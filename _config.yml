@@ -1,0 +1,28 @@
+title: Yasin BARAN
+description: Bilgisayar Mühendisi
+
+url: http://yasinbaran.com
+baseurl: ""
+paginate_path: "blog/page:num/"
+permalink: blog/:title/
+
+markdown: kramdown
+highlighter: rouge
+gems: [jekyll-paginate]
+paginate: 5
+
+navigation:
+ - title: Ana Sayfa
+   url: /index.html
+ - title: Hakkında
+   url: /about
+
+social:
+   github: yasinbaran
+   twitter: yasin__baran
+   facebook: yasinbaranofficial
+   email: yasin@yasinbaran.com
+   linkedin: yasinbaran
+   instagram: yasin__baran
+
+google_analytics: "UA-58263416-1"
