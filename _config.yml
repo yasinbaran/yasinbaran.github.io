@@ -14,7 +14,7 @@ paginate: 5
 navigation:
  - title: Ana Sayfa
    url: /index.html
- - title: Hakkında
+ - title: Hakkımda
    url: /about
 
 social:
