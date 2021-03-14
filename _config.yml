@@ -1,7 +1,7 @@
 title: Yasin BARAN
 description: Bilgisayar Mühendisi
 
-url: http://yasinbaran.com
+url: http://baranlarinyasin.com
 baseurl: ""
 paginate_path: "blog/page:num/"
 permalink: blog/:title/
@@ -21,7 +21,7 @@ social:
    github: yasinbaran
    twitter: yasin__baran
    facebook: yasinbaranofficial
-   email: yasin@yasinbaran.com
+   email: yasin@baranlarinyasin.com
    linkedin: yasinbaran
    instagram: yasin__baran
 
