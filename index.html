@@ -3,60 +3,345 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formasyon İnteraktif Sınav Sistemi</title>
+    <title>Formasyon Final Sınav Portalı</title>
     <style>
         /* --- GENEL TASARIM --- */
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f0f2f5; color: #333; margin: 0; padding: 20px; }
-        .container { max-width: 900px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; }
-        
-        /* --- INSTAGRAM DESTEK ÇUBUĞU --- */
-        .instagram-bar { background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d); color: white; text-align: center; padding: 15px; font-weight: 500; font-size: 15px; }
-        .instagram-link { color: white; text-decoration: none; font-weight: bold; background-color: rgba(255, 255, 255, 0.2); padding: 5px 12px; border-radius: 20px; margin-left: 10px; transition: background 0.3s; display: inline-flex; align-items: center; gap: 5px; }
-        .instagram-link:hover { background-color: rgba(255, 255, 255, 0.4); }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
 
-        header { text-align: center; padding: 30px 30px 10px 30px; border-bottom: 2px solid #eee; margin-bottom: 20px; }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+      /* --- SOSYAL MEDYA ALANI (YENİ) --- */
+        .social-bar {
+            background: #ffffff;
+            border-bottom: 1px solid #eee;
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(to bottom, #fff, #f9f9f9);
+        }
+
+        .social-text {
+            font-weight: 600;
+            color: #555;
+            font-size: 15px;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-social {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            color: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .btn-social:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+
+        /* Instagram Marka Rengi */
+        .btn-insta {
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+        }
+
+        /* YouTube Marka Rengi */
+        .btn-youtube {
+            background-color: #FF0000;
+        }
+
+        /* İkonlar için basit emoji kullanımı (SVG yerine hızlı çözüm) */
+        .icon { font-size: 18px; }
+
+        .instagram-link {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-left: 10px;
+            transition: background 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .instagram-link:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 30px 10px 30px;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 20px;
+        }
+
         h1 { color: #2c3e50; margin: 0 0 10px 0; }
         p.sub-text { color: #666; font-size: 14px; }
+
         .icerik-alani-genel { padding: 0 30px 30px 30px; }
 
         /* --- DERS BUTONLARI --- */
         .ders-kutusu { margin-bottom: 15px; }
-        .ders-baslik { width: 100%; background-color: #007aff; color: white; padding: 15px 20px; text-align: left; border: none; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; transition: background 0.2s; }
-        .ders-baslik:hover { background-color: #005bb5; }
-        .ders-icerik { display: none; padding: 20px; border: 1px solid #ddd; border-top: none; background: #fff; border-radius: 0 0 8px 8px; }
+
+        .ders-baslik {
+            width: 100%;
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            text-align: left;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            transition: background 0.2s;
+        }
+
+        .ders-baslik:hover { background-color: #34495e; }
+
+        .ders-icerik {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            background: #fff;
+            border-radius: 0 0 8px 8px;
+        }
 
         /* --- BİLGİ KUTULARI --- */
-        .sinav-bilgisi { background-color: #fff3cd; color: #856404; padding: 12px; border-radius: 6px; border-left: 5px solid #ffc107; margin-bottom: 20px; font-weight: bold; }
-        .materyal-alani { background-color: #f8f9fa; padding: 15px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #e9ecef; }
-        .pdf-viewer { width: 100%; height: 500px; border: 1px solid #ccc; border-radius: 4px; background-color: #fff; }
-        .tam-ekran-link { display: block; text-align: center; margin-top: 10px; color: #007aff; text-decoration: none; font-size: 15px; font-weight: 500; margin-bottom: 15px; }
+        .sinav-bilgisi {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 5px solid #28a745;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* --- PDF GÖRÜNTÜLEME ALANI --- */
+        .materyal-alani {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .pdf-viewer {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .tam-ekran-link {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            color: #007aff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        
         .tam-ekran-link:hover { text-decoration: underline; }
-        .ara-cizgi { border: 0; border-top: 2px dashed #ccc; margin: 25px 0; }
 
         /* --- TEST / SORU TASARIMI --- */
-        h3 { margin-top: 30px; color: #2c3e50; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .soru-karti { border: 1px solid #eee; padding: 15px; margin-bottom: 15px; border-radius: 8px; background-color: #fafafa; }
+        h3 { color: #d35400; margin-top: 30px; border-bottom: 2px solid #eee; padding-bottom: 10px;}
+
+        .soru-karti {
+            border: 1px solid #eee;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+
+        /* --- TEST / SORU TASARIMI (GÜNCELLENDİ) --- */
+        
+        /* Soru Kartı Kutusu */
+        .soru-karti {
+            border: 1px solid #e1e4e8;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background-color: #fafafa;
+            text-align: left; /* TÜM İÇERİĞİ SOLA DAYAR */
+        }
+
+        /* Soru Metni */
+        .soru-metni {
+            font-weight: 700; /* Kalın yazı */
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 16px;
+            line-height: 1.5; /* Satır aralığını açar, okumayı kolaylaştırır */
+        }
+
+        /* Şıkların (Seçeneklerin) Düzeni */
+        .secenekler label {
+            display: flex; /* Esnek kutu modeli: Buton ve yazıyı yan yana hizalar */
+            align-items: flex-start; /* Yazı çok uzunsa en üstten başlatır */
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left; /* Yazıyı sola daya */
+            line-height: 1.4;
+        }
+
+        /* Üzerine gelince renk değişimi */
+        .secenekler label:hover { 
+            background-color: #f1f8ff; 
+            border-color: #007aff;
+        }
+
+        /* Radio Buton Ayarı */
+        .secenekler input { 
+            margin-right: 12px; /* Buton ile yazı arasına boşluk bırakır */
+            margin-top: 4px; /* Butonu yazının hizasına göre hafif aşağı iter */
+            min-width: 16px; /* Butonun küçülmesini engeller */
+            height: 16px;
+        }
+
+        /* Kontrol Butonu */
+        .kontrol-btn {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .kontrol-btn:hover { background-color: #d35400; }
+
+        /* Sonuç Mesajları */
+        .sonuc-mesaji {
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 4px;
+            display: none;
+            text-align: left;
+        }
+
+        .dogru { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .yanlis { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+
         .soru-metni { font-weight: 600; margin-bottom: 10px; color: #2c3e50; }
-        .secenekler label { display: block; padding: 8px 12px; margin-bottom: 5px; background: white; border: 1px solid #ddd; border-radius: 4px; cursor: pointer; transition: all 0.2s; }
+
+        .secenekler label {
+            display: block;
+            padding: 8px 12px;
+            margin-bottom: 5px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
         .secenekler label:hover { background-color: #f1f1f1; }
         .secenekler input { margin-right: 10px; }
-        .kontrol-btn { background-color: #28a745; color: white; border: none; padding: 8px 15px; border-radius: 4px; cursor: pointer; margin-top: 10px; font-size: 14px; }
-        .kontrol-btn:hover { background-color: #218838; }
-        .sonuc-mesaji { margin-top: 10px; font-weight: bold; padding: 8px; border-radius: 4px; display: none; }
-        .dogru { background-color: #d4edda; color: #155724; display: block; }
-        .yanlis { background-color: #f8d7da; color: #721c24; display: block; }
+
+        .kontrol-btn {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .kontrol-btn:hover { background-color: #d35400; }
+
+        .sonuc-mesaji {
+            margin-top: 10px;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .dogru { background-color: #d4edda; color: #155724; display: block; border: 1px solid #c3e6cb; }
+        .yanlis { background-color: #f8d7da; color: #721c24; display: block; border: 1px solid #f5c6cb; }
+
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="instagram-bar">
-        Bana destek olmak için: <a href="https://www.instagram.com/baranlarinyasin" target="_blank" class="instagram-link">📸 @baranlarinyasin</a>
+    
+    <div class="container">
+    
+    <div class="social-bar">
+        <span class="social-text">Odaklanmak için YouTube kanalımdaki sessiz ambiyansı aç, mola verince Instagram'a göz at :) </span>
+        
+        <div class="social-buttons">
+            
+             <a href="https://www.youtube.com/channel/UCwLr0K66ILVKxOx46y0lSNw" target="_blank" class="btn-social btn-youtube">
+                <span class="icon">▶️</span> YouTube'a Abone Ol
+            </a>
+
+            <a href="https://www.instagram.com/baranlarinyasin" target="_blank" class="btn-social btn-insta">
+                <span class="icon">📸</span> Instagram'dan Takip Et
+            </a>
+
+           
+        </div>
     </div>
 
     <header>
-        <h1>🎓 Formasyon Sınav Portalı</h1>
-        <p class="sub-text">Ders materyallerini incele ve interaktif soruları çöz.</p>
+
+    <header>
+        <h1>🎓 Final Dönemi Çalışma Portalı</h1>
+        <p class="sub-text">Final notlarını incele ve soruları çöz.</p>
     </header>
 
     <div class="icerik-alani-genel">
@@ -64,157 +349,64 @@
         <div class="ders-kutusu">
             <button class="ders-baslik" onclick="toggleDers('ders1')">1. Eğitime Giriş</button>
             <div id="ders1" class="ders-icerik">
-                <div class="sinav-bilgisi">📅 Sınav: 25.11.2025 Salı - 19:30</div>
+                <div class="sinav-bilgisi">📅 Final Sınavı: 19.01.2026 Pazartesi - 20:00</div>
                 
                 <div class="materyal-alani">
-                    <h3>📚 Ders Materyalleri</h3>
-                    
-                    <p style="font-weight: bold; color: #555;">1. Ana Ders Notları:</p>
-                    <iframe src="egitime_giris.pdf" class="pdf-viewer"></iframe>
-                    <a href="egitime_giris.pdf" target="_blank" class="tam-ekran-link">📄 Ders Notlarını Görüntüle</a>
-
-                    <hr class="ara-cizgi">
-
-                    <p style="font-weight: bold; color: #555;">2. Ek Çalışma Soruları:</p>
-                    <iframe src="sorular55.pdf" class="pdf-viewer"></iframe>
-                    <a href="sorular55.pdf" target="_blank" class="tam-ekran-link">📄 Ek Soruları Görüntüle (sorular55)</a>
+                    <h3>📚 Final Soru Havuzu</h3>
+                    <iframe src="final_egitim.pdf" class="pdf-viewer"></iframe>
+                    <a href="final_egitim.pdf" target="_blank" class="tam-ekran-link">📄 Ders Notlarını Görüntüle</a>
                 </div>
                 
-                <h3>✍️ Kendini Dene</h3>
-                <div class="soru-karti" id="d1-s1"><p class="soru-metni">1. "Bireyin kendi yaşantısı yoluyla ve kasıtlı olarak istendik davranış değişikliği meydana getirme süreci" aşağıdakilerden hangisinin tanımıdır?</p><div class="secenekler"><label><input type="radio" name="d1s1" value="a"> A) Öğrenme</label><label><input type="radio" name="d1s1" value="b"> B) Eğitim</label><label><input type="radio" name="d1s1" value="c"> C) Kültürleme</label><label><input type="radio" name="d1s1" value="d"> D) Öğretim</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s1', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d1-s2"><p class="soru-metni">2. Aşağıdakilerden hangisi "Formal Eğitim"in özelliklerinden biridir?</p><div class="secenekler"><label><input type="radio" name="d1s2" value="a"> A) Kendiliğinden oluşur.</label><label><input type="radio" name="d1s2" value="b"> B) Planlı ve programlıdır.</label><label><input type="radio" name="d1s2" value="c"> C) Yer ve zaman belli değildir.</label><label><input type="radio" name="d1s2" value="d"> D) Amaçlı değildir.</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s2', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d1-s3"><p class="soru-metni">3. Okullarda belli bir müfredat programı çerçevesinde yürütülen eğitime ne ad verilir?</p><div class="secenekler"><label><input type="radio" name="d1s3" value="a"> A) Örgün Eğitim</label><label><input type="radio" name="d1s3" value="b"> B) Yaygın Eğitim</label><label><input type="radio" name="d1s3" value="c"> C) Sargın Eğitim</label><label><input type="radio" name="d1s3" value="d"> D) İnformal Eğitim</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s3', 'a')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d1-s4"><p class="soru-metni">4. Bireyin kendi isteği dışında, rastgele ve plansız olarak gerçekleşen eğitim türü hangisidir?</p><div class="secenekler"><label><input type="radio" name="d1s4" value="a"> A) Kasıtlı Kültürleme</label><label><input type="radio" name="d1s4" value="b"> B) Formal Eğitim</label><label><input type="radio" name="d1s4" value="c"> C) İnformal Eğitim</label><label><input type="radio" name="d1s4" value="d"> D) Halk Eğitimi</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s4', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d1-s5"><p class="soru-metni">5. Aşağıdakilerden hangisi eğitimin "açık (görünen)" işlevlerinden biridir?</p><div class="secenekler"><label><input type="radio" name="d1s5" value="a"> A) Eş seçimi</label><label><input type="radio" name="d1s5" value="b"> B) Tanıdık sağlama</label><label><input type="radio" name="d1s5" value="c"> C) Statü kazandırma</label><label><input type="radio" name="d1s5" value="d"> D) Toplumun kültürel mirasını aktarma</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s5', 'd')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d1-s6"><p class="soru-metni">6. Eğitimin bir sistem olarak işlemesi sürecinde, sisteme giren unsurların işlenip ürüne dönüştürüldüğü sürece ne ad verilir?</p><div class="secenekler"><label><input type="radio" name="d1s6" value="a"> A) Girdi</label><label><input type="radio" name="d1s6" value="b"> B) İşlem (Süreç)</label><label><input type="radio" name="d1s6" value="c"> C) Çıktı</label><label><input type="radio" name="d1s6" value="d"> D) Dönüt</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s6', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d1-s7"><p class="soru-metni">7. Aşağıdakilerden hangisi "Yaygın Eğitim" kurumlarına bir örnektir?</p><div class="secenekler"><label><input type="radio" name="d1s7" value="a"> A) İlkokul</label><label><input type="radio" name="d1s7" value="b"> B) Ortaokul</label><label><input type="radio" name="d1s7" value="c"> C) Halk Eğitim Merkezleri</label><label><input type="radio" name="d1s7" value="d"> D) Lise</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s7', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d1-s8"><p class="soru-metni">8. Bireyin çalıştığı işyerinde mesleki gelişimini sağlamak amacıyla yapılan eğitime ne ad verilir?</p><div class="secenekler"><label><input type="radio" name="d1s8" value="a"> A) Hizmet İçi Eğitim</label><label><input type="radio" name="d1s8" value="b"> B) Örgün Eğitim</label><label><input type="radio" name="d1s8" value="c"> C) Temel Eğitim</label><label><input type="radio" name="d1s8" value="d"> D) Sargın Eğitim</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s8', 'a')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d1-s9"><p class="soru-metni">9. Kültürel değerlerin yeni kuşaklara kazandırılması sürecine ne ad verilir?</p><div class="secenekler"><label><input type="radio" name="d1s9" value="a"> A) Kültürleşme</label><label><input type="radio" name="d1s9" value="b"> B) Kültürlenme</label><label><input type="radio" name="d1s9" value="c"> C) Kültürleme</label><label><input type="radio" name="d1s9" value="d"> D) Kültür şoku</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s9', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d1-s10"><p class="soru-metni">10. Türk Milli Eğitimi'nin temel ilkelerinden "Eğitim kurumlarının dil, ırk, cinsiyet ve din ayrımı gözetmeksizin herkese açık olması" hangi ilkedir?</p><div class="secenekler"><label><input type="radio" name="d1s10" value="a"> A) Fırsat Eşitliği</label><label><input type="radio" name="d1s10" value="b"> B) Genellik ve Eşitlik</label><label><input type="radio" name="d1s10" value="c"> C) Süreklilik</label><label><input type="radio" name="d1s10" value="d"> D) Laiklik</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s10', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d1-s11"><p class="soru-metni">11. Bir eğitim sisteminde yeterli miktarda ve kalitede girdi olmasına rağmen, işlem süreci hatalıysa sonuç ne olur?</p><div class="secenekler"><label><input type="radio" name="d1s11" value="a"> A) Çıktılar beklenen nitelikte olmaz.</label><label><input type="radio" name="d1s11" value="b"> B) Sistem kapalı hale gelir.</label><label><input type="radio" name="d1s11" value="c"> C) Girdiler artar.</label><label><input type="radio" name="d1s11" value="d"> D) Dönüt sistemi hızlanır.</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s11', 'a')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d1-s12"><p class="soru-metni">12. Öğrencinin okul dışında, kendi çabasıyla bir müzik aleti çalmayı öğrenmesi hangi eğitim türüne girer?</p><div class="secenekler"><label><input type="radio" name="d1s12" value="a"> A) Örgün Eğitim</label><label><input type="radio" name="d1s12" value="b"> B) Sargın Eğitim (Kendi kendine öğrenme)</label><label><input type="radio" name="d1s12" value="c"> C) Formal Eğitim</label><label><input type="radio" name="d1s12" value="d"> D) Zorunlu Eğitim</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s12', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d1-s13"><p class="soru-metni">13. Eğitimin "Gizli (Latent)" işlevlerinden biri aşağıdakilerden hangisidir?</p><div class="secenekler"><label><input type="radio" name="d1s13" value="a"> A) Okuma yazma öğretmek</label><label><input type="radio" name="d1s13" value="b"> B) Meslek edindirmek</label><label><input type="radio" name="d1s13" value="c"> C) Eş seçimine ortam hazırlamak</label><label><input type="radio" name="d1s13" value="d"> D) İyi vatandaş yetiştirmek</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s13', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d1-s14"><p class="soru-metni">14. Eğitim sisteminin çevreden girdi alıp çevreye çıktı vermesi ve dönüt alması sistemin hangi özelliğini gösterir?</p><div class="secenekler"><label><input type="radio" name="d1s14" value="a"> A) Kapalı Sistem</label><label><input type="radio" name="d1s14" value="b"> B) Yarı Açık Sistem</label><label><input type="radio" name="d1s14" value="c"> C) Açık Sistem</label><label><input type="radio" name="d1s14" value="d"> D) Durağan Sistem</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s14', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d1-s15"><p class="soru-metni">15. Türk Milli Eğitim sisteminde "Yöneltme" ilkesi neyi ifade eder?</p><div class="secenekler"><label><input type="radio" name="d1s15" value="a"> A) Herkese aynı derslerin verilmesini</label><label><input type="radio" name="d1s15" value="b"> B) Bireylerin ilgi ve yeteneklerine göre programlara yönlendirilmesini</label><label><input type="radio" name="d1s15" value="c"> C) Eğitimin parasız olmasını</label><label><input type="radio" name="d1s15" value="d"> D) Eğitimin yaşam boyu sürmesini</label></div><button class="kontrol-btn" onclick="cevapKontrol('d1-s15', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
+                <h3>✍️ Soru Havuzu (75 Soru)</h3>
+                <div id="soru-listesi-ders1"></div>
             </div>
         </div>
 
         <div class="ders-kutusu">
-            <button class="ders-baslik" onclick="toggleDers('ders2')">2. Rehberlik ve Özel Eğitim</button>
+            <button class="ders-baslik" onclick="toggleDers('ders2')">2. Sınıf Yönetimi</button>
             <div id="ders2" class="ders-icerik">
-                <div class="sinav-bilgisi">📅 Sınav: 25.11.2025 Salı - 21:30</div>
-                <div class="materyal-alani">
-                    <h3>📚 Ders Materyali</h3>
-                    <iframe src="rehberlik.pdf" class="pdf-viewer"></iframe>
-                    <a href="rehberlik.pdf" target="_blank" class="tam-ekran-link">📄 Ders Notlarını Görüntüle</a>
-                </div>
-                <h3>✍️ Kendini Dene</h3>
+                <div class="sinav-bilgisi">📅 Final Sınavı: 20.01.2026 Salı - 20:00</div>
                 
-                <div class="soru-karti" id="d2-s1"><p class="soru-metni">1. Çağdaş eğitim anlayışına göre eğitimin temel amacı nedir?</p><div class="secenekler"><label><input type="radio" name="d2s1" value="a"> A) Sadece akademik başarıyı artırmak</label><label><input type="radio" name="d2s1" value="b"> B) Bireyi kendisi ve toplum için yetiştirmek</label><label><input type="radio" name="d2s1" value="c"> C) Otoriteye itaat eden bireyler yetiştirmek</label><label><input type="radio" name="d2s1" value="d"> D) Ekonomik kalkınmayı tek hedef almak</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s1', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d2-s2"><p class="soru-metni">2. Rehberlik hizmetlerinin merkezinde kim vardır?</p><div class="secenekler"><label><input type="radio" name="d2s2" value="a"> A) Okul Müdürü</label><label><input type="radio" name="d2s2" value="b"> B) Öğretmen</label><label><input type="radio" name="d2s2" value="c"> C) Birey (Öğrenci)</label><label><input type="radio" name="d2s2" value="d"> D) Veli</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s2', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d2-s3"><p class="soru-metni">3. Maslow'un ihtiyaçlar hiyerarşisinin en üst basamağında hangi ihtiyaç yer alır?</p><div class="secenekler"><label><input type="radio" name="d2s3" value="a"> A) Fizyolojik ihtiyaçlar</label><label><input type="radio" name="d2s3" value="b"> B) Güvenlik ihtiyacı</label><label><input type="radio" name="d2s3" value="c"> C) Ait olma ve sevgi ihtiyacı</label><label><input type="radio" name="d2s3" value="d"> D) Kendini gerçekleştirme ihtiyacı</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s3', 'd')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d2-s4"><p class="soru-metni">4. Aşağıdakilerden hangisi rehberlik ilkelerinden biri değildir?</p><div class="secenekler"><label><input type="radio" name="d2s4" value="a"> A) Gönüllülük esastır</label><label><input type="radio" name="d2s4" value="b"> B) Gizlilik esastır</label><label><input type="radio" name="d2s4" value="c"> C) Bireysel farklara saygı esastır</label><label><input type="radio" name="d2s4" value="d"> D) Sadece sorunlu öğrencilere yöneliktir</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s4', 'd')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d2-s5"><p class="soru-metni">5. Okula yeni başlayan öğrencilerin okula uyum sağlaması için yapılan rehberlik hizmete ne ad verilir?</p><div class="secenekler"><label><input type="radio" name="d2s5" value="a"> A) Müşavirlik</label><label><input type="radio" name="d2s5" value="b"> B) Oryantasyon</label><label><input type="radio" name="d2s5" value="c"> C) İzleme</label><label><input type="radio" name="d2s5" value="d"> D) Sevk</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s5', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d2-s6"><p class="soru-metni">6. Psikolojik danışma ve rehberlik hizmetlerinin temel amacı nedir?</p><div class="secenekler"><label><input type="radio" name="d2s6" value="a"> A) Disiplini sağlamak</label><label><input type="radio" name="d2s6" value="b"> B) Bireyin kendini gerçekleştirmesine yardım etmek</label><label><input type="radio" name="d2s6" value="c"> C) Akademik başarıyı artırmak</label><label><input type="radio" name="d2s6" value="d"> D) Ailenin isteklerini yerine getirmek</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s6', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d2-s7"><p class="soru-metni">7. Aşağıdakilerden hangisi 'Doğrudan Sunulan Rehberlik Hizmetleri'nden biridir?</p><div class="secenekler"><label><input type="radio" name="d2s7" value="a"> A) Araştırma ve Değerlendirme</label><label><input type="radio" name="d2s7" value="b"> B) Müşavirlik (Konsültasyon)</label><label><input type="radio" name="d2s7" value="c"> C) Psikolojik Danışma</label><label><input type="radio" name="d2s7" value="d"> D) Çevre ile İlişkiler</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s7', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d2-s8"><p class="soru-metni">8. Rehberlik hizmetlerinde 'Müşavirlik' ne anlama gelir?</p><div class="secenekler"><label><input type="radio" name="d2s8" value="a"> A) Öğrenciye doğrudan test uygulamak</label><label><input type="radio" name="d2s8" value="b"> B) Öğretmen, yönetici ve velilerle işbirliği yapmak</label><label><input type="radio" name="d2s8" value="c"> C) Öğrenciyi bir üst kuruma yerleştirmek</label><label><input type="radio" name="d2s8" value="d"> D) Mezun öğrencileri takip etmek</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s8', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d2-s9"><p class="soru-metni">9. 'Bireyi Tanıma' hizmetlerinin temel amacı nedir?</p><div class="secenekler"><label><input type="radio" name="d2s9" value="a"> A) Öğrenciyi etiketlemek</label><label><input type="radio" name="d2s9" value="b"> B) Bireyin kendini tanımasına yardımcı olmak</label><label><input type="radio" name="d2s9" value="c"> C) Öğrenci hakkında dosya tutmak</label><label><input type="radio" name="d2s9" value="d"> D) Okul idaresine bilgi vermek</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s9', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d2-s10"><p class="soru-metni">10. 'Sevk (Refere)' hizmeti ne demektir?</p><div class="secenekler"><label><input type="radio" name="d2s10" value="a"> A) Öğrenciyi disipline göndermek</label><label><input type="radio" name="d2s10" value="b"> B) Sorunu okulda çözülemeyen öğrenciyi uzmana yönlendirmek</label><label><input type="radio" name="d2s10" value="c"> C) Öğrenciye okul kurallarını anlatmak</label><label><input type="radio" name="d2s10" value="d"> D) Veliyi okula çağırmak</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s10', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d2-s11"><p class="soru-metni">11. 'İzleme' hizmetinin temel işlevi nedir?</p><div class="secenekler"><label><input type="radio" name="d2s11" value="a"> A) Öğrencilerin devamsızlığını kontrol etmek</label><label><input type="radio" name="d2s11" value="b"> B) Sunulan rehberlik hizmetlerinin etkililiğini ve sonuçlarını değerlendirmek</label><label><input type="radio" name="d2s11" value="c"> C) Sınav sonuçlarını panoya asmak</label><label><input type="radio" name="d2s11" value="d"> D) Öğrencileri derste gözetlemek</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s11', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d2-s12"><p class="soru-metni">12. Rehberlikte kullanılan 'Test Dışı Teknikler'den biri hangisidir?</p><div class="secenekler"><label><input type="radio" name="d2s12" value="a"> A) Zeka Testi</label><label><input type="radio" name="d2s12" value="b"> B) Yetenek Testi</label><label><input type="radio" name="d2s12" value="c"> C) Görüşme</label><label><input type="radio" name="d2s12" value="d"> D) İlgi Envanteri</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s12', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d2-s13"><p class="soru-metni">13. Psikolojik danışma ilişkisinin en temel özelliği nedir?</p><div class="secenekler"><label><input type="radio" name="d2s13" value="a"> A) Zorunluluk</label><label><input type="radio" name="d2s13" value="b"> B) Gönüllülük</label><label><input type="radio" name="d2s13" value="c"> C) Tek yönlülük</label><label><input type="radio" name="d2s13" value="d"> D) Öğüt verme</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s13', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d2-s14"><p class="soru-metni">14. Kendini gerçekleştiren bireyin özelliklerinden biri hangisidir?</p><div class="secenekler"><label><input type="radio" name="d2s14" value="a"> A) Gerçekçidir</label><label><input type="radio" name="d2s14" value="b"> B) Sürekli başkalarını suçlar</label><label><input type="radio" name="d2s14" value="c"> C) Değişime kapalıdır</label><label><input type="radio" name="d2s14" value="d"> D) Sadece geçmişe odaklıdır</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s14', 'a')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d2-s15"><p class="soru-metni">15. Türkiye'de rehberlik hizmetlerinin yürütülmesi için kurulan il düzeyindeki merkez hangisidir?</p><div class="secenekler"><label><input type="radio" name="d2s15" value="a"> A) Halk Eğitim Merkezi</label><label><input type="radio" name="d2s15" value="b"> B) Rehberlik ve Araştırma Merkezi (RAM)</label><label><input type="radio" name="d2s15" value="c"> C) Mesleki Eğitim Merkezi</label><label><input type="radio" name="d2s15" value="d"> D) Sağlık Ocağı</label></div><button class="kontrol-btn" onclick="cevapKontrol('d2-s15', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
+                <div class="materyal-alani">
+                    <h3>📚 Final Ders Notları</h3>
+                    <iframe src="final_sinif.pdf" class="pdf-viewer"></iframe>
+                    <a href="final_sinif.pdf" target="_blank" class="tam-ekran-link">📄 Ders Notlarını Görüntüle</a>
+                </div>
+
+                <h3>✍️ Örnek Sorular</h3>
+                <div id="soru-listesi-ders2"></div>
             </div>
         </div>
 
         <div class="ders-kutusu">
-            <button class="ders-baslik" onclick="toggleDers('ders3')">3. Sınıf Yönetimi</button>
+            <button class="ders-baslik" onclick="toggleDers('ders3')">3. Öğretim İlke ve Yöntemleri</button>
             <div id="ders3" class="ders-icerik">
-                <div class="sinav-bilgisi">📅 Sınav: 26.11.2025 Çarşamba - 20:00</div>
-                <div class="materyal-alani">
-                    <h3>📚 Ders Materyali</h3>
-                    <iframe src="sinif_yonetimi.pdf" class="pdf-viewer"></iframe>
-                    <a href="sinif_yonetimi.pdf" target="_blank" class="tam-ekran-link">📄 Ders Notlarını Görüntüle</a>
-                </div>
-                <h3>✍️ Kendini Dene</h3>
+                <div class="sinav-bilgisi">📅 Final Sınavı: 21.01.2026 Çarşamba - 20:00</div>
                 
-                <div class="soru-karti" id="d3-s1"><p class="soru-metni">1. Sınıf yönetiminin en temel amacı nedir?</p><div class="secenekler"><label><input type="radio" name="d3s1" value="a"> A) Öğrencileri sessiz tutmak</label><label><input type="radio" name="d3s1" value="b"> B) Akademik ve sosyal-duygusal öğrenmeyi destekleyecek bir çevre oluşturmak</label><label><input type="radio" name="d3s1" value="c"> C) Otorite kurmak</label><label><input type="radio" name="d3s1" value="d"> D) Sınav yapmak</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s1', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d3-s2"><p class="soru-metni">2. Sınıfın fiziksel ortamında kullanılan 'Mavi' rengin etkisi nedir?</p><div class="secenekler"><label><input type="radio" name="d3s2" value="a"> A) Neşe verir</label><label><input type="radio" name="d3s2" value="b"> B) Karamsarlık yaratır</label><label><input type="radio" name="d3s2" value="c"> C) Barışçıl ve sakinleştiricidir</label><label><input type="radio" name="d3s2" value="d"> D) Uykusuzluğa iyi gelir</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s2', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d3-s3"><p class="soru-metni">3. İstenmeyen bir durum ortaya çıktığında anında tepki verilmesini öngören sınıf yönetimi modeli hangisidir?</p><div class="secenekler"><label><input type="radio" name="d3s3" value="a"> A) Önlemsel Model</label><label><input type="radio" name="d3s3" value="b"> B) Tepkisel Model</label><label><input type="radio" name="d3s3" value="c"> C) Gelişimsel Model</label><label><input type="radio" name="d3s3" value="d"> D) Bütünsel Model</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s3', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d3-s4"><p class="soru-metni">4. 'Dalga Etkisi' kavramı hangi disiplin modelinde yer alır?</p><div class="secenekler"><label><input type="radio" name="d3s4" value="a"> A) Glasser Modeli</label><label><input type="radio" name="d3s4" value="b"> B) Kounin Modeli</label><label><input type="radio" name="d3s4" value="c"> C) Canter Modeli</label><label><input type="radio" name="d3s4" value="d"> D) Skinner Modeli</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s4', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d3-s5"><p class="soru-metni">5. Glasser'in 'Gerçeklik Terapisi' modeline göre öğrencinin olumsuz davranışlarının temel nedeni nedir?</p><div class="secenekler"><label><input type="radio" name="d3s5" value="a"> A) Zeka eksikliği</label><label><input type="radio" name="d3s5" value="b"> B) Sevilme ve değer verilme ihtiyaçlarının karşılanamaması</label><label><input type="radio" name="d3s5" value="c"> C) Aile baskısı</label><label><input type="radio" name="d3s5" value="d"> D) Okul kuralları</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s5', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d3-s6"><p class="soru-metni">6. Canter'in 'Etkin Disiplin' modeli neyi savunur?</p><div class="secenekler"><label><input type="radio" name="d3s6" value="a"> A) Öğretmenin otoriter olmasını</label><label><input type="radio" name="d3s6" value="b"> B) Öğrenciye tam özgürlük verilmesini</label><label><input type="radio" name="d3s6" value="c"> C) Disiplinin gereksiz olduğunu</label><label><input type="radio" name="d3s6" value="d"> D) Her şeyin görmezden gelinmesini</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s6', 'a')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d3-s7"><p class="soru-metni">7. 'Gölge Öğrenci' tipi nasıl tanımlanır?</p><div class="secenekler"><label><input type="radio" name="d3s7" value="a"> A) Çok başarılı ve aktif</label><label><input type="radio" name="d3s7" value="b"> B) Sürekli sorun çıkaran</label><label><input type="radio" name="d3s7" value="c"> C) Kendini ortaya koymaktan kaçınan, sessiz</label><label><input type="radio" name="d3s7" value="d"> D) Sosyal ilişkileri çok güçlü</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s7', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d3-s8"><p class="soru-metni">8. Sınıf yönetiminde 'Önlemsel Model'in temel amacı nedir?</p><div class="secenekler"><label><input type="radio" name="d3s8" value="a"> A) Sorun çıktıktan sonra ceza vermek</label><label><input type="radio" name="d3s8" value="b"> B) Olası sorunları önceden kestirip önlem almak</label><label><input type="radio" name="d3s8" value="c"> C) Öğrencileri serbest bırakmak</label><label><input type="radio" name="d3s8" value="d"> D) Sadece akademik başarıya odaklanmak</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s8', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d3-s9"><p class="soru-metni">9. Sınıfın yapısal özelliklerinden 'Çok Boyutluluk' neyi ifade eder?</p><div class="secenekler"><label><input type="radio" name="d3s9" value="a"> A) Sınıfta aynı anda birçok farklı etkinliğin ve olayın gerçekleşebilmesini</label><label><input type="radio" name="d3s9" value="b"> B) Sınıfın fiziksel olarak büyük olmasını</label><label><input type="radio" name="d3s9" value="c"> C) Sadece tek bir amaca odaklanılmasını</label><label><input type="radio" name="d3s9" value="d"> D) Sınıfın tarihsel geçmişini</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s9', 'a')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d3-s10"><p class="soru-metni">10. Rudolf Dreikurs'un 'Mantıksal Sonuçlar Modeli'nin temel amacı nedir?</p><div class="secenekler"><label><input type="radio" name="d3s10" value="a"> A) Öğrenciye ceza vermek</label><label><input type="radio" name="d3s10" value="b"> B) Öğrencide öz disiplini geliştirmek</label><label><input type="radio" name="d3s10" value="c"> C) Öğretmen otoritesini artırmak</label><label><input type="radio" name="d3s10" value="d"> D) Aileleri eğitmek</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s10', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d3-s11"><p class="soru-metni">11. Aşağıdakilerden hangisi öğretmenden kaynaklanan disiplin sorunlarından biridir?</p><div class="secenekler"><label><input type="radio" name="d3s11" value="a"> A) Öğrencilerin derse geç kalması</label><label><input type="radio" name="d3s11" value="b"> B) Derse hazırlıksız gelmek ve dersi monoton işlemek</label><label><input type="radio" name="d3s11" value="c"> C) Sınıfın kalabalık olması</label><label><input type="radio" name="d3s11" value="d"> D) Ailenin ilgisizliği</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s11', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d3-s12"><p class="soru-metni">12. Etkili bir sınıf yönetimi için kurallar nasıl belirlenmelidir?</p><div class="secenekler"><label><input type="radio" name="d3s12" value="a"> A) Sadece öğretmen tarafından</label><label><input type="radio" name="d3s12" value="b"> B) Okul idaresi tarafından</label><label><input type="radio" name="d3s12" value="c"> C) Öğrencilerle birlikte, açık bir dil kullanılarak</label><label><input type="radio" name="d3s12" value="d"> D) Velilerin isteğine göre</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s12', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d3-s13"><p class="soru-metni">13. 'Orta Yolcu' öğretmen tipolojisinin özelliği nedir?</p><div class="secenekler"><label><input type="radio" name="d3s13" value="a"> A) Mükemmeliyetçidir</label><label><input type="radio" name="d3s13" value="b"> B) "Bu iş görür" mantığıyla hareket eder, standartlara çok önem vermez</label><label><input type="radio" name="d3s13" value="c"> C) Çok sert ve otoriterdir</label><label><input type="radio" name="d3s13" value="d"> D) Öğrenciye tam özgürlük verir</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s13', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d3-s14"><p class="soru-metni">14. Sınıfta zaman yönetiminin en önemli amacı nedir?</p><div class="secenekler"><label><input type="radio" name="d3s14" value="a"> A) Teneffüse erken çıkmak</label><label><input type="radio" name="d3s14" value="b"> B) Zamanın ders dışı etkinliklere harcanmasını önleyerek öğretime odaklanmak</label><label><input type="radio" name="d3s14" value="c"> C) Öğretmenin dinlenmesini sağlamak</label><label><input type="radio" name="d3s14" value="d"> D) Yoklama almak</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s14', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d3-s15"><p class="soru-metni">15. 'Bütünsel Sınıf Yönetimi Modeli' neyi ifade eder?</p><div class="secenekler"><label><input type="radio" name="d3s15" value="a"> A) Sadece önlemsel modelin kullanılmasıdır.</label><label><input type="radio" name="d3s15" value="b"> B) Tepkisel, önlemsel ve gelişimsel modellerin bir sentezi olarak duruma göre hepsinden yararlanılmasıdır.</label><label><input type="radio" name="d3s15" value="c"> C) Hiçbir kuralın olmamasıdır.</label><label><input type="radio" name="d3s15" value="d"> D) Sadece ceza yönteminin kullanılmasıdır.</label></div><button class="kontrol-btn" onclick="cevapKontrol('d3-s15', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-
+                <div class="materyal-alani">
+                    <h3>📚 Final Ders Notları</h3>
+                    <iframe src="final_oyt.pdf" class="pdf-viewer"></iframe>
+                    <a href="final_oyt.pdf" target="_blank" class="tam-ekran-link">📄 Ders Notlarını Görüntüle</a>
+                </div>
+                
+                <h3>✍️ Örnek Sorular</h3>
+                <div id="soru-listesi-ders3"></div>
             </div>
         </div>
 
         <div class="ders-kutusu">
-            <button class="ders-baslik" onclick="toggleDers('ders4')">4. Özel Öğretim Yöntemleri</button>
+            <button class="ders-baslik" onclick="toggleDers('ders4')">4. Rehberlik ve Özel Eğitim</button>
             <div id="ders4" class="ders-icerik">
-                <div class="sinav-bilgisi">📅 Sınav: 26.11.2025 Çarşamba - 21:00</div>
-                <div class="materyal-alani">
-                    <h3>📚 Ders Materyali</h3>
-                    <iframe src="ozel_ogretim.pdf" class="pdf-viewer"></iframe>
-                    <a href="ozel_ogretim.pdf" target="_blank" class="tam-ekran-link">📄 Ders Notlarını Görüntüle</a>
-                </div>
-                <h3>✍️ Kendini Dene</h3>
+                <div class="sinav-bilgisi">📅 Final Sınavı: 21.01.2026 Çarşamba - 21:00</div>
                 
-                <div class="soru-karti" id="d4-s1"><p class="soru-metni">1. Öğretim hedeflerine ulaşmak için izlenen 'genel yol'a ne ad verilir?</p><div class="secenekler"><label><input type="radio" name="d4s1" value="a"> A) Teknik</label><label><input type="radio" name="d4s1" value="b"> B) Yöntem</label><label><input type="radio" name="d4s1" value="c"> C) Strateji</label><label><input type="radio" name="d4s1" value="d"> D) Model</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s1', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d4-s2"><p class="soru-metni">2. 'Öğrenme gözlenebilir davranış değişikliğidir' görüşünü savunan kuram hangisidir?</p><div class="secenekler"><label><input type="radio" name="d4s2" value="a"> A) Bilişsel Kuram</label><label><input type="radio" name="d4s2" value="b"> B) Davranışçı Kuram</label><label><input type="radio" name="d4s2" value="c"> C) Yapılandırmacı Kuram</label><label><input type="radio" name="d4s2" value="d"> D) Sosyal Öğrenme Kuramı</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s2', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d4-s3"><p class="soru-metni">3. Polya'ya göre problem çözme sürecinin ilk aşaması nedir?</p><div class="secenekler"><label><input type="radio" name="d4s3" value="a"> A) Planı Uygulama</label><label><input type="radio" name="d4s3" value="b"> B) Değerlendirme</label><label><input type="radio" name="d4s3" value="c"> C) Plan Yapma</label><label><input type="radio" name="d4s3" value="d"> D) Problemi Anlama</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s3', 'd')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d4-s4"><p class="soru-metni">4. Pedagojik Alan Bilgisi (PAB) neyi ifade eder?</p><div class="secenekler"><label><input type="radio" name="d4s4" value="a"> A) Sadece konuyu derinlemesine bilmek</label><label><input type="radio" name="d4s4" value="b"> B) Bir konuyu öğrencilerin anlayabileceği biçimde öğretme bilgisini</label><label><input type="radio" name="d4s4" value="c"> C) Sınıf yönetimi kurallarını bilmeyi</label><label><input type="radio" name="d4s4" value="d"> D) Okulun tarihçesini bilmeyi</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s4', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d4-s5"><p class="soru-metni">5. Yapılandırmacı yaklaşımda öğretmenin temel rolü nedir?</p><div class="secenekler"><label><input type="radio" name="d4s5" value="a"> A) Bilgi aktarıcısı</label><label><input type="radio" name="d4s5" value="b"> B) Otorite figürü</label><label><input type="radio" name="d4s5" value="c"> C) Kolaylaştırıcı (Rehber)</label><label><input type="radio" name="d4s5" value="d"> D) Disiplin sağlayıcı</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s5', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d4-s6"><p class="soru-metni">6. Soyut kavramların öğretiminde 'Somuttan Soyuta' ilkesinin önemi nedir?</p><div class="secenekler"><label><input type="radio" name="d4s6" value="a"> A) Öğrenmeyi zorlaştırır</label><label><input type="radio" name="d4s6" value="b"> B) Öğrenme somut deneyimden soyut sembole geçer, anlamayı kolaylaştırır</label><label><input type="radio" name="d4s6" value="c"> C) Zaman kaybına neden olur</label><label><input type="radio" name="d4s6" value="d"> D) Sadece okul öncesinde kullanılır</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s6', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d4-s7"><p class="soru-metni">7. 'Bilişsel Kuram'a göre öğrenme nasıl gerçekleşir?</p><div class="secenekler"><label><input type="radio" name="d4s7" value="a"> A) Sadece ezberle</label><label><input type="radio" name="d4s7" value="b"> B) Bilgilerin zihinde anlamlı biçimde işlenmesi ve yapılandırılmasıyla</label><label><input type="radio" name="d4s7" value="c"> C) Ödül ve ceza ile</label><label><input type="radio" name="d4s7" value="d"> D) Pasif dinleme ile</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s7', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d4-s8"><p class="soru-metni">8. 'Ters Yüz Sınıf (Flipped Classroom)' modelinin temel özelliği nedir?</p><div class="secenekler"><label><input type="radio" name="d4s8" value="a"> A) Sınıfta sadece oyun oynanması</label><label><input type="radio" name="d4s8" value="b"> B) Teorik bilginin evde öğrenilip, derste uygulama yapılması</label><label><input type="radio" name="d4s8" value="c"> C) Öğretmenin hiç ders anlatmaması</label><label><input type="radio" name="d4s8" value="d"> D) Sınavların kaldırılması</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s8', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d4-s9"><p class="soru-metni">9. Bir kavramın sadece belirli bir yönüne odaklanıp diğer yönlerini görememeye ne ad verilir?</p><div class="secenekler"><label><input type="radio" name="d4s9" value="a"> A) Aşırı Genelleme</label><label><input type="radio" name="d4s9" value="b"> B) Kısıtlı Algılama</label><label><input type="radio" name="d4s9" value="c"> C) Aşırı Özelleme</label><label><input type="radio" name="d4s9" value="d"> D) Kavram Yanılgısı</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s9', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d4-s10"><p class="soru-metni">10. 'Metabilişsel Düşünme' ne demektir?</p><div class="secenekler"><label><input type="radio" name="d4s10" value="a"> A) Hızlı düşünme</label><label><input type="radio" name="d4s10" value="b"> B) Ne düşündüğünü düşünme (düşünme sürecini izleme ve kontrol etme)</label><label><input type="radio" name="d4s10" value="c"> C) Ezber yapma</label><label><input type="radio" name="d4s10" value="d"> D) Hayal kurma</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s10', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d4-s11"><p class="soru-metni">11. Problem çözme stratejilerinden 'Geriye Doğru Gitme' ne zaman kullanılır?</p><div class="secenekler"><label><input type="radio" name="d4s11" value="a"> A) Sonuçtan başlanarak başlangıç durumuna ulaşılmak istendiğinde</label><label><input type="radio" name="d4s11" value="b"> B) Problem çok basitse</label><label><input type="radio" name="d4s11" value="c"> C) Hiçbir veri yoksa</label><label><input type="radio" name="d4s11" value="d"> D) Sadece geometride</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s11', 'a')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d4-s12"><p class="soru-metni">12. 'Didaktik Antlaşma' sınıf içinde neyi belirler?</p><div class="secenekler"><label><input type="radio" name="d4s12" value="a"> A) Öğretmen maaşlarını</label><label><input type="radio" name="d4s12" value="b"> B) Öğretmen ile öğrenci arasındaki örtük/açık kuralları, rol ve sorumlulukları</label><label><input type="radio" name="d4s12" value="c"> C) Okulun fiziksel şartlarını</label><label><input type="radio" name="d4s12" value="d"> D) Sınav tarihlerini</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s12', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d4-s13"><p class="soru-metni">13. Matematik öğretiminde 'Keşfetmeye Dayalı Öğrenme'nin amacı nedir?</p><div class="secenekler"><label><input type="radio" name="d4s13" value="a"> A) Öğretmenin formülü tahtaya yazması</label><label><input type="radio" name="d4s13" value="b"> B) Öğrencilerin kuralları ve ilişkileri kendilerinin bulması</label><label><input type="radio" name="d4s13" value="c"> C) Bol bol test çözmek</label><label><input type="radio" name="d4s13" value="d"> D) Ezber yapmak</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s13', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d4-s14"><p class="soru-metni">14. 'Sosyomatematiksel Normlar' neyi düzenler?</p><div class="secenekler"><label><input type="radio" name="d4s14" value="a"> A) Tenefüs saatlerini</label><label><input type="radio" name="d4s14" value="b"> B) Sınıftaki matematiksel tartışmanın kalitesini ve neyin kabul edilebilir çözüm olduğunu</label><label><input type="radio" name="d4s14" value="c"> C) Öğrenci kıyafetlerini</label><label><input type="radio" name="d4s14" value="d"> D) Oturma düzenini</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s14', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d4-s15"><p class="soru-metni">15. 'Proje Tabanlı Öğrenme' yönteminin temel özelliği nedir?</p><div class="secenekler"><label><input type="radio" name="d4s15" value="a"> A) Öğrencilerin bir ürün geliştirmesi ve sürecin sonunda somut bir çıktı olması</label><label><input type="radio" name="d4s15" value="b"> B) Sadece öğretmenin ders anlatması</label><label><input type="radio" name="d4s15" value="c"> C) Kısa süreli hafıza çalışmaları</label><label><input type="radio" name="d4s15" value="d"> D) Çoktan seçmeli sınavlar</label></div><button class="kontrol-btn" onclick="cevapKontrol('d4-s15', 'a')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-
-            </div>
-        </div>
-
-        <div class="ders-kutusu">
-            <button class="ders-baslik" onclick="toggleDers('ders5')">5. Öğretim İlke ve Yöntemleri</button>
-            <div id="ders5" class="ders-icerik">
-                <div class="sinav-bilgisi">📅 Sınav: 27.11.2025 Perşembe - 20:00</div>
                 <div class="materyal-alani">
-                    <h3>📚 Ders Materyali</h3>
-                    <iframe src="oyt.pdf" class="pdf-viewer"></iframe>
-                    <a href="oyt.pdf" target="_blank" class="tam-ekran-link">📄 Ders Notlarını Görüntüle</a>
+                    <h3>📚 Final Ders Notları</h3>
+                    <iframe src="final_rehberlik.pdf" class="pdf-viewer"></iframe>
+                    <a href="final_rehberlik.pdf" target="_blank" class="tam-ekran-link">📄 Ders Notlarını Görüntüle</a>
                 </div>
-                <h3>✍️ Kendini Dene</h3>
-                
-                <div class="soru-karti" id="d5-s1"><p class="soru-metni">1. Selahattin Ertürk'e göre eğitimin tanımındaki 'kasıtlı' ifadesi neyi vurgular?</p><div class="secenekler"><label><input type="radio" name="d5s1" value="a"> A) Eğitimin zorla yapıldığını</label><label><input type="radio" name="d5s1" value="b"> B) Eğitimin planlı ve programlı (formal) olduğunu</label><label><input type="radio" name="d5s1" value="c"> C) Eğitimin tesadüfen olduğunu</label><label><input type="radio" name="d5s1" value="d"> D) Eğitimin sadece okulda olduğunu</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s1', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d5-s2"><p class="soru-metni">2. Formal eğitimde bulunması gereken 'olmazsa olmaz' özelliklerden biri hangisidir?</p><div class="secenekler"><label><input type="radio" name="d5s2" value="a"> A) Program</label><label><input type="radio" name="d5s2" value="b"> B) Rastgelelik</label><label><input type="radio" name="d5s2" value="c"> C) Plansızlık</label><label><input type="radio" name="d5s2" value="d"> D) Doğaçlama</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s2', 'a')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d5-s3"><p class="soru-metni">3. Öğretimin öğrencinin bildiği yerden başlayıp bilinmeyene doğru gitmesi hangi ilkedir?</p><div class="secenekler"><label><input type="radio" name="d5s3" value="a"> A) Somuttan Soyuta</label><label><input type="radio" name="d5s3" value="b"> B) Bilinenden Bilinmeyene</label><label><input type="radio" name="d5s3" value="c"> C) Ekonomiklik</label><label><input type="radio" name="d5s3" value="d"> D) Güncellik</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s3', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d5-s4"><p class="soru-metni">4. 'Öğrenciye görelik' (Çocuğa yöneliklik) ilkesi neyi ifade eder?</p><div class="secenekler"><label><input type="radio" name="d5s4" value="a"> A) Öğretmenin otoriter olmasını</label><label><input type="radio" name="d5s4" value="b"> B) Öğretimin çocuğun yaşına, yeteneğine ve ilgisine uygun olmasını</label><label><input type="radio" name="d5s4" value="c"> C) Konunun ezberletilmesini</label><label><input type="radio" name="d5s4" value="d"> D) Sınav odaklı çalışmayı</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s4', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d5-s5"><p class="soru-metni">5. 'Ekonomiklik İlkesi' öğretimde neyi amaçlar?</p><div class="secenekler"><label><input type="radio" name="d5s5" value="a"> A) En az maliyet ve emekle en yüksek verimi almayı</label><label><input type="radio" name="d5s5" value="b"> B) Okul bütçesini artırmayı</label><label><input type="radio" name="d5s5" value="c"> C) Öğretmenin az ders anlatmasını</label><label><input type="radio" name="d5s5" value="d"> D) Öğrenciden para toplamayı</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s5', 'a')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d5-s6"><p class="soru-metni">6. Posner'a göre, resmi programda yazılı olmayan ancak okul kültürüyle öğrenilen program türü hangisidir?</p><div class="secenekler"><label><input type="radio" name="d5s6" value="a"> A) Resmi Program</label><label><input type="radio" name="d5s6" value="b"> B) Örtük (Gizil) Program</label><label><input type="radio" name="d5s6" value="c"> C) İhmal Edilen Program</label><label><input type="radio" name="d5s6" value="d"> D) Ekstra Program</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s6', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d5-s7"><p class="soru-metni">7. 'Hazırbulunuşluk' ilkesi ne demektir?</p><div class="secenekler"><label><input type="radio" name="d5s7" value="a"> A) Öğrencinin derse zamanında gelmesi</label><label><input type="radio" name="d5s7" value="b"> B) Öğretimin öğrencinin bulunduğu seviyeden başlaması</label><label><input type="radio" name="d5s7" value="c"> C) Öğretmenin derse hazırlıklı gelmesi</label><label><input type="radio" name="d5s7" value="d"> D) Sınıfın temiz olması</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s7', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d5-s8"><p class="soru-metni">8. Çoklu Zeka Kuramı kime aittir?</p><div class="secenekler"><label><input type="radio" name="d5s8" value="a"> A) Piaget</label><label><input type="radio" name="d5s8" value="b"> B) Vygotsky</label><label><input type="radio" name="d5s8" value="c"> C) Howard Gardner</label><label><input type="radio" name="d5s8" value="d"> D) Bloom</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s8', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d5-s9"><p class="soru-metni">9. Yapılandırmacı yaklaşımda öğrenme sorumluluğu kime aittir?</p><div class="secenekler"><label><input type="radio" name="d5s9" value="a"> A) Öğretmene</label><label><input type="radio" name="d5s9" value="b"> B) Öğrenciye</label><label><input type="radio" name="d5s9" value="c"> C) Okul Müdürüne</label><label><input type="radio" name="d5s9" value="d"> D) Veliye</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s9', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d5-s10"><p class="soru-metni">10. Bir öğretim programının 4 temel öğesi nelerdir?</p><div class="secenekler"><label><input type="radio" name="d5s10" value="a"> A) Girdi, İşlem, Çıktı, Dönüt</label><label><input type="radio" name="d5s10" value="b"> B) Hedef, İçerik, Eğitim Durumları, Değerlendirme</label><label><input type="radio" name="d5s10" value="c"> C) Okul, Sınıf, Öğrenci, Öğretmen</label><label><input type="radio" name="d5s10" value="d"> D) Plan, Uygulama, Kontrol, Önlem</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s10', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d5-s11"><p class="soru-metni">11. 'Somuttan Soyuta' ilkesi en çok hangi gelişim döneminde önemlidir?</p><div class="secenekler"><label><input type="radio" name="d5s11" value="a"> A) Lise dönemi</label><label><input type="radio" name="d5s11" value="b"> B) Üniversite dönemi</label><label><input type="radio" name="d5s11" value="c"> C) İlkokul (Somut İşlemler) dönemi</label><label><input type="radio" name="d5s11" value="d"> D) Yetişkinlik dönemi</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s11', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d5-s12"><p class="soru-metni">12. Yapılandırmacılıkta öğrenme süreci nasıldır?</p><div class="secenekler"><label><input type="radio" name="d5s12" value="a"> A) Pasif ve ezberci</label><label><input type="radio" name="d5s12" value="b"> B) Öznel, aktif ve dinamik</label><label><input type="radio" name="d5s12" value="c"> C) Öğretmen merkezli</label><label><input type="radio" name="d5s12" value="d"> D) Sadece sınav odaklı</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s12', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d5-s13"><p class="soru-metni">13. 'Yakınsak Gelişim Alanı' kavramı kime aittir?</p><div class="secenekler"><label><input type="radio" name="d5s13" value="a"> A) Piaget</label><label><input type="radio" name="d5s13" value="b"> B) Skinner</label><label><input type="radio" name="d5s13" value="c"> C) Vygotsky</label><label><input type="radio" name="d5s13" value="d"> D) Freud</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s13', 'c')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d5-s14"><p class="soru-metni">14. Öğretmenin öğrenciye doğru cevabı bulması için verdiği ipuçlarına ne ad verilir?</p><div class="secenekler"><label><input type="radio" name="d5s14" value="a"> A) Pekiştireç</label><label><input type="radio" name="d5s14" value="b"> B) İpucu</label><label><input type="radio" name="d5s14" value="c"> C) Dönüt</label><label><input type="radio" name="d5s14" value="d"> D) Düzeltme</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s14', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
-                <div class="soru-karti" id="d5-s15"><p class="soru-metni">15. 'Resmi Program' kim tarafından hazırlanır?</p><div class="secenekler"><label><input type="radio" name="d5s15" value="a"> A) Okul Müdürü</label><label><input type="radio" name="d5s15" value="b"> B) Talim Terbiye Kurulu</label><label><input type="radio" name="d5s15" value="c"> C) Sınıf Öğretmeni</label><label><input type="radio" name="d5s15" value="d"> D) Veliler</label></div><button class="kontrol-btn" onclick="cevapKontrol('d5-s15', 'b')">Cevabı Kontrol Et</button><div class="sonuc-mesaji"></div></div>
 
+                 <h3>✍️ Örnek Sorular</h3>
+                <div id="soru-listesi-ders4"></div>
             </div>
         </div>
 
@@ -222,31 +414,237 @@
 </div>
 
 <script>
-    // Ders İçeriğini Açıp Kapatma
-    function toggleDers(id) {
-        var x = document.getElementById(id);
-        x.style.display = (x.style.display === "block") ? "none" : "block";
+    // --- 1. DERS İÇİN SORU VERİTABANI (75 SORU) ---
+    // Bu veri otomatik olarak oluşturulmuştur.
+    const egitimSorulari = [
+        {"id": 1, "text": "Eğitimin amacı, bireyi hazır kalıplara sokmak değil; onun düşünme, sorgulama ve doğruyu arama yetisini geliştirmektir. Buna göre çıkarılabilecek en uygun yargı aşağıdakilerden hangisidir?", "options": {"a": "Eğitim, bireyin gelenekleri sorgulamadan kabul etmesini sağlamalıdır.", "b": "Eğitim, bireyin akıl yürütme ve sorgulama becerilerini geliştirmelidir.", "c": "Eğitim, bireyin edilgen bir konumda kalmasını hedeflemektedir.", "d": "Eğitim, bireyi toplumsal beklentilerden tamamen koparmalıdır.", "e": "Eğitim, bireysel farklılıkları ortadan kaldırmalıdır."}, "answer": "b"},
+        {"id": 2, "text": "Aşağıdakilerden hangisi yapılandırmacı öğrenme kuramına göre öğretmenin rolünü en iyi açıklar?", "options": {"a": "Öğrencilere bilgiyi doğrudan aktaran kişi", "b": "Öğrencilerin bilgiye ulaşmasına rehberlik eden kişi", "c": "Öğrencilerin davranışlarını gözlemleyip not veren kişi", "d": "Öğrencilerin ezber yapmasını sağlayan kişi", "e": "Öğrenciye formül ezberletme kazandıran kişi"}, "answer": "b"},
+        {"id": 3, "text": "Vygotsky'nin sosyal yapılandırmacı öğrenme anlayışına göre öğrenme süreci aşağıdakilerden hangisiyle en yakından ilişkilidir?", "options": {"a": "Öğrencinin bireysel olarak kendi başına bilgiye ulaşması", "b": "Öğrencinin öğretmenin aktardığı bilgiyi ezberlemesi", "c": "Öğrenmenin sosyal etkileşim ve iş birliği içinde gerçekleşmesi", "d": "Öğrencinin davranışlarının pekiştireçlerle şekillenmesi", "e": "Öğrenci pasif kalması sağlanır."}, "answer": "c"},
+        {"id": 4, "text": "Maslow'un İhtiyaçlar Hiyerarşisi Kuramı ile Alderfer'in ERG Kuramı karşılaştırıldığında aşağıdaki ifadelerden hangisi doğrudur?", "options": {"a": "Maslow'a göre ihtiyaçlar aynı anda karşılanabilirken, Alderfer'e göre ihtiyaçlar katı bir sırayla karşılanır.", "b": "Alderfer, Maslow'un katı hiyerarşik yapısını esnetmiş ve bireylerin birden fazla ihtiyacı aynı anda yaşayabileceğini savunmuştur.", "c": "Maslow, ihtiyaçları varoluş, ilişki ve gelişme olmak üzere üç temel gruba ayırmıştır.", "d": "Alderfer, kendini gerçekleştirme ihtiyacını ERG kuramına dahil etmemiştir.", "e": "Maslow ve Alderfer, ihtiyaçların mutlaka alt basamaktan üst basamağa doğru ilerlemesi gerektiği konusunda aynı görüştedir."}, "answer": "b"},
+        {"id": 5, "text": "Aşağıdakilerden hangisi aşırı disiplinin birey üzerinde oluşturduğu stres ve baskının bir sonucu değildir?", "options": {"a": "Sürekli kaygı ve hata yapma korkusunun oluşması", "b": "Özgüvenin azalması ve kişinin kendini yetersiz hissetmesi", "c": "Yaratıcılığın ve özgür düşüncenin artması", "d": "Fiziksel ve zihinsel tükenmişlik hissinin ortaya çıkması", "e": "Sosyal ilişkilerde zayıflama ve içe kapanma görülmesi"}, "answer": "c"},
+        {"id": 6, "text": "Aşağıdakilerden hangisi esasçılığa yöneltilen temel eleştirilerden biri olarak kabul edilir?", "options": {"a": "Temel derslere yeterince önem vermemesi", "b": "Öğrenci yaratıcılığını ve bireysel farklılıkları sınırlaması", "c": "Öğretmen rolünü zayıflatması", "d": "Akademik standartları düşürmesi", "e": "Kültürel aktarımı reddetmesi"}, "answer": "b"},
+        {"id": 7, "text": "İlerlemecilik akımının felsefi temeli aşağıdakilerden hangisine dayanır?", "options": {"a": "İdealizm", "b": "Realizm", "c": "Pragmatizm", "d": "Varoluşçuluk", "e": "Natüralizm"}, "answer": "c"},
+        {"id": 8, "text": "Toplumu yeniden şekillendirmeyi ve eğitimi toplumsal değişimin aracı olarak gören eğitim felsefesi akımı aşağıdakilerden hangisidir?", "options": {"a": "Varoluşçuluk", "b": "Daimicilik", "c": "Esasicilik", "d": "Yeniden kurmacılık", "e": "İlerlemecilik"}, "answer": "d"},
+        {"id": 9, "text": "Aşağıdaki düşünürlerden hangisi varoluşçuluk akımıyla ilişkilidir?", "options": {"a": "John Dewey", "b": "Aristoteles", "c": "Jean-Paul Sartre", "d": "Comenius", "e": "John Locke"}, "answer": "c"},
+        {"id": 10, "text": "Daimicilik (Perennializm) eğitim felsefesine göre eğitimin temel amacı aşağıdakilerden hangisidir?", "options": {"a": "Öğrenciyi mesleğe hazırlamak", "b": "Toplumsal değişimi hızlandırmak", "c": "Değişmez evrensel doğruları öğretmek", "d": "Bireysel ilgileri merkeze almak", "e": "Deneyim yoluyla öğrenmeyi sağlamak"}, "answer": "c"},
+        {"id": 11, "text": "Aşağıdaki filozoflardan hangisi esasicilik (Essentialism) eğitim felsefesiyle ilişkilendirilir?", "options": {"a": "John Dewey", "b": "Jean-Paul Sartre", "c": "William Bagley", "d": "Rousseau", "e": "Montessori"}, "answer": "c"},
+        {"id": 12, "text": "Varoluşçu eğitim felsefesine göre eğitimde en önemli unsur aşağıdakilerden hangisidir?", "options": {"a": "Disiplin", "b": "Öğretmen merkezlilik", "c": "Bireysel özgürlük ve seçim", "d": "Ezbere dayalı öğrenme", "e": "Sabit müfredat"}, "answer": "c"},
+        {"id": 13, "text": "Yeniden kurmacılık (Reconstructionism) eğitim felsefesinin temel hedefi aşağıdakilerden hangisidir?", "options": {"a": "Klasik eserleri öğretmek", "b": "Toplumsal sorunları çözmek ve toplumu yeniden yapılandırmak", "c": "Öğrenciyi sınavlara hazırlamak", "d": "Bireysel farklılıkları göz ardı etmek", "e": "Değişmez bilgileri aktarmak"}, "answer": "b"},
+        {"id": 14, "text": "\"Eğitim, hayatın kendisidir\" görüşü aşağıdaki filozoflardan hangisine aittir?", "options": {"a": "Platon", "b": "Kant", "c": "John Dewey", "d": "Farabi", "e": "Comenius"}, "answer": "c"},
+        {"id": 15, "text": "Öğrenme sürecinde karşılaşılan duygusal veya güdüsel engelleri ortadan kaldırmak için kullanılan stratejilere \"duyuşsal stratejiler\" denir. Buna göre, aşağıdakilerden hangisi bir öğrencinin sınav kaygısını azaltmak veya dikkatini toplamak için başvurabileceği duyuşsal stratejilerden biri değildir?", "options": {"a": "Ders çalışırken radyo veya televizyon gibi dışsal dikkat dağıtıcıları ortamdan uzaklaştırmak", "b": "Anlaşılması güç olan uzun bir metni daha kolay hatırlamak için bölümlere ayırarak özet çıkarmak", "c": "Öğrenilen yeni bilgiler ile önceden bilinenler arasındaki çelişkileri uzlaştırmaya çalışmak", "d": "\"Bu projeyi yapamam\" gibi olumsuz içsel konuşmaları, olumlu öz-konuşmalara dönüştürmek", "e": "Kütüphane gibi öğrenmeyi en iyi destekleyen sessiz ve düzenli çevresel özellikleri belirleyip orada çalışmak"}, "answer": "b"},
+        {"id": 16, "text": "Aşağıdakilerden hangisi kaynak kullanma stratejisine en iyi örnektir?", "options": {"a": "Konuyu daha iyi anlamak için önemli yerlerin altını çizmek", "b": "Öğrenilen bilgileri kendi cümleleriyle özetlemek", "c": "Anlamadığı konuları öğretmene ve ek kaynaklara başvurarak öğrenmeye çalışmak", "d": "Ezber yapılacak bilgileri tekrar tekrar okumak", "e": "Konuyu zihinde canlandırarak öğrenmeye çalışmak"}, "answer": "c"},
+        {"id": 17, "text": "Üstbilişsel öğrenme stratejisinde üstbiliş kavramı yerine birçok alternatif kavram bulunur. Aşağıdakilerden hangisi bu alternatif kavramlar arasında yer almaz?", "options": {"a": "Metabiliş", "b": "Biliş ötesi", "c": "Yürütücü biliş", "d": "Bilişsel işlemler", "e": "Bilişsel farkındalık"}, "answer": "d"},
+        {"id": 18, "text": "Bir piyano öğrencisi, başlangıçta hangi parmağını nereye koyacağını sürekli düşünürken, aylar sonra notalara bakmadan ve düşünmeden çalmaya başlamıştır. Bu öğrencinin yaşadığı değişim aşağıdakilerden hangisinin gerçekleştiğini kanıtlar?", "options": {"a": "Bilginin sadece kısa süreli bellekte kaldığını", "b": "Öğrencinin \"bağımsız öğrenici\" olmaktan vazgeçtiğini", "c": "Sürecin zahmetsizce kullanılabilir hale gelerek \"otomatikleştiğini\"", "d": "Hatırlama stratejilerinin (nimonik) devreden çıktığını", "e": "Piyanonun kolay öğrenilen bir müzik aleti olduğunu"}, "answer": "c"},
+        {"id": 19, "text": "Eğitim araştırmalarına göre, öğrenci başarısını etkileyen okul içi faktörler arasında en önemli unsur hangisidir?", "options": {"a": "Sınıf mevcudu", "b": "Okulun fiziksel imkanları", "c": "Öğretmen kalitesi", "d": "Müfredatın yoğunluğu", "e": "Teknolojik donanım"}, "answer": "c"},
+        {"id": 20, "text": "Bir öğrencinin, öğretmenin bir çatışmayı nasıl çözdüğünü zihnine kaydetmesi Bandura'nın hangi aşamasına örnektir?", "options": {"a": "Dikkat Çekme", "b": "Hatırlama", "c": "Yeniden Üretme", "d": "Motivasyon", "e": "Öz-Yeterlilik"}, "answer": "b"},
+        {"id": 21, "text": "Bireyin belirli bir eylemi başarıyla gerçekleştirebileceğine dair inancına ne ad verilir?", "options": {"a": "Öz-Saygı", "b": "Ahlaki Muhakeme", "c": "Öz-Yeterlilik", "d": "Pozitif Pekiştirme", "e": "Sosyal Uyum"}, "answer": "c"},
+        {"id": 22, "text": "Öğretmenler neyi zorunlu sınıf normu haline getirerek öğrencilerin toplumsal fayda sağlayan davranışlar sergilemesini sağlarlar?", "options": {"a": "Sessizlik ve itaat", "b": "Hız ve rekabet", "c": "Nezaket, saygı ve işbirliği", "d": "Not odaklı çalışma", "e": "Bireysel çalışma disiplini"}, "answer": "c"},
+        {"id": 23, "text": "Öğretmenlerin sosyal ve ahlaki gelişimdeki etkisi esas olarak nerede ölçülür?", "options": {"a": "Yıl sonu karne notlarında", "b": "Müfredat kitaplarındaki sorularda", "c": "Standart başarı testlerinde", "d": "Sınıfta yaşanan gerçek hayat derslerinde", "e": "Okulun fiziksel şartlarında"}, "answer": "d"},
+        {"id": 24, "text": "Aşağıda verilen sanal sınıf özelliklerinden hangisi eşzamanlı (senkron) sanal sınıfa aittir?", "options": {"a": "Öğrenciler sanal sınıflara kendi avatarlarıyla katılır.", "b": "Dersin bir kısmı canlı anlatılır kalan kısmı video şeklinde izlenir.", "c": "Ders videoları sisteme yüklenir ve öğrenciler istedikleri zaman izlerler.", "d": "VR teknolojisi derslerde kullanılır.", "e": "Canlı ders yapılır ve anlık soru-cevap mümkündür."}, "answer": "e"},
+        {"id": 25, "text": "Aşağıdakilerden hangisi edu-metaverse'in kullanım alanlarından biri değildir?", "options": {"a": "Beden eğitimi", "b": "Fen bilimleri", "c": "Dil bilimi", "d": "Tip", "e": "Mesleki eğitim"}, "answer": "a"},
+        {"id": 26, "text": "Bireyselleştirilmiş öğrenmenin asıl amacı aşağıdakilerden hangisidir?", "options": {"a": "Kişiyi başarıya ulaştırmak", "b": "Ülkenin eğitim düzeyini arttırmak", "c": "Ekonomiyi güçlendirmek", "d": "Çocuklara okulu sevdirmek", "e": "Kişiyi analiz edip ona göre öğrenme yolları denemek"}, "answer": "e"},
+        {"id": 27, "text": "Aşağıdakilerden hangisi gelecekte bireylerden beklenecek özelliklerden biri değildir?", "options": {"a": "Analitik beceriler", "b": "Teknolojik okuryazarlık", "c": "Güçlü ezber yetisi", "d": "Yaratıcı düşünce", "e": "Esnek düşünebilme"}, "answer": "c"},
+        {"id": 28, "text": "Aşağıdakilerden hangisi eğitimin bilinen tanımıdır?", "options": {"a": "Sadece okulda verilen öğretim süreci", "b": "Bireyin davranışlarında istendik değişiklikler oluşturma süreci", "c": "Yalnızca akademik başarıyı artırma", "d": "Meslek kazandırma faaliyeti", "e": "Bilgi aktarma işi"}, "answer": "b"},
+        {"id": 29, "text": "Eğitim ile öğretim arasındaki temel fark aşağıdakilerden hangisidir?", "options": {"a": "Eğitim plansızdır, öğretim plansızdır", "b": "Eğitim okulda, öğretim evde gerçekleşir", "c": "Eğitim daha kapsamlıdır, öğretim eğitimin bir parçasıdır", "d": "Eğitim sadece çocuklara yöneliktir", "e": "Öğretim informal bir süreçtir"}, "answer": "c"},
+        {"id": 30, "text": "Aşağıdakilerden hangisi informal eğitime örnek olarak gösterilebilir?", "options": {"a": "Üniversitede verilen dersler", "b": "Okul müfredatına bağlı öğretim", "c": "Aile içinde kazanılan davranışlar", "d": "Sınavla ölçülen öğrenmeler", "e": "Diploma ile sonuçlanan eğitim"}, "answer": "c"},
+        {"id": 31, "text": "Eğitimin bireysel işlevlerinden biri aşağıdakilerden hangisidir?", "options": {"a": "Kültür aktarımını sağlamak", "b": "Toplumsal bütünlüğü korumak", "c": "Bireyin yeteneklerini geliştirmek", "d": "Milli bilinci güçlendirmek", "e": "Toplumsal düzeni sağlamak"}, "answer": "c"},
+        {"id": 32, "text": "Aşağıdakilerden hangisi eğitimin sürekliliği ilkesini ifade eder?", "options": {"a": "Eğitim sadece okul çağında verilir", "b": "Eğitim yalnızca devlet tarafından yapılır", "c": "Eğitim hayat boyu devam eder", "d": "Eğitim yalnızca örgün eğitimdir", "e": "Eğitim sadece sınavlara yöneliktir"}, "answer": "c"},
+        {"id": 33, "text": "Eğitimin amacının \"değişmeyen evrensel doğruları ve değerleri\" yeni kuşaklara aktarmak olduğunu savunan, klasik eserlerin okunmasına büyük önem veren eğitim felsefesi hangisidir?", "options": {"a": "İlerlemecilik", "b": "Esasicilik", "c": "Daimicilik", "d": "Yeniden Kurmacılık", "e": "Varoluşçuluk"}, "answer": "c"},
+        {"id": 34, "text": "\"Eğitim hayata hazırlık değil, hayatın kendisidir\" diyerek öğrencinin ilgi, ihtiyaç ve yeteneklerini merkeze alan akım aşağıdakilerden hangisidir?", "options": {"a": "Esasicilik", "b": "İlerlemecilik", "c": "Daimicilik", "d": "Realizm", "e": "Yeniden Kurmacılık"}, "answer": "b"},
+        {"id": 35, "text": "Geleneksel eğitim anlayışının temelini oluşturan; öğretmenin otorite olduğu, disiplinin ön planda tutulduğu ve temel becerilerin (okuma, yazma, sayma) ezber yoluyla öğretilmesini savunan akım hangisidir?", "options": {"a": "İdealizm", "b": "Yeniden Kurmacılık", "c": "İlerlemecilik", "d": "Esasicilik", "e": "Varoluşçuluk"}, "answer": "d"},
+        {"id": 36, "text": "Özellikle toplumsal kriz dönemlerinde ortaya çıkan, okulun temel görevinin \"toplumu reforme etmek ve yeniden yapılandırmak\" olduğunu savunan eğitim felsefesi hangisidir?", "options": {"a": "Yeniden Kurmacılık", "b": "Daimicilik", "c": "Esasicilik", "d": "İlerlemecilik", "e": "Natüralizm"}, "answer": "a"},
+        {"id": 37, "text": "Pragmatizm (faydacılık) felsefesine dayanan ve \"yaparak-yaşayarak öğrenme\" modelini en çok destekleyen eğitim akımı aşağıdakilerden hangisidir?", "options": {"a": "Daimicilik", "b": "Esasicilik", "c": "İlerlemecilik", "d": "Yeniden Kurmacılık", "e": "İdealizm"}, "answer": "c"},
+        {"id": 38, "text": "COVID-19 pandemisi sürecinde Türkiye'de eğitimin devamlılığını sağlamak amacıyla alınan en temel uygulama aşağıdakilerden hangisidir?", "options": {"a": "Tüm sınavların süresiz olarak iptal edilmesi", "b": "Okulların tamamen kapatılıp eğitimin durdurulması", "c": "Uzaktan eğitim için EBA ve canlı ders sistemlerinin kullanılması", "d": "Öğrenci sayılarının yarıya düşürülmesi", "e": "Üniversite giriş sınavlarının kaldırılması"}, "answer": "c"},
+        {"id": 39, "text": "Aşağıdakilerden hangisi yapay zekanın sebep olabileceği sorunlardan biri değildir?", "options": {"a": "Altyapı Sorunları", "b": "Hızlı Geri Bildirim", "c": "Gizlilik Sorunları", "d": "Sürekli Takip Duygusu", "e": "Yüzeysel Anlatım"}, "answer": "b"},
+        {"id": 40, "text": "Türkiye'de eğitimin dijitalleşme sürecinin ilk adımlarında (1980-1990'lar) 115 liseye bilgisayar dağıtılması ve müfredata seçmeli dersler eklenmesi, teknolojinin eğitimdeki rolü hakkında hangi temel yorumu destekler?", "options": {"a": "Eğitimin tamamen yapay zeka kontrolüne geçtiği.", "b": "Teknolojinin eğitimde hiyerarşiyi tamamen ortadan kaldırdığı.", "c": "Teknolojinin eğitim sistemine destekleyici bir araç olarak entegre edilmeye çalışıldığı.", "d": "Tüm derslerin internet üzerinden işlenmeye başlandığı.", "e": "Bilgisayarların sadece idari işler için kullanılacağı."}, "answer": "c"},
+        {"id": 41, "text": "Yapay zekanın eğitimde sağladığı \"kişiselleştirilmiş eğitim\" ve \"anında geri bildirim\" avantajları, öğrenme süreci üzerinde nasıl bir katkı sunar?", "options": {"a": "Mevcut verilerle tamamen özgün ve yaratıcı yeni bilgiler üretilmesini sağlar.", "b": "Öğrencinin kendi hızında ilerleyerek eksiklerini anında fark etmesine yardımcı olur.", "c": "Eleştirel düşünme becerilerini en üst seviyeye çıkararak derinlemesine analiz yapar.", "d": "Eğitim kurumlarının teknoloji altyapı ihtiyacını tamamen ortadan kaldırır.", "e": "Veri gizliliği ve güvenlik risklerini kendiliğinden çözer."}, "answer": "b"},
+        {"id": 42, "text": "Aşağıdakilerden hangisi davranışçı yaklaşıma ait değildir?", "options": {"a": "Sadece gözlemlenebilir davranış önemlidir", "b": "Davranış şekillendirilebilir", "c": "Öğrenme pasif değil, aktiftir.", "d": "Öğrenme, yeni davranışın kazanılmasıdır.", "e": "Zihinsel ve içsel süreçler incelenmez."}, "answer": "c"},
+        {"id": 43, "text": "Piaget'ye göre bir çocuğun bilişsel gelişimi dört döneme ayrılır ve bu dört dönemde farklı bilişsel özellikler edinir. Aşağıdakilerden hangisi farklı bir bilişsel döneme aittir?", "options": {"a": "Tümevarım ve tümdengelim yollarını kullanarak düşünebilme.", "b": "Hipotezler kurarak problemi sistematik bir şekilde çözebilme.", "c": "Ben merkezcil davranışlar sergileme", "d": "Yetişkinler gibi kompleks düşünebilme.", "e": "Soyut ve somut düşünme özelliğini kazanmak."}, "answer": "c"},
+        {"id": 44, "text": "Optik konusunda öğrencisi Elif in zorlandığını gören Duygu öğretmen, bu konuyu iyi bilen bir öğrencisine Elife anlatmasını istemiştir. Arkadaşının yardımıyla Elif in optik konusunda eskisi kadar zorlanmadığı gözlemlenmiştir Bu durum Vygotsky'nin bilişsel gelişim kuramından hangisiyle açıklanabilir?", "options": {"a": "Gizil gelişim alanı", "b": "Gerçek gelişim alanı", "c": "Eylemsel temsil dönemi", "d": "Yakınsal gelişim alanı", "e": "İmgesel temsil dönemi"}, "answer": "d"},
+        {"id": 45, "text": "İlk defa kurabiye yapan Sude, yaptığı kurabiyelerin kuru ve sert olduğunu görmüştür. İkinci bir sefer denerken, arkadaşının yaptığı kurabiyeleri incelemiş ve sorunun, fazla pişirmek olduğunu anlamıştır. Bunun üzenine Sude, kurabiyelerinin pişirme süresini kısaltmıştır ve istediği sonuca ulaşmıştır. Yukarıda verilen durumda Sude hangi öğrenme kuramını kullanmıştır?", "options": {"a": "Deneyimsel Öğrenme Kuramı", "b": "Sosyal Öğrenme Kuramı", "c": "Çoklu Zekâ Kuramı", "d": "Bağlaşımcılık", "e": "Gestalt Kuramı"}, "answer": "a"},
+        {"id": 46, "text": "Waldorf Eğitim Modeli ile ilgili aşağıdakilerden hangisi yanlıştır?", "options": {"a": "Henry Waldorf tarafından kurulmuştur.", "b": "Antroposofi ilkeleri üzerinden şekillenmiştir.", "c": "20. yüzyılın başında Almanya'da ortaya çıkmıştır.", "d": "Eğitimde sıf farkının gözardı edilmesi amaçlanmıştır.", "e": "Sistem öğrencinin ruhunu geliştirmek ve öğrencinin ihtiyaçlarını karşılamak üzerine tasarlanmıştır."}, "answer": "a"},
+        {"id": 47, "text": "Eğitimde \"Anlamlı Öğrenme\" modelini geliştiren ve ön organize edicilerin kullanımını savunan kuramcı kimdir?", "options": {"a": "Piaget", "b": "Ausubel", "c": "Bruner", "d": "Gagne", "e": "Watson"}, "answer": "b"},
+        {"id": 48, "text": "Reggio Emilia eğitim yaklaşımıyla ilgili aşağıdaki ifadelerden hangisi doğrudur?", "options": {"a": "Reggio Emilia yaklaşımı öğretmen merkezli ve ezbere dayalı bir eğitim anlayışını benimser.", "b": "Reggio emilia yaklaşımı sadece ilkokul düzeyinde uygulanır.", "c": "Reggio emilia yaklaşımı çocukların merakını destekler ve yaşayarak öğrenmelerini teşvik eder.", "d": "Reggio emilia yaklaşımında doğal metaryeller kullanılmaz.", "e": "Reggio emilia yaklaşımı 2. Dünya Savaşı'ndan önce ortaya çıkmıştır."}, "answer": "c"},
+        {"id": 49, "text": "Friedrich Fröbel'in eğitim anlayışıyla ilgili aşağıdakilerden hangisi doğrudur?", "options": {"a": "Eğitimin temelinde ezber ve disiplinli sınıf düzeni yer alır.", "b": "Çocuk, pasif bir alıcı olarak görülür ve öğretmen merkezlidir.", "c": "Oyun, çocuğun öğrenmesinde temel bir araçtır ve eğitim doğal gelişime dayanır.", "d": "Eğitimin temel amacı yalnızca akademik başarıdır.", "e": "Okul öncesi eğitim gereksiz görülmüştür."}, "answer": "c"},
+        {"id": 50, "text": "John Locke, Jean-Jacques Rousseau ve Johann Heinrich Pestalozzi'nin eğitim anlayışları göz önüne alındığında, aşağıdakilerden hangisi bu üç düşünürün ortak görüşlerinden biridir?", "options": {"a": "Eğitimin temel amacı, öğrencilerin akademik bilgiyi ezber yoluyla edinmesini sağlamaktır.", "b": "Eğitim süreci, öğretmen merkezli ve disiplin temelli olmalıdır.", "c": "Öğrenme, öğrencinin aktif katılımı ve deneyimleri yoluyla gerçekleşmelidir.", "d": "Eğitim, tüm öğrenciler için tek tip programlar üzerinden yürütülmelidir.", "e": "Çocuklar doğuştan bilgiyle geldikleri için eğitimin rolü sınırlıdır."}, "answer": "c"},
+        {"id": 51, "text": "Howard Gardner'ın Çoklu Zeka Kuramı'na göre zeka kavramı aşağıdakilerden hangisiyle en iyi şekilde açıklanır?", "options": {"a": "Sadece doğuştan gelen bilişsel kapasite", "b": "Akademik başarıyla ölçülen yetenek", "c": "Tek ve değişmez bir zihinsel güç", "d": "Farklı alanlarda problem çözme ve ürün ortaya koyma kapasitesi", "e": "Sadece dil ve matematik becerileri"}, "answer": "d"},
+        {"id": 52, "text": "Devlet adlı eserinde eğitimi devletin temel görevi sayan ve eğitimi sınıflara göre düzenleye filozof aşağıdakilerden hangisidir?", "options": {"a": "Sokrates", "b": "Aristoteles", "c": "Platon", "d": "Epiktetos", "e": "Sofistler"}, "answer": "c"},
+        {"id": 53, "text": "Aşağıdakilerden hangisi hümanist dönemi eğitim özelliklerinden biri değildir?", "options": {"a": "Eğitimin merkezinde insan vardır.", "b": "Öğretim metodunda bilimsel verilere dayalı düşünce tarzına geçilmiştir.", "c": "Eğitim anlayışı, bireyin çok yönlü gelişimini esas alır.", "d": "Eğitimde cezaya yer veren sıkı disiplin önemli yer tutar.", "e": "Liberal bir eğitim üslubu vardır."}, "answer": "d"},
+        {"id": 54, "text": "Sokrates'in Doğurtma yöntemi eğitimin temel amacını aşağıdakilerden hangisi olarak tanımlar?", "options": {"a": "Fiziksel dayanıklılığı arttırarak öğrenciyi devletin askeri ihtiyaçlarına hazır hale getirmek.", "b": "Öğrenciye dışarıdan yeni ve teknik bilgiler yükleyerek donanımlı hale getirmek.", "c": "Öğrencinin toplumsal otoriteye koşulsuz itaat etmesini sağlayacak ahlaki kalıplar sunma.", "d": "Duyguların akla üstün gelmesini sağlayan etkileyici bir hitabet yeteneği kazandırma.", "e": "Öğrencinin zihninde halihazırda var olan bilgiyi açığa çıkarma."}, "answer": "e"},
+        {"id": 55, "text": "Aşağıdakilerden hangisi Atatürk'ün isteği üzerine Türkiye'ye gelip Türkiye'de eğitim nasıl olmalıdır konulu rapor hazırlayan ve köy enstitülerini benimseyen dünyaca ünlü filozoftur?", "options": {"a": "Karl Max", "b": "Nietzche", "c": "John Dewey", "d": "Jean-Paul Sartre", "e": "Noam Chomsky"}, "answer": "c"},
+        {"id": 56, "text": "Ünlü düşünürlerimizden hangisi ya da hangileri köy enstitülerinin kuruluşunda liderlik yapmıştır? I- Hasan Ali Yücel II- Sabahattin Ali III-İsmail Hakkı Tonguç", "options": {"a": "Yalnız I", "b": "Yalnız II", "c": "II ve III", "d": "I ve III", "e": "I, II ve III"}, "answer": "d"},
+        {"id": 57, "text": "Aşağıdakilerden hangisi Türk alfabesinin kabulünün ülkedeki eğitim sistemine etkilerinden biri değildir?", "options": {"a": "Okuma-yazma öğrenme sürecinin kısalması ve kolaylaşması.", "b": "Ülke genelinde okur-yazar oranında artış sağlanması", "c": "Çağdaş Batı medeniyeti ile bilimsel ve kültürel etkileşimin güçlenmesi.", "d": "Tevhid-i Tedridad Kanunu'nun kabul edilmesine ve medreselerin kapatılmasına zemin hazırlaması", "e": "Konuşma dili ve yazı dili arasındaki kopukluğun giderilmesi ve öğrencilerin iletişimde sıkıntı çekmemesi."}, "answer": "d"},
+        {"id": 58, "text": "OECD'nin 2022 raporuna göre pandemi sürecinde dijital eğitime geçişle birlikte en belirgin hâle gelen sorunlardan biri aşağıdakilerden hangisidir?", "options": {"a": "Öğretmenlerin tamamen işlevsiz hale gelmesi", "b": "Öğrencilerin öğrenmeye olan ilgisinin tamamen kaybolması", "c": "Altyapı, eşitsizlik ve dijital yeterlilik eksiklikleri", "d": "Yapay zekânın eğitimi ele geçirmesi", "e": "Sınav sistemlerinin tamamen kaldırılması"}, "answer": "c"},
+        {"id": 59, "text": "Education 5.0 yaklaşımı aşağıdakilerden hangisini merkeze alır?", "options": {"a": "Tek tip müfredat ve standart öğrenme hızını", "b": "Öğretmen merkezli anlatımı", "c": "Yapay zekâ, artırılmış/sanal gerçeklik ve kişiselleştirilmiş öğrenmeyi", "d": "Yalnızca yüz yüze eğitimi", "e": "Ezber temelli bilgi aktarımını"}, "answer": "c"},
+        {"id": 60, "text": "Hibrit (fiziksel-sanal) öğrenme ortamlarının en temel katkısı aşağıdakilerden hangisidir?", "options": {"a": "Öğretmeni tamamen devre dışı bırakması", "b": "Öğrenmeyi yalnızca dijital ortama taşıması", "c": "\"Tek tip hız\" anlayışını kırarak bireyselleştirilmiş öğrenmeyi mümkün kılması", "d": "Öğrenciler arası etkileşimi azaltması", "e": "Sadece teknik derslerde kullanılabilmesi"}, "answer": "c"},
+        {"id": 61, "text": "Aşağıdakilerden hangisi pandemi öncesi klasik eğitim modelinin temel özelliklerinden biri değildir?", "options": {"a": "Ezbere dayalı olması", "b": "Sınav merkezli bir yapı izlemesi", "c": "Öğretmenin bilgi aktaran otorite olması", "d": "Öğrencinin bireysel öğrenme hızının merkeze alınması", "e": "Endüstri çağının standartlaştırma anlayışıyla uyumlu olması"}, "answer": "d"},
+        {"id": 62, "text": "Erikson'un kuramına göre, 3-6 yaş aralığında çocuğun çevresini keşfetme çabalarının cezalandırılması hangi duygunun gelişmesine yol açar?", "options": {"a": "Utanç ve Şüphe", "b": "Suçluluk", "c": "Aşağılık Duygusu", "d": "Rol Karmaşası", "e": "Umutsuzluk"}, "answer": "b"},
+        {"id": 63, "text": "Klasik Koşullanmada; zil sesine salya akıtan köpeğe bir süre zil çalınıp et verilmezse, salya tepkisinin kesilmesi durumuna ne ad verilir?", "options": {"a": "Genelleme", "b": "Ayırt Etme", "c": "Sönme", "d": "Geri Gelme", "e": "Pekiştirme"}, "answer": "c"},
+        {"id": 64, "text": "Skinner'a göre, istenmeyen bir davranışı azaltmak için ortama rahatsız edici bir uyarıcının eklenmesine (örn: azarlama) ne denir?", "options": {"a": "Olumlu Pekiştirme", "b": "Olumsuz Pekiştirme", "c": "I. Tip Ceza", "d": "II. Tip Ceza", "e": "Sönme"}, "answer": "c"},
+        {"id": 65, "text": "Yapılandırmacı öğrenme yaklaşımında öğretmenin temel rolü aşağıdakilerden hangisidir?", "options": {"a": "Bilgiyi en doğru şekilde sunmak", "b": "Öğrencileri disiplin altında tutmak", "c": "Öğrenciye rehberlik etmek ve uygun ortamı hazırlamak", "d": "Müfredatı harfiyen ezberletmek", "e": "Tüm öğrencilerin aynı sonuca ulaşmasını sağlamak"}, "answer": "c"},
+        {"id": 66, "text": "Kohlberg'in kuramında, \"Cezadan kurtulmak için kurala uymak\" hangi ahlaki evreye aittir?", "options": {"a": "İtaat ve Ceza", "b": "Saf Çıkarcı", "c": "İyi Çocuk Eğilimi", "d": "Kanun ve Düzen", "e": "Evrensel Ahlak"}, "answer": "a"},
+        {"id": 67, "text": "Gardner'ın Çoklu Zekâ Kuramı'na göre, kendi duygu ve hedeflerini iyi analiz eden bir bireyde hangi zekâ türü baskındır?", "options": {"a": "Sözel Zekâ", "b": "Sosyal Zekâ", "c": "Öze Dönük (İçsel) Zekâ", "d": "Mantıksal Zekâ", "e": "Görsel Zekâ"}, "answer": "c"},
+        {"id": 68, "text": "Maslow'un ilk İhtiyaçlar Hiyerarşisi'ne göre, en tepede yer alan ve bireyin tüm potansiyelini kullanmasını ifade eden ihtiyaç hangisidir?", "options": {"a": "Güvenlik", "b": "Ait Olma", "c": "Saygınlık", "d": "Kendini Gerçekleştirme", "e": "Fizyolojik İhtiyaçlar"}, "answer": "d"},
+        {"id": 69, "text": "Dersin başında \"Bu konu gerçek hayatta şu işinize yarayacak\" demek hangi öğretim etkinliğidir?", "options": {"a": "Dikkat çekme", "b": "Güdüleme", "c": "Dönüt verme", "d": "Hatırlatma", "e": "Değerlendirme"}, "answer": "b"},
+        {"id": 70, "text": "Bir öğrencinin sınava sadece not almak için çalışması hangisidir?", "options": {"a": "İçsel Motivasyon", "b": "Başarı Motivasyonu", "c": "Dışsal Motivasyon", "d": "Bilişsel Motivasyon", "e": "Sosyal Motivasyon"}, "answer": "c"},
+        {"id": 71, "text": "Aristoteles'e göre erdemli davranış, iki uç nokta arasındaki dengeli tutumu ifade eder. Bu ilkeye ne ad verilir?", "options": {"a": "Diyalektik", "b": "Epistemoloji", "c": "Mesotes (Orta Yol)", "d": "Pragmatizm", "e": "İdealizm"}, "answer": "c"},
+        {"id": 72, "text": "\"Bilginin hayat boyu değişeceğini ve bireyin bilgiyi kendi birikimine göre inşa ettiğini\" savunan kuram hangisidir?", "options": {"a": "Davranışçılık", "b": "Klasik Koşullanma", "c": "Yapılandırmacılık", "d": "Sunuş Yoluyla Öğretim", "e": "Tam Öğrenme"}, "answer": "c"},
+        {"id": 73, "text": "Bruner'in \"Buluş Yoluyla Öğretim\" stratejisinde öğretmenin temel görevi nedir?", "options": {"a": "Bilgiyi doğrudan aktarmak", "b": "Örnekler sunarak öğrencinin kurala ulaşmasını sağlamak", "c": "Sadece sınav yapmak", "d": "Müfredatı takip etmek", "e": "Sınıf disiplinini sağlamak"}, "answer": "b"},
+        {"id": 74, "text": "\"Okul, toplumun bir kopyası olmalıdır\" diyerek okulun demokratik yaşama hazırlık yeri olduğunu savunan akım hangisidir?", "options": {"a": "Daimicilik", "b": "Esasicilik", "c": "İlerlemecilik", "d": "Yeniden Kurmacılık", "e": "Varoluşçuluk"}, "answer": "c"},
+        {"id": 75, "text": "Öğretmenin materyal hazırlarken öğrencinin yaşını dikkate alması hangi ilkedir?", "options": {"a": "Açıklık", "b": "Ekonomiklik", "c": "Öğrenciye uygunluk", "d": "Güncellik", "e": "Yakından uzağa"}, "answer": "c"}
+    ];
+
+
+    // --- 4. DERS (REHBERLİK) İÇİN SORU VERİTABANI ---
+    const rehberlikSorulari = [
+        {id: 1, text: "Çağdaş eğitimde Öğrenci Kişilik Hizmetlerinin temel amacı nedir?", options: {a: "Disiplini sağlamak", b: "Sadece akademik başarıyı artırmak", c: "Öğrencinin bütünsel gelişimine ve uyumuna yardım etmek", d: "Öğretmenlerin yükünü hafifletmek", e: "Okul kurallarını öğretmek"}, answer: "c"},
+        {id: 2, text: "Aşağıdakilerden hangisi 'Doğrudan' öğrenciye sunulan bir hizmet DEĞİLDİR?", options: {a: "Psikolojik Danışma", b: "Oryantasyon", c: "Müşavirlik (Konsültasyon)", d: "Bireyi Tanıma", e: "Yöneltme ve Yerleştirme"}, answer: "c"},
+        {id: 3, text: "Okula yeni başlayan öğrencilerin uyum sağlaması için yapılan hizmet hangisidir?", options: {a: "İzleme", b: "Oryantasyon", c: "Sevk", d: "Araştırma", e: "Müşavirlik"}, answer: "b"},
+        {id: 4, text: "Rehberliğin nihai (sonal) amacı nedir?", options: {a: "Meslek sahibi yapmak", b: "Kendini gerçekleştirme", c: "Sınav kazandırmak", d: "Topluma uyum", e: "Disiplinli olmak"}, answer: "b"},
+        {id: 5, text: "Rehberlik hizmetlerinde hangi ilke ESASTIR?", options: {a: "Zorunluluk", b: "Öğretmen merkezlilik", c: "Gönüllülük", d: "Tek yönlülük", e: "Yargılayıcılık"}, answer: "c"},
+        {id: 6, text: "Bir sınıftaki liderleri ve gruplaşmaları belirleyen teknik hangisidir?", options: {a: "Anket", b: "Otobiyografi", c: "Sosyometri", d: "Vaka Kaydı", e: "Görüşme"}, answer: "c"},
+        {id: 7, text: "Okul Rehberlik Hizmetleri Yürütme Komisyonu başkanı kimdir?", options: {a: "Müdür Yardımcısı", b: "Okul Müdürü", c: "Koordinatör Danışman", d: "Sınıf Öğretmeni", e: "Okul Aile Birliği Başkanı"}, answer: "b"},
+        {id: 8, text: "Bireyin bir özelliğinin genel izlenimi etkilemesine ne ad verilir?", options: {a: "Mantık hatası", b: "Kişisel yanlılık", c: "Halo (Hareleme) hatası", d: "Anlam hatası", e: "Merkeze yığılma"}, answer: "c"},
+        {id: 9, text: "Mesleki rehberliğin kurucusu kimdir?", options: {a: "Freud", b: "Rogers", c: "Parsons", d: "Maslow", e: "Skinner"}, answer: "c"},
+        {id: 10, text: "Hangi hizmet türü öğrenciyi bir uzmana veya kuruma yönlendirmeyi kapsar?", options: {a: "İzleme", b: "Sevk (Refere)", c: "Oryantasyon", d: "Araştırma", e: "Bilgi Toplama"}, answer: "b"},
+        {id: 11, text: "Maslow'un hiyerarşisinde 'Fizyolojik' ihtiyaçlardan hemen sonra hangisi gelir?", options: {a: "Sevgi", b: "Saygınlık", c: "Güvenlik", d: "Bilme", e: "Estetik"}, answer: "c"},
+        {id: 12, text: "Aşağıdakilerden hangisi 'Test Dışı' bir tekniktir?", options: {a: "Yetenek Testi", b: "İlgi Envanteri", c: "Görüşme", d: "Kişilik Testi", e: "Tutum Ölçeği"}, answer: "c"},
+        {id: 13, text: "Danışandan hız alan (Hümanistik) yaklaşımın temsilcisi kimdir?", options: {a: "Freud", b: "Skinner", c: "Carl Rogers", d: "Ellis", e: "Glasser"}, answer: "c"},
+        {id: 14, text: "'Kimdir Bu?' tekniği hangi amaçla uygulanır?", options: {a: "Akademik başarıyı ölçmek", b: "Bireyin başkaları ve kendisi tarafından nasıl algılandığını görmek", c: "Meslek seçmek", d: "Zeka ölçmek", e: "Aile yapısını incelemek"}, answer: "b"},
+        {id: 15, text: "Sınıf rehberlik planını kim hazırlar?", options: {a: "Okul Müdürü", b: "Rehber Öğretmen", c: "Sınıf Rehber Öğretmeni", d: "RAM", e: "Müdür Yardımcısı"}, answer: "c"},
+        {id: 16, text: "İllerde rehberlik hizmetlerini koordine eden kurum hangisidir?", options: {a: "Okul Aile Birliği", b: "Disiplin Kurulu", c: "RAM (Rehberlik Araştırma Merkezi)", d: "Halk Eğitim", e: "Sağlık Ocağı"}, answer: "c"},
+        {id: 17, text: "Gözlenen bir olayın yorum katılmadan kaydedilmesine ne denir?", options: {a: "Derecelendirme", b: "Anket", c: "Vaka Kaydı (Anekdot)", d: "Otobiyografi", e: "Sosyometri"}, answer: "c"},
+        {id: 18, text: "Psikolojik danışma ile psikoterapi arasındaki temel fark nedir?", options: {a: "Danışma daha uzun sürer", b: "Terapi sadece çocuklara yapılır", c: "Danışma 'normal' bireylere, terapi 'patolojik' sorunlara yöneliktir", d: "Fark yoktur", e: "Danışma ilaçla tedavidir"}, answer: "c"},
+        {id: 19, text: "Bireyin gelecekteki başarısını yordayan (tahmin eden) test türü hangisidir?", options: {a: "İlgi envanteri", b: "Kişilik testi", c: "Yetenek testi", d: "Tutum ölçeği", e: "Başarı testi"}, answer: "c"},
+        {id: 20, text: "Hizmetin verildiği yere göre 'Müşavirlik' hangi gruba girer?", options: {a: "Doğrudan hizmet", b: "Dolaylı hizmet", c: "Eğitsel hizmet", d: "Mesleki hizmet", e: "Kişisel hizmet"}, answer: "b"}
+    ];
+    
+    const oytSorulari = [
+        {id: 1, text: "Selahattin Ertürk'e göre eğitim nedir?", options: {a: "Rastgele davranış kazanma", b: "Kasıtlı ve istendik davranış değiştirme süreci", c: "Sadece okulda yapılan öğretim", d: "Çocuğun büyüme süreci", e: "Bilgi aktarımı"}, answer: "b"},
+        {id: 2, text: "Posner'a göre yazılı olmayan, okul ikliminden kaynaklanan program hangisidir?", options: {a: "Resmi Program", b: "Ekstra Program", c: "Örtük (Gizil) Program", d: "İhmal Edilen Program", e: "Uygulamadaki Program"}, answer: "c"},
+        {id: 3, text: "Bir öğretim programının 'Niçin?' sorusuna cevap veren en önemli öğesi hangisidir?", options: {a: "İçerik", b: "Eğitim Durumları", c: "Değerlendirme", d: "Hedef (Kazanım)", e: "Materyal"}, answer: "d"},
+        {id: 4, text: "Bloom'un Tam Öğrenme modelinde öğrenciye yol gösteren işaretlere ne denir?", options: {a: "Pekiştireç", b: "Dönüt", c: "İpucu", d: "Düzeltme", e: "Katılım"}, answer: "c"},
+        {id: 5, text: "Öğretimin öğrencinin seviyesine uygun olması hangi ilkedir?", options: {a: "Ayanilik", b: "Ekonomiklik", c: "Düzeye Uygunluk (Çocuğa Görelik)", d: "Güncellik", e: "Bütünlük"}, answer: "c"},
+        {id: 6, text: "En kalıcı öğrenme sağlayan ilke hangisidir?", options: {a: "Yaparak Yaşayarak Öğrenme", b: "Dinleyerek Öğrenme", c: "Okuyarak Öğrenme", d: "İzleyerek Öğrenme", e: "Anlatarak Öğrenme"}, answer: "a"},
+        {id: 7, text: "Öğretimin yakın çevreden başlayıp uzak çevreye gitmesi hangi ilkedir?", options: {a: "Somuttan Soyuta", b: "Yakından Uzağa", c: "Bilinenden Bilinmeyene", d: "Basitten Karmaşığa", e: "Güncellik"}, answer: "b"},
+        {id: 8, text: "Ausubel'in savunduğu, öğretmenin bilgiyi organize edip sunduğu strateji hangisidir?", options: {a: "Buluş Yoluyla", b: "Araştırma-İnceleme", c: "Sunuş Yoluyla", d: "Tam Öğrenme", e: "İşbirlikli Öğrenme"}, answer: "c"},
+        {id: 9, text: "Öğrencinin örneklerden yola çıkarak kuralı kendisinin bulduğu strateji hangisidir?", options: {a: "Sunuş", b: "Buluş Yoluyla", c: "Anlatım", d: "Gösteri", e: "Konferans"}, answer: "b"},
+        {id: 10, text: "John Dewey'in problem çözme basamaklarını temel alan strateji hangisidir?", options: {a: "Araştırma-İnceleme", b: "Sunuş", c: "Buluş", d: "Mikro Öğretim", e: "Programlı Öğretim"}, answer: "a"},
+        {id: 11, text: "Gardner'a göre kelimeleri etkili kullanan bireyde hangi zeka baskındır?", options: {a: "Mantıksal", b: "Görsel", c: "Bedensel", d: "Sözel-Dilsel", e: "Doğacı"}, answer: "d"},
+        {id: 12, text: "Yapılandırmacılıkta öğretmenin rolü nedir?", options: {a: "Bilgiyi aktarmak", b: "Otorite olmak", c: "Rehberlik etmek", d: "Sınav yapmak", e: "Disiplin sağlamak"}, answer: "c"},
+        {id: 13, text: "Vygotsky'nin bir yetişkin desteğiyle öğrenilebilecek alanı ifade eden kavramı nedir?", options: {a: "Şema", b: "Yakınsak Gelişim Alanı", c: "Dengeleme", d: "Özümleme", e: "Uyum"}, answer: "b"},
+        {id: 14, text: "Kısa sürede çok sayıda fikir üretmeyi amaçlayan teknik hangisidir?", options: {a: "Altı Şapka", b: "İstasyon", c: "Beyin Fırtınası", d: "Drama", e: "Soru-Cevap"}, answer: "c"},
+        {id: 15, text: "Altı Şapkalı Düşünme tekniğinde 'Kırmızı Şapka' neyi ifade eder?", options: {a: "Tarafsızlık", b: "Duygular", c: "Karamsarlık", d: "Yaratıcılık", e: "Kontrol"}, answer: "b"},
+        {id: 16, text: "Dersin videoya kaydedilip tekrar izlenerek hataların düzeltildiği teknik hangisidir?", options: {a: "Gösteri", b: "Benzetim", c: "Mikro Öğretim", d: "Rol Oynama", e: "Drama"}, answer: "c"},
+        {id: 17, text: "Bir sorunun nedenlerini ve alt nedenlerini gösteren şema tekniği hangisidir?", options: {a: "Kavram Haritası", b: "Zihin Haritası", c: "Balık Kılçığı", d: "V Diyagramı", e: "Anlam Çözümleme"}, answer: "c"},
+        {id: 18, text: "Uzmanların bir konuyu sohbet havasında tartıştığı teknik hangisidir?", options: {a: "Konferans", b: "Panel", c: "Sempozyum", d: "Brifing", e: "Söylev"}, answer: "b"},
+        {id: 19, text: "Kalabalık sınıflarda en ekonomik olan ancak öğrenci pasifliği yaratan yöntem hangisidir?", options: {a: "Tartışma", b: "Örnek Olay", c: "Anlatım", d: "Proje", e: "Gösterip Yaptırma"}, answer: "c"},
+        {id: 20, text: "Bloom'un modelinde öğrenme eksiği olanlara uygulanan ek çalışmalara ne denir?", options: {a: "Pekiştirme", b: "Tamamlayıcı Öğretim", c: "Ön Koşul", d: "Sınav", e: "Ödev"}, answer: "b"}
+    ];
+
+    // --- 6. DERS (SINIF YÖNETİMİ) İÇİN SORU VERİTABANI ---
+    // Kaynak: Yüklenen PDF Ders Notları
+    const sinifYonetimiSorulari = [
+        {id: 1, text: "Sınıf kurallarının temel amacı nedir?", options: {a: "Öğretmen otoritesini kurmak", b: "Öğrencileri cezalandırmak", c: "Bireylerin haklarını daha iyi kullanmasına imkan sağlamak", d: "Sınıfta sessizliği sağlamak", e: "İdarenin isteğini yapmak"}, answer: "c"},
+        {id: 2, text: "Drucker'a göre 'yerine konulması ve satın alınması imkansız' olan kaynak hangisidir?", options: {a: "Para", b: "Zaman", c: "Bilgi", d: "İnsan Gücü", e: "Materyal"}, answer: "b"},
+        {id: 3, text: "Sınıf içi iletişimde suçlayıcı olmayan, empati kurduran dil hangisidir?", options: {a: "Sen Dili", b: "Emir Dili", c: "Ben Dili", d: "Yargılayıcı Dil", e: "Sorgulayıcı Dil"}, answer: "c"},
+        {id: 4, text: "Öğrenme-Öğretme sürecinin ilk aşaması hangisidir?", options: {a: "Değerlendirme", b: "Uygulama", c: "Güdüleme", d: "Planlama", e: "İletişim"}, answer: "d"},
+        {id: 5, text: "Moore'a göre motivasyonun işlevlerinden biri DEĞİLDİR?", options: {a: "Harekete geçirmek", b: "Yönlendirmek", c: "Sürdürmek", d: "Cezalandırmak", e: "Davranışı belirlemek"}, answer: "d"},
+        {id: 6, text: "Sınıf kuralları belirlenirken hangisine dikkat edilmelidir?", options: {a: "Kurallar çok sayıda olmalıdır", b: "Kurallar olumsuz ifadelerle (yapma, etme) yazılmalıdır", c: "Kurallar sadece öğretmen tarafından belirlenmelidir", d: "Kurallar öğrencilerle birlikte, demokratik şekilde belirlenmelidir", e: "Kurallar çok uzun cümlelerden oluşmalıdır"}, answer: "d"},
+        {id: 7, text: "İletişimde mesajın alıcı tarafından anlaşıldığını gösteren öğe hangisidir?", options: {a: "Kaynak", b: "Kanal", c: "Dönüt (Geri Bildirim)", d: "Kodlama", e: "Gürültü"}, answer: "c"},
+        {id: 8, text: "Aşağıdakilerden hangisi bir 'Zaman Tuzağı'dır?", options: {a: "Ders planı yapmak", b: "Erteleme alışkanlığı", c: "Derse zamanında girmek", d: "Materyal hazırlamak", e: "Görev dağılımı yapmak"}, answer: "b"},
+        {id: 9, text: "Türk aile yapısının en temel toplumsal işlevi nedir?", options: {a: "Kültürel değerleri yeni nesle aktarmak", b: "Çocuğu okuldan uzak tutmak", c: "Sadece ekonomik destek sağlamak", d: "Çocuğa meslek seçmek", e: "Otorite kurmak"}, answer: "a"},
+        {id: 10, text: "Maslow'un ihtiyaçlar hiyerarşisinin en tabanında (en temel) hangi ihtiyaç vardır?", options: {a: "Güvenlik", b: "Sevgi", c: "Saygınlık", d: "Fizyolojik İhtiyaçlar", e: "Kendini Gerçekleştirme"}, answer: "d"},
+        {id: 11, text: "Sınıfta 'Göz Teması' kurmak hangi iletişim türüne girer?", options: {a: "Sözlü İletişim", b: "Yazılı İletişim", c: "Sözsüz (Beden Dili) İletişim", d: "Tek Yönlü İletişim", e: "Resmi İletişim"}, answer: "c"},
+        {id: 12, text: "Aşağıdakilerden hangisi sınıf yönetiminin boyutlarından biridir?", options: {a: "Fiziksel Düzen", b: "Aile Bütçesi", c: "Okul Mimarisi", d: "Öğretmen Maaşı", e: "Servis Güzergahı"}, answer: "a"},
+        {id: 13, text: "'Çok gürültü yapıyorsun, sus artık!' ifadesi hangi dilin örneğidir?", options: {a: "Ben Dili", b: "Sen Dili", c: "Empatik Dil", d: "Etkili Dil", e: "Soru Dili"}, answer: "b"},
+        {id: 14, text: "Bir öğretmenin dersin başında öğrencilerin dikkatini çekmesi ve hedefi göstermesi hangi süreci başlatır?", options: {a: "Ölçme", b: "Motivasyon (Güdüleme)", c: "Disiplin", d: "Ceza", e: "Planlama"}, answer: "b"},
+        {id: 15, text: "Sınıf kurallarının sayısı ideal olarak nasıl olmalıdır?", options: {a: "En az 20 tane", b: "Sınırsız", c: "Akılda kalacak kadar az ve öz (5-7 arası)", d: "Hiç olmamalı", e: "Her derste değişmeli"}, answer: "c"},
+        {id: 16, text: "Okul-Aile Birliklerinin temel amacı nedir?", options: {a: "Öğretmenleri denetlemek", b: "Okul ile aile arasında bütünleşmeyi ve işbirliğini sağlamak", c: "Öğrencilere not vermek", d: "Okul müdürünü seçmek", e: "Müfredatı belirlemek"}, answer: "b"},
+        {id: 17, text: "Zamanın geri döndürülemez ve depolanamaz olması neyi gerektirir?", options: {a: "Zamanın etkili yönetimini (tasarrufu)", b: "Daha çok uymayı", c: "Hızlı konuşmayı", d: "Dersleri kısa tutmayı", e: "Teneffüsleri kaldırmayı"}, answer: "a"},
+        {id: 18, text: "Öğretimin planlanması öğretmene ne sağlar?", options: {a: "Daha çok yorulmasını", b: "Kendine güven duymasını ve sürprizleri önlemesini", c: "Dersin uzamasını", d: "Öğrencilerin sıkılmasını", e: "Otoritesinin sarsılmasını"}, answer: "b"},
+        {id: 19, text: "İletişimde 'Kaynak' kimdir?", options: {a: "Mesajı alan kişi", b: "Mesajın kendisi", c: "İletişimi başlatan ve mesajı gönderen kişi", d: "İletişim aracı", e: "Ortam"}, answer: "c"},
+        {id: 20, text: "İçsel motivasyon nedir?", options: {a: "Ödül almak için çalışmak", b: "Ceza almamak için çalışmak", c: "Ailesi istediği için çalışmak", d: "Bireyin kendi isteği ve merakıyla, zevk alarak çalışması", e: "Not için çalışmak"}, answer: "d"}
+    ];
+
+   /* ----------------------------------------------------
+       2. OTOMATİK SORU YÜKLEME MOTORU (Tüm Dersler İçin)
+       ---------------------------------------------------- */
+    
+    // Bu fonksiyon her ders için soruları ayrı ayrı yükler
+    function sorulariYukle(konteynerId, soruDizisi, dersKodu) {
+        const liste = document.getElementById(konteynerId);
+        if (!liste) return; // Eğer o dersin kutusu yoksa atla
+
+        soruDizisi.forEach(soru => {
+            const soruKarti = document.createElement("div");
+            soruKarti.className = "soru-karti";
+            
+            // Benzersiz ID oluştur (Örn: d1-s1, d2-s1) ki karışmasın
+            const uniqueId = dersKodu + "-" + soru.id;
+            
+            soruKarti.id = "kutu-" + uniqueId;
+
+            let seceneklerHTML = "";
+            for (const [key, value] of Object.entries(soru.options)) {
+                // Radio butonlarının name'i de benzersiz olmalı
+                seceneklerHTML += `
+                    <label>
+                        <input type="radio" name="cevap-${uniqueId}" value="${key}"> 
+                        ${key.toUpperCase()}) ${value}
+                    </label>`;
+            }
+
+            soruKarti.innerHTML = `
+                <p class="soru-metni">${soru.id}. ${soru.text}</p>
+                <div class="secenekler">${seceneklerHTML}</div>
+                <button class="kontrol-btn" onclick="cevapKontrol('${uniqueId}', '${soru.answer}')">Cevabı Kontrol Et</button>
+                <div class="sonuc-mesaji" id="msg-${uniqueId}"></div>
+            `;
+
+            liste.appendChild(soruKarti);
+        });
     }
 
-    // Test Kontrol Sistemi
-    function cevapKontrol(soruId, dogruSik) {
-        var soruKutusu = document.getElementById(soruId);
-        var secilen = soruKutusu.querySelector('input[type="radio"]:checked');
-        var mesajKutusu = soruKutusu.querySelector('.sonuc-mesaji');
+    // Sayfa Yüklendiğinde Tüm Dersleri Hazırla
+    window.onload = function() {
+        sorulariYukle("soru-listesi-ders1", egitimSorulari, "d1");
+        sorulariYukle("soru-listesi-ders2", sinifYonetimiSorulari, "d2");
+        sorulariYukle("soru-listesi-ders3", oytSorulari, "d3");
+        sorulariYukle("soru-listesi-ders4", rehberlikSorulari, "d4");
+    };
+
+
+    /* ----------------------------------------------------
+       3. CEVAP KONTROL VE DİĞER İŞLEVLER
+       ---------------------------------------------------- */
+
+    function cevapKontrol(uniqueId, dogruCevap) {
+        // Benzersiz ID'ye göre seçimi bul
+        const secilen = document.querySelector(`input[name="cevap-${uniqueId}"]:checked`);
+        const mesajKutusu = document.getElementById(`msg-${uniqueId}`);
 
         if (!secilen) {
             alert("Lütfen bir şık işaretleyiniz.");
             return;
         }
 
-        if (secilen.value === dogruSik) {
-            mesajKutusu.innerHTML = "✅ Tebrikler! Doğru Cevap.";
+        if (secilen.value === dogruCevap) {
+            mesajKutusu.innerHTML = "✅ Harika! Doğru Cevap.";
             mesajKutusu.className = "sonuc-mesaji dogru";
         } else {
-            mesajKutusu.innerHTML = "❌ Maalesef Yanlış. Doğru Cevap: " + dogruSik.toUpperCase();
+            mesajKutusu.innerHTML = "❌ Yanlış. Doğru Cevap: " + dogruCevap.toUpperCase();
             mesajKutusu.className = "sonuc-mesaji yanlis";
         }
     }
+
+    // Ders İçeriği Açma/Kapama
+    function toggleDers(id) {
+        var x = document.getElementById(id);
+        x.style.display = (x.style.display === "block") ? "none" : "block";
+    }
+    
+
 </script>
 
 </body>
