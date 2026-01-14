@@ -309,6 +309,58 @@
             display: none;
         }
 
+        /* --- MOBİL CİHAZLAR İÇİN ÖZEL AYARLAR --- */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 5px; /* Mobilde sayfa kenar boşluğunu azalt */
+                background-color: #fff; /* Mobilde arka planı beyaz yap, ferah görünsün */
+            }
+
+            .container {
+                width: 100%; /* Kutuyu ekranın tamamına yay */
+                padding: 10px; /* İç boşluğu azalt (30px'ten 10px'e) */
+                box-shadow: none; /* Mobilde gölgeyi kaldır, daha hızlı yüklenir */
+                border-radius: 0; /* Köşeleri düzleştir */
+            }
+
+            header {
+                padding: 15px 10px; /* Başlık alanını daralt */
+            }
+
+            h1 {
+                font-size: 20px; /* Başlığı mobilde biraz küçült */
+            }
+
+            .ders-baslik {
+                font-size: 16px; /* Ders butonları mobilde taşmasın */
+                padding: 12px;
+            }
+
+            .soru-karti {
+                padding: 12px; /* Soru kartının içindeki boşluğu azalt */
+            }
+
+            .secenekler label {
+                padding: 8px 10px; /* Şıkların butonlarını biraz küçült */
+                font-size: 14px; /* Mobilde yazı boyutunu optimize et */
+            }
+
+            .pdf-viewer {
+                height: 350px; /* Mobilde PDF penceresini çok uzun yapma */
+            }
+            
+            /* Mobilde Sosyal Medya Butonlarını Alt Alta Al */
+            .social-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .btn-social {
+                width: 100%; /* Butonlar tam genişlik olsun, parmakla basması kolaylaşır */
+                justify-content: center;
+            }
+        }
+
         .dogru { background-color: #d4edda; color: #155724; display: block; border: 1px solid #c3e6cb; }
         .yanlis { background-color: #f8d7da; color: #721c24; display: block; border: 1px solid #f5c6cb; }
 
