@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formasyon Vize Sınav Portalı - 2. Dönem</title>
+    <style>
+        /* --- GENEL TASARIM --- */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* --- SOSYAL MEDYA ALANI (ZARİF VERSİYON) --- */
+        .social-bar {
+            background: #ffffff;
+            border-bottom: 1px solid #eee;
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(to bottom, #fff, #f9f9f9);
+        }
+
+        .social-text {
+            font-weight: 600;
+            color: #555;
+            font-size: 15px;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-social {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            color: white;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-social:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-insta {
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+        }
+
+        .btn-youtube {
+            background-color: #FF0000;
+        }
+
+        .icon {
+            font-size: 18px;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px 30px 10px 30px;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 20px;
+        }
+
+
+        h1 {
+            color: #2c3e50;
+            margin: 0 0 10px 0;
+        }
+
+        p.sub-text {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .icerik-alani-genel {
+            padding: 0 30px 30px 30px;
+        }
+
+        /* --- DERS BUTONLARI --- */
+        .ders-kutusu {
+            margin-bottom: 15px;
+        }
+
+        .ders-baslik {
+            width: 100%;
+            background-color: #2c3e50;
+            color: white;
+            padding: 15px 20px;
+            text-align: left;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            transition: background 0.2s;
+        }
+
+        .ders-baslik:hover {
+            background-color: #34495e;
+        }
+
+        .ders-icerik {
+            display: none;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-top: none;
+            background: #fff;
+            border-radius: 0 0 8px 8px;
+        }
+
+        /* --- BİLGİ KUTULARI --- */
+        .sinav-bilgisi {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 6px;
+            border-left: 5px solid #28a745;
+            margin-bottom: 20px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        /* --- PDF GÖRÜNTÜLEME ALANI --- */
+        .materyal-alani {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+        }
+
+        .pdf-viewer {
+            width: 100%;
+            height: 500px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .tam-ekran-link {
+            display: block;
+            text-align: center;
+            margin-top: 10px;
+            color: #007aff;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        .tam-ekran-link:hover {
+            text-decoration: underline;
+        }
+
+        /* --- TEST / SORU TASARIMI (GÜNCELLENDİ) --- */
+        h3 {
+            color: #d35400;
+            margin-top: 30px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+
+        .soru-karti {
+            border: 1px solid #e1e4e8;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            background-color: #fafafa;
+            text-align: left;
+        }
+
+        .soru-metni {
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .secenekler label {
+            display: flex;
+            align-items: flex-start;
+            padding: 10px 15px;
+            margin-bottom: 8px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            line-height: 1.4;
+        }
+
+        .secenekler label:hover {
+            background-color: #f1f8ff;
+            border-color: #007aff;
+        }
+
+        .secenekler input {
+            margin-right: 12px;
+            margin-top: 4px;
+            min-width: 16px;
+            height: 16px;
+        }
+
+        .kontrol-btn {
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 15px;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .kontrol-btn:hover {
+            background-color: #d35400;
+        }
+
+        .sonuc-mesaji {
+            margin-top: 15px;
+            font-weight: bold;
+            padding: 12px;
+            border-radius: 4px;
+            text-align: left;
+        }
+
+        .dogru {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .yanlis {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        /* --- MOBİL CİHAZLAR İÇİN ÖZEL AYARLAR --- */
+        @media screen and (max-width: 768px) {
+            body {
+                padding: 5px;
+                background-color: #fff;
+            }
+
+            .container {
+                width: 100%;
+                padding: 10px;
+                box-shadow: none;
+                border-radius: 0;
+            }
+
+            header {
+                padding: 15px 10px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .ders-baslik {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            .soru-karti {
+                padding: 12px;
+            }
+
+            .secenekler label {
+                padding: 8px 10px;
+                font-size: 14px;
+            }
+
+            .pdf-viewer {
+                height: 350px;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .btn-social {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 🚀 GREEN DIGITAL STUDIO REKLAM VE SOSYAL MEDYA ALANI 🚀 -->
+    <div
+        style="text-align: center; margin-bottom: 20px; padding: 25px; background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #bbf7d0; margin: 20px;">
+        <h3
+            style="margin-top: 0; color: #166534; font-size: 20px; display: flex; align-items: center; justify-content: center; gap: 10px;">
+            🌱 Yeni Nesil Öğretmenlerin Dijital Çözüm Ortağı: Green Digital Studio
+        </h3>
+        <p style="font-size: 15px; color: #15803d; margin-bottom: 20px; font-weight: 500;">
+            Eğitimde fark yaratmak ve dijital dünyaya ayak uydurmak isteyen öğretmenler için web tasarımı, dijital
+            materyal yönetimi, kişisel marka kimliği oluşturma ve eğitim teknolojileri danışmanlığı gibi profesyonel
+            hizmetler sunuyoruz. Çalışmalarımızı incelemek ve vizyonumuza ortak olmak için bizi takip edebilirsin.
+        </p>
+
+        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 15px;">
+            <!-- Web Sitesi Butonu -->
+            <a href="https://greendigitalstudio.com" target="_blank"
+                style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background-color: #16a34a; color: white; text-decoration: none; border-radius: 50px; font-size: 14px; font-weight: bold; transition: transform 0.2s, box-shadow 0.2s;">
+                🌐 Sunduğumuz Hizmetleri İncele
+            </a>
+
+            <!-- Instagram Butonu -->
+            <a href="https://www.instagram.com/greendigitalstudiotr" target="_blank"
+                style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); color: white; text-decoration: none; border-radius: 50px; font-size: 14px; font-weight: bold; transition: transform 0.2s, box-shadow 0.2s;">
+                📸 Instagram (@greendigitalstudiotr)
+            </a>
+
+            <!-- Twitter (X) Butonu -->
+            <a href="https://twitter.com/greendigitaltr" target="_blank"
+                style="display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background-color: #0f1419; color: white; text-decoration: none; border-radius: 50px; font-size: 14px; font-weight: bold; transition: transform 0.2s, box-shadow 0.2s;">
+                🐦 X / Twitter (@greendigitaltr)
+            </a>
+        </div>
+    </div>
+
+    <header>
+        <h1>🎓 Final Sınav Portalı</h1>
+        <p class="sub-text">Final tarihlerini takip et, notları incele ve soruları çözerek sınavlara hazırlan.</p>
+    </header>
+
+    <!-- ⚖️ ALMA-VERME DENGESİ POPUP KODU ⚖️ -->
+    <div id="dengePopup"
+        style="display: flex; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); z-index: 9999; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.4s ease; pointer-events: none; backdrop-filter: blur(4px);">
+        <div
+            style="background: white; width: 90%; max-width: 450px; padding: 35px; border-radius: 16px; box-shadow: 0 15px 30px rgba(0,0,0,0.3); text-align: center; position: relative; transform: translateY(-30px); transition: transform 0.4s ease;">
+            <h2 style="color: #2c3e50; margin-top: 0; font-size: 24px;">⚖️ Alma - Verme Dengesi</h2>
+            <p style="color: #555; font-size: 15px; line-height: 1.6; text-align: left; margin-bottom: 25px;">
+                Evrendeki her şey kusursuz bir alışveriş içindedir. Bu portal, benim sizler için 'verme'
+                eylemim.<br><br>
+                Eğer sen de aldığın bu faydayı dengelemek ve <b>"alma-verme"</b> döngüsünü tamamlamak istersen,
+                aşağıdaki seçeneklerden biriyle bana veya bir kuruma destek olabilirsin.
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <!-- Bağış Seçeneği -->
+                <a href="https://www.tema.org.tr/bagislar" target="_blank" onclick="popupKapat()"
+                    style="padding: 14px; background: #16a34a; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px; transition: 0.2s;">🌳
+                    Dilediğin Bir Kuruma Bağış Yap</a>
+
+                <!-- Instagram Seçeneği -->
+                <a href="https://www.instagram.com/baranlarinyasin" target="_blank" onclick="popupKapat()"
+                    style="padding: 14px; background: linear-gradient(45deg, #f09433, #e1306c, #bc1888); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px; transition: 0.2s;">📸
+                    Beni Instagram'da Takip Et</a>
+
+                <!-- Instagram Seçeneği -->
+                <a href="https://www.instagram.com/greendigitalstudiotr" target="_blank" onclick="popupKapat()"
+                    style="padding: 14px; background: linear-gradient(45deg, #f09433, #e1306c, #bc1888); color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px; transition: 0.2s;">📸
+                    Green Digital'i Instagram'da Takip Et</a>
+
+                <!-- Twitter Seçeneği -->
+                <a href="https://twitter.com/greendigitaltr" target="_blank" onclick="popupKapat()"
+                    style="padding: 14px; background: #0f1419; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 15px; transition: 0.2s;">🐦
+                    X (Twitter) Hesabımızı Takip Et</a>
+            </div>
+
+            <button onclick="popupKapat()"
+                style="margin-top: 25px; background: none; border: none; color: #888; text-decoration: underline; cursor: pointer; font-size: 14px;">Dengeyi
+                sağladım, derslere geçmek istiyorum</button>
+        </div>
+    </div>
+
+    <div class="icerik-alani-genel">
+
+        <div class="ders-kutusu">
+            <button class="ders-baslik" onclick="toggleDers('ders3')">1. Eğitim Psikolojisi</button>
+            <div id="ders3" class="ders-icerik">
+                <div class="sinav-bilgisi"
+                    style="background-color: #ffeeba; color: #856404; border-left-color: #ffc107;">
+                    📅 Final Sınav Tarihi: 22 Haziran 2026 Pazartesi - 21:00
+                </div>
+
+                <div class="materyal-alani">
+                    <h3>📚 Ders Notları</h3>
+                    <div class="pdf-container">
+                        <iframe src="egitim_psikolojisi.pdf" class="pdf-viewer"></iframe>
+                    </div>
+                    <a href="egitim_psikolojisi.pdf" target="_blank" class="tam-ekran-btn">📄 Notları Ayrı Sekmede
+                        Tam Ekran Aç</a>
+                </div>
+
+                <h3>✍️ Soru Havuzu</h3>
+                <div id="soru-listesi-ders3"></div>
+            </div>
+        </div>
+
+        <div class="ders-kutusu">
+            <button class="ders-baslik" onclick="toggleDers('ders1')">2. Eğitimde Ölçme ve Değerlendirme</button>
+            <div id="ders1" class="ders-icerik">
+                <div class="sinav-bilgisi"
+                    style="background-color: #d4edda; color: #155724; border-left-color: #28a745;">
+                    📅 Final Sınav Tarihi: 23 Haziran 2026 Salı - 19:00
+                </div>
+
+                <div class="materyal-alani">
+                    <h3>📚 Ders Notları</h3>
+                    <div class="pdf-container">
+                        <iframe src="olcme_ve_degerlendirme.pdf" class="pdf-viewer"></iframe>
+                    </div>
+                    <a href="olcme_ve_degerlendirme.pdf" target="_blank" class="tam-ekran-btn">📄 Notları Ayrı
+                        Sekmede Tam Ekran Aç</a>
+                </div>
+
+                <h3>✍️ Soru Havuzu</h3>
+                <div id="soru-listesi-ders1"></div>
+            </div>
+        </div>
+
+        <div class="ders-kutusu">
+            <button class="ders-baslik" onclick="toggleDers('ders2')">3. Öğretim Teknolojileri</button>
+            <div id="ders2" class="ders-icerik">
+                <div class="sinav-bilgisi"
+                    style="background-color: #cce5ff; color: #004085; border-left-color: #007bff;">
+                    📅 Final Sınav Tarihi: 23 Haziran 2026 Salı - 20:00
+                </div>
+
+                <div class="materyal-alani">
+                    <h3>📚 Ders Notları</h3>
+                    <div class="pdf-container">
+                        <iframe src="ogretim_teknolojileri.pdf" class="pdf-viewer"></iframe>
+                    </div>
+                    <a href="ogretim_teknolojileri.pdf" target="_blank" class="tam-ekran-btn">📄 Notları Ayrı
+                        Sekmede Tam Ekran Aç</a>
+                </div>
+
+                <h3>✍️ Soru Havuzu</h3>
+                <div id="soru-listesi-ders2"></div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+    <script>
+        /* ----------------------------------------------------
+           1. SORU VERİTABANLARI (2. DÖNEM DERSLERİ)
+           ---------------------------------------------------- */
+
+        // 1. EĞİTİMDE ÖLÇME VE DEĞERLENDİRME
+        // İleride pdf yüklediğinde burayı gerçek sorularla güncelleyeceğiz.
+        // --- 2. DERS: EĞİTİMDE ÖLÇME VE DEĞERLENDİRME FİNAL SORULARI (50 SORU) ---
+        const olcmeSorulari = [
+            { id: 1, text: "'Bireyin davranışlarında kendi yaşantısı yoluyla istendik değişme meydana getirme süreci' olarak tanımlanan kavram aşağıdakilerden hangisidir?", options: { a: "Ölçme", b: "Değerlendirme", c: "Eğitim", d: "Ölçüm", e: "Öğretim" }, answer: "c" },
+            { id: 2, text: "En az iki değer alabilen ve durumdan duruma değişebilen nitelik ve özelliklere ne ad verilir?", options: { a: "Ölçüt", b: "Değişken", c: "Sabit", d: "Parametre", e: "Frekans" }, answer: "b" },
+            { id: 3, text: "Cinsiyet ve medeni durum gibi, iki birim arasında bölünme şansı olmayan tam sayılarla ifade edilen değişken türü hangisidir?", options: { a: "Sürekli değişken", b: "Nicel değişken", c: "Süreksiz değişken", d: "Bağımlı değişken", e: "Bağımsız değişken" }, answer: "c" },
+            { id: 4, text: "Bir araştırmada diğer değişkenlere bağlı olarak değişen (etkilenen) değişkene ne ad verilir?", options: { a: "Bağımsız değişken", b: "Bağımlı değişken", c: "Sürekli değişken", d: "Süreksiz değişken", e: "Kontrol değişkeni" }, answer: "b" },
+            { id: 5, text: "Bir özelliği kendisiyle ilgili olan, benzer olan bir özellikle ölçme işlemine ne denir? (Örn: Metre ile uzunluk ölçmek)", options: { a: "Türetilmiş ölçme", b: "Doğrudan ölçme", c: "Dolaylı ölçme", d: "Bağıl ölçme", e: "Mutlak ölçme" }, answer: "b" },
+            { id: 6, text: "Ölçülen özelliği kendisine benzer olmayan bir özellikle karşılaştırarak ölçme işlemine ne denir? (Örn: Termometre ile sıcaklık ölçmek)", options: { a: "Dolaylı ölçme", b: "Doğrudan ölçme", c: "Türetilmiş ölçme", d: "Standart ölçme", e: "İzafi ölçme" }, answer: "a" },
+            { id: 7, text: "Nüfus yoğunluğu veya hacim gibi iki farklı değişken arasında aritmetik işlemlerle bağıntı kurularak ulaşılan ölçme türü hangisidir?", options: { a: "Doğrudan ölçme", b: "Dolaylı ölçme", c: "Aralıklı ölçme", d: "Türetilmiş ölçme", e: "Oranlı ölçme" }, answer: "d" },
+            { id: 8, text: "Aşağıdakilerden hangisi birimde bulunması gereken özelliklerden biri değildir?", options: { a: "Eşitlik", b: "Genellik", c: "Kullanışlılık", d: "Değişkenlik", e: "Standartlık" }, answer: "d" },
+            { id: 9, text: "Ölçme işlemi için belirlenen başlangıç noktasının kesin olduğu ve 'gerçekte yokluğu' ifade ettiği sıfır noktasına ne ad verilir?", options: { a: "İzafi sıfır", b: "Bağıl sıfır", c: "Mutlak (Gerçek) sıfır", d: "Göreli sıfır", e: "Tanımlanmış sıfır" }, answer: "c" },
+            { id: 10, text: "Nitelikleri benzerlik ya da farklılıklarına göre ayırmaya yarayan, belli bir başlangıç noktası ve birimi olmayan, sayılarının sayısal anlam taşımadığı ölçek türü hangisidir?", options: { a: "Sıralama Ölçeği", b: "Sınıflama Ölçeği", c: "Eşit Aralıklı Ölçek", d: "Eşit Oranlı Ölçek", e: "Değerlendirme Ölçeği" }, answer: "b" },
+            { id: 11, text: "'En' ve 'daha' sözcüklerinin anahtar kelime olduğu, bir özelliğe sahip oluş derecesine göre ölçüm yapan ölçek türü hangisidir?", options: { a: "Sınıflama Ölçeği", b: "Eşit Oranlı Ölçek", c: "Sıralama Ölçeği", d: "Eşit Aralıklı Ölçek", e: "Mutlak Ölçek" }, answer: "c" },
+            { id: 12, text: "İzafi (bağıl) bir sıfırın bulunduğu, birimlerin birbirine eşit olduğu ve toplama/çıkarma yapılabilen ölçek türü hangisidir?", options: { a: "Eşit Aralıklı Ölçek", b: "Eşit Oranlı Ölçek", c: "Sıralama Ölçeği", d: "Sınıflama Ölçeği", e: "Göreli Ölçek" }, answer: "a" },
+            { id: 13, text: "Ölçülen özellik hakkında en duyarlı sonuçları veren, gerçek sıfırın bulunduğu ve her türlü istatistiki işlemin yapılabildiği ölçek hangisidir?", options: { a: "Sınıflama", b: "Sıralama", c: "Eşit Aralıklı", d: "Eşit Oranlı", e: "Mutlak" }, answer: "d" },
+            { id: 14, text: "Ölçme sonuçlarının bir sınır değer ile karşılaştırılarak bir yargıya varma işine ne denir?", options: { a: "Ölçüm", b: "Ölçüt", c: "Değerlendirme", d: "Karar", e: "Birim" }, answer: "c" },
+            { id: 15, text: "Ölçme işleminden önce belirlenmiş standart ve gruptan etkilenmeyen değişmez sınır değere ne ad verilir?", options: { a: "Bağıl Ölçüt", b: "Mutlak Ölçüt", c: "İzafi Ölçüt", d: "Türetilmiş Ölçüt", e: "Standart Sapma" }, answer: "b" },
+            { id: 16, text: "Ölçmeye konu olan grubun özellikleri dikkate alınarak (örneğin sınıf ortalaması veya çan eğrisi) belirlenen ölçüt türü hangisidir?", options: { a: "Mutlak Ölçüt", b: "Bağıl Ölçüt", c: "Gerçek Ölçüt", d: "Standart Ölçüt", e: "Normatif Ölçüt" }, answer: "b" },
+            { id: 17, text: "'ALES sınavından en az 70 alanların yüksek lisans başvurusu kabul edilir.' Bu örnekte kullanılan ölçüt ve değerlendirme türü nedir?", options: { a: "Bağıl Ölçüt - Bağıl Değerlendirme", b: "Mutlak Ölçüt - Mutlak Değerlendirme", c: "Bağıl Ölçüt - Mutlak Değerlendirme", d: "Mutlak Ölçüt - Bağıl Değerlendirme", e: "İzafi Ölçüt - Bağıl Değerlendirme" }, answer: "b" },
+            { id: 18, text: "Öğrencileri tanımak veya uygun bir programa/sınıfa yerleştirmek amacıyla eğitim sürecinin başında yapılan değerlendirme türü hangisidir?", options: { a: "Biçimlendirme ve Yetiştirmeye Yönelik", b: "Tanıma ve Yerleştirmeye Yönelik", c: "Değer Biçmeye Yönelik", d: "Bağıl Değerlendirme", e: "Sonuç Değerlendirme" }, answer: "b" },
+            { id: 19, text: "Öğrenme eksikliklerinin belirlenmesi ve giderilmesi amacıyla yapılan, not verme amacı gütmeyen değerlendirme türü hangisidir?", options: { a: "Tanıma ve Yerleştirmeye Yönelik", b: "Biçimlendirme ve Yetiştirmeye Yönelik (Formatif)", c: "Değer Biçmeye Yönelik (Summatif)", d: "Seçme Amaçlı Değerlendirme", e: "Mutlak Değerlendirme" }, answer: "b" },
+            { id: 20, text: "Eğitim-öğretim faaliyetlerinin sonunda, hedefe ne kadar ulaşıldığını belirlemek ve not vermek amacıyla yapılan değerlendirme türü hangisidir?", options: { a: "Değer Biçmeye Yönelik", b: "Biçimlendirme ve Yetiştirmeye Yönelik", c: "Tanıma ve Yerleştirmeye Yönelik", d: "Diagnostik Değerlendirme", e: "Giriş Değerlendirmesi" }, answer: "a" },
+            { id: 21, text: "Bir ölçme aracının, ölçmek istediği özelliği başka herhangi bir özellikle karıştırmadan doğru olarak ölçebilme derecesine ne denir?", options: { a: "Güvenirlik", b: "Kullanışlılık", c: "Geçerlik", d: "Duyarlık", e: "Tutarlılık" }, answer: "c" },
+            { id: 22, text: "Bir testteki maddelerin, ölçülecek davranışı ve konu içeriğini ne derece iyi örneklediğini ifade eden geçerlik türü hangisidir?", options: { a: "Görünüş Geçerliği", b: "Kapsam Geçerliği", c: "Yapı Geçerliği", d: "Yordama Geçerliği", e: "Uygunluk Geçerliği" }, answer: "b" },
+            { id: 23, text: "Bir testin kapağında 'Fizik Testi' yazıyorsa, testin içinde fizikle ilgili sorular bulunması testin hangi geçerliğini gösterir?", options: { a: "Kapsam Geçerliği", b: "Yapı Geçerliği", c: "Görünüş Geçerliği", d: "Yordama Geçerliği", e: "Uygunluk Geçerliği" }, answer: "c" },
+            { id: 24, text: "Zeka, ilgi, kişilik gibi doğrudan gözlenemeyen özelliklerin kuramsal temellerini tam olarak yansıtabilme derecesine ne ad verilir?", options: { a: "Yapı Geçerliği", b: "Kapsam Geçerliği", c: "Yordama Geçerliği", d: "Görünüş Geçerliği", e: "Ölçüte Dayalı Geçerlik" }, answer: "a" },
+            { id: 25, text: "Ölçüt puanların yordayıcı (geçerliği araştırılan) puanlardan sonra elde edildiği ve gelecekteki performansı tahmin etmeye dayalı geçerlik türü hangisidir?", options: { a: "Uygunluk Geçerliği", b: "Kapsam Geçerliği", c: "Yapı Geçerliği", d: "Yordama Geçerliği", e: "Görünüş Geçerliği" }, answer: "d" },
+            { id: 26, text: "Ölçüt puanların yordayıcı puanlarla aynı zamanda veya daha önce elde edilmesi durumundaki geçerliğe ne ad verilir?", options: { a: "Yordama Geçerliği", b: "Uygunluk (Eş-zaman) Geçerliği", c: "Yapı Geçerliği", d: "Kapsam Geçerliği", e: "Görünüş Geçerliği" }, answer: "b" },
+            { id: 27, text: "Ölçümden ölçüme değişmeyen, her ölçümde hatanın aynı olduğu ve ayıklanabilir hata türü hangisidir?", options: { a: "Tesadüfi Hata", b: "Sistematik Hata", c: "Sabit Hata", d: "Rastgele Hata", e: "Standart Hata" }, answer: "c" },
+            { id: 28, text: "Bir öğretmenin sadece yazısı güzel olanlara 10 puan fazla vermesi ne tür bir hatadır?", options: { a: "Sabit Hata", b: "Sistematik Hata", c: "Tesadüfi Hata", d: "Ölçüm Hatası", e: "Ortam Hatası" }, answer: "b" },
+            { id: 29, text: "Ölçme sonuçlarına nereden, hangi miktarda ve nasıl karıştığı bilinmeyen, düzeltilemeyen hata türü hangisidir?", options: { a: "Sabit Hata", b: "Sistematik Hata", c: "Standart Hata", d: "Tesadüfi Hata", e: "Mutlak Hata" }, answer: "d" },
+            { id: 30, text: "Ölçme sonuçlarının tesadüfi hatalardan arınıklık derecesini ifade eden kavrama ne denir?", options: { a: "Geçerlik", b: "Güvenirlik", c: "Kullanışlılık", d: "Objektiflik", e: "Standartlık" }, answer: "b" },
+            { id: 31, text: "Aynı testin aynı gruba, belli bir zaman aralığı bırakılarak iki kez uygulanması yoluyla hesaplanan güvenirlik belirleme yöntemi hangisidir?", options: { a: "Eş Değer (Paralel) Formlar", b: "Eş Değer Yarılar", c: "Test-Tekrar Test", d: "İç Tutarlılık", e: "Kuder-Richardson" }, answer: "c" },
+            { id: 32, text: "Tek oturumda uygulanan bir testin, iki yarıya (örneğin tek-çift maddeler) bölünerek iki parça arasındaki korelasyonun hesaplandığı güvenirlik yöntemi hangisidir?", options: { a: "Eş Değer Yarılar", b: "Test-Tekrar Test", c: "Paralel Formlar", d: "Cronbach Alfa", e: "Madde Analizi" }, answer: "a" },
+            { id: 33, text: "Aşağıdakilerden hangisi bir testin güvenirliğini artırmanın yollarından biri değildir?", options: { a: "Soru sayısını artırmak", b: "Soruları açık, net ve anlaşılır hazırlamak", c: "Öğrencilere yeterli zaman vermek", d: "Puanlamayı objektif yapmak", e: "Soruları sadece çok zor seviyede hazırlamak" }, answer: "e" },
+            { id: 34, text: "Bir ölçme aracının hazırlanmasının, uygulanmasının ve puanlanmasının ekonomik ve pratik olma derecesine ne denir?", options: { a: "Geçerlik", b: "Güvenirlik", c: "Kullanışlılık", d: "Tutarlılık", e: "Kararlılık" }, answer: "c" },
+            { id: 35, text: "İstatistiksel terminolojide araştırmacının çalışmayı umduğu tüm gruba ne ad verilir?", options: { a: "Örneklem", b: "Evren", c: "Parametre", d: "İstatistik", e: "Frekans" }, answer: "b" },
+            { id: 36, text: "Evrenin çok geniş olması nedeniyle, evrenden daha küçük fakat evreni temsil edebilen gruba ne ad verilir?", options: { a: "Örneklem", b: "Bağımlı Grup", c: "Evren", d: "Popülasyon", e: "Değişken" }, answer: "a" },
+            { id: 37, text: "Bir sınıfa veya aralığa düşen veri sayısına istatistikte ne ad verilir?", options: { a: "Mod", b: "Medyan", c: "Ranj", d: "Frekans (Sıklık)", e: "Varyans" }, answer: "d" },
+            { id: 38, text: "Bir dağılımdaki tüm puanların toplamının, toplam puan sayısına bölünmesiyle elde edilen değere ne denir?", options: { a: "Mod", b: "Ortanca", c: "Aritmetik Ortalama", d: "Ranj", e: "Standart Sapma" }, answer: "c" },
+            { id: 39, text: "Puanlar küçükten büyüğe doğru sıralandığında, dağılımı tam olarak ikiye bölen değere ne ad verilir?", options: { a: "Tepe Değer (Mod)", b: "Ortanca (Medyan)", c: "Aritmetik Ortalama", d: "Ranj", e: "Varyans" }, answer: "b" },
+            { id: 40, text: "Bir veri grubunda en fazla tekrar eden (frekansı en yüksek olan) puana ne ad verilir?", options: { a: "Tepe Değer (Mod)", b: "Ortanca (Medyan)", c: "Aritmetik Ortalama", d: "Ranj", e: "Standart Sapma" }, answer: "a" },
+            { id: 41, text: "Bir dağılımdaki en yüksek puan ile en düşük puan arasındaki farka ne ad verilir?", options: { a: "Standart Sapma", b: "Varyans", c: "Ortalama Sapma", d: "Ranj (Açıklık)", e: "Çeyrek Sapma" }, answer: "d" },
+            { id: 42, text: "Puanların aritmetik ortalamadan ne derecede uzaklara yayıldıklarını gösteren dağılım ölçüsüne ne denir?", options: { a: "Standart Sapma", b: "Mod", c: "Medyan", d: "Ranj", e: "Korelasyon" }, answer: "a" },
+            { id: 43, text: "Standart sapmanın karesine eşit olan ve elde edilen her bir puanın ortalama değerden olan farklarının karelerinin ortalaması olarak tanımlanan kavram hangisidir?", options: { a: "Ranj", b: "Varyans", c: "Mod", d: "Medyan", e: "Frekans" }, answer: "b" },
+            { id: 44, text: "Merkezinin her iki tarafının aynı şekle sahip olduğu ve ortalama, ortanca, tepe değerin birbirine eşit olduğu dağılım türü hangisidir?", options: { a: "Sağa çarpık dağılım", b: "Sola çarpık dağılım", c: "Simetrik (Normal) dağılım", d: "İki tepeli dağılım", e: "Rastgele dağılım" }, answer: "c" },
+            { id: 45, text: "Sınavın zor olduğu, grubun büyük kısmının düşük puan aldığı ve tepe değerin ortalamadan küçük olduğu dağılım şekline ne ad verilir?", options: { a: "Simetrik dağılım", b: "Sağa çarpık dağılım", c: "Sola çarpık dağılım", d: "Normal dağılım", e: "Çan eğrisi" }, answer: "b" },
+            { id: 46, text: "Sınavın kolay olduğu, öğrencilerin çoğunun yüksek puan aldığı ve ortalamanın tepe değerden küçük olduğu dağılım şekline ne ad verilir?", options: { a: "Sağa çarpık dağılım", b: "Sola çarpık dağılım", c: "Simetrik dağılım", d: "Normal dağılım", e: "İzometrik dağılım" }, answer: "b" },
+            { id: 47, text: "Her bireyin puanının ortalamadan farkının standart sapmaya bölünmesiyle elde edilen puana ne denir?", options: { a: "T puanı", b: "Z puanı", c: "Ham puan", d: "Yüzdelik dilim", e: "Korelasyon" }, answer: "b" },
+            { id: 48, text: "Z puanının 10 ile çarpılıp 50 ile toplanması sonucu elde edilen standart puana ne ad verilir?", options: { a: "T puanı", b: "Ham puan", c: "Varyans", d: "Çeyrek Sapma", e: "Korelasyon" }, answer: "a" },
+            { id: 49, text: "İki değişken arasındaki ilişkiyi ve bu ilişkinin yönünü ile miktarını açıklayan istatistiksel tekniğe ne ad verilir?", options: { a: "Standart Sapma", b: "Korelasyon", c: "Varyans", d: "Ranj", e: "Z Puanı" }, answer: "b" },
+            { id: 50, text: "Bir testin bir ölçüte göre geçerliği ile güvenirliği arasındaki ilişkiyi açıklayan kurala göre, bir testin geçerliği aşağıdakilerden hangisinden büyük olamaz?", options: { a: "Varyansından", b: "Standart sapmasından", c: "Güvenirliğinin karesinden", d: "Güvenirliğinin karekökünden", e: "Aritmetik ortalamasından" }, answer: "d" }
+        ];
+
+        // 2. ÖĞRETİM TEKNOLOJİLERİ
+        const teknolojiSorulari = [
+            { id: 1, text: "Tasarım kavramının sözlük anlamı aşağıdakilerden hangisidir?", options: { a: "Bir nesnenin fiziksel kütlesi", b: "Zihinde canlandırılan biçim, tasavvur", c: "Bir aracın kullanım kılavuzu", d: "Öğrenci başarı notlarının ortalaması", e: "Okul binasının mimari projesi" }, answer: "b" },
+            { id: 2, text: "Öğretim teknolojilerinin temel amacı aşağıdakilerden hangisidir?", options: { a: "Eğitimi tamamen dijital hale getirmek", b: "Öğretmenlerin iş yükünü artırmak", c: "Öğretme-öğrenme sürecini daha etkili ve verimli hale getirmek", d: "Sınıf mevcudunu azaltmak", e: "Sadece pahalı araçların kullanımını teşvik etmek" }, answer: "c" },
+            { id: 3, text: "Edgar Dale'in 'Yaşantı Konisi'ne göre, öğrenmede en etkili ve en kalıcı yaşantılar hangisidir?", options: { a: "Doğrudan edinilen maksatlı yaşantılar", b: "Görsel semboller (Grafikler vb.)", c: "Radyo ve plak dinleme", d: "Hareketli resimler izleme", e: "Sözel semboller (Okuma/Dinleme)" }, answer: "a" },
+            { id: 4, text: "Görsel tasarım öğelerinden 'çizgi' ile ilgili aşağıdakilerden hangisi yanlıştır?", options: { a: "Dikkat çekmek için kullanılır.", b: "Hareketi ifade edebilir.", c: "Sadece siyah renkli olmalıdır.", d: "Ayırıcı veya birleştirici olabilir.", e: "Yön gösterebilir." }, answer: "c" },
+            { id: 5, text: "İki boyutlu bir görsel materyalde (örneğin bir afişte) derinlik hissi yaratmak için kullanılan öğe hangisidir?", options: { a: "Boşluk", b: "Doku", c: "Şekil", d: "Vurgu", e: "Simetri" }, answer: "b" },
+            { id: 6, text: "Görsel tasarım ilkelerinden 'Bütünlük' (Unity) neyi ifade eder?", options: { a: "Materyaldeki öğelerin farklı renklerde olmasını", b: "Bir görseli oluşturan parçaların birbiriyle ilişkili bir mesaj iletmesini", c: "Tüm metinlerin büyük harfle yazılmasını", d: "Resmin tam merkezde durmasını", e: "Arka planın her zaman beyaz olmasını" }, answer: "b" },
+            { id: 7, text: "Görsel bir materyal üzerinde gözün ilk odaklandığı ve genellikle en önemli mesajın yerleştirildiği nokta hangisidir?", options: { a: "Sağ alt köşe", b: "Sol alt köşe", c: "Optik merkez (Merkezin biraz üstü)", d: "Tam orta nokta", e: "Sağ üst köşe" }, answer: "c" },
+            { id: 8, text: "Tasarımda 'Denge' ilkesi ile ilgili olarak; bir eksenin her iki yanında öğelerin ağırlık ve büyüklük bakımından aynı olması durumuna ne denir?", options: { a: "İnformal (Kayıtlı) Denge", b: "Dikey Denge", c: "Formal (Simetrik) Denge", d: "Zıtlık", e: "Ritim" }, answer: "c" },
+            { id: 9, text: "Görsel tasarımda dikkati tek bir noktaya çekmek, diğer öğeleri geri plana itmek için kullanılan ilke hangisidir?", options: { a: "Hizalama", b: "Vurgu", c: "Ahenk", d: "Yakınlık", e: "Sadelik" }, answer: "b" },
+            { id: 10, text: "Kavram haritaları ile ilgili aşağıdakilerden hangisi doğrudur?", options: { a: "Sadece sayısal verileri gösterir.", b: "Kavramlar arasındaki ilişkileri görselleştirerek anlamlı öğrenmeyi sağlar.", c: "Öğrencilerin ezber yapması için en iyi araçtır.", d: "Sadece Fen Bilimleri dersinde kullanılır.", e: "Bir paragraf metinden oluşur." }, answer: "b" },
+            { id: 11, text: "Öğrencinin bilgiyi tablolar veya matrisler halinde görmesi veya bu formata dönüştürmesi neye yardımcı olur?", options: { a: "Bilginin daha zor öğrenilmesine", b: "Bilginin örgütlenmesine ve anlamlı öğrenmeye", c: "Görsel kirliliğe", d: "Ezberleme süresinin uzamasına", e: "Kağıt tasarrufuna" }, answer: "b" },
+            { id: 12, text: "Hangi renk grubu 'Sıcak Renkler' olarak adlandırılır ve genellikle uyarıcı/yakınlık etkisi yaratır?", options: { a: "Mavi, Yeşil, Mor", b: "Kırmızı, Sarı, Turuncu", c: "Beyaz, Gri, Siyah", d: "Lacivert, Turkuaz", e: "Pembe, Lila" }, answer: "b" },
+            { id: 13, text: "Materyal tasarımında 'Sadelik' ilkesinin temel kuralı nedir?", options: { a: "Mümkün olduğunca çok resim kullanmak", b: "Gereksiz tüm ayrıntıları ayıklayarak mesajı netleştirmek", c: "Hiç renk kullanmamak", d: "Sadece metin kullanmak", e: "Sayfanın her yerini doldurmak" }, answer: "b" },
+            { id: 14, text: "Bir sunum slaytı hazırlanırken harf büyüklüğü (punto) seçimi nasıl olmalıdır?", options: { a: "Mümkün olan en küçük yazı seçilmelidir.", b: "Arka sıradaki öğrencilerin bile rahatça okuyabileceği büyüklükte olmalıdır.", c: "Her kelime farklı puntoyla yazılmalıdır.", d: "Sadece başlıklar büyük olmalıdır.", e: "Sadece italik fontlar kullanılmalıdır." }, answer: "b" },
+            { id: 15, text: "Öğretim materyallerinde kullanılan 'Yönlendirme' öğelerinin (oklar, çizgiler vb.) amacı nedir?", options: { a: "Süsleme yapmak", b: "Öğrencinin dikkatini önemli noktaya kanalize etmek", c: "Sayfayı bölümlere ayırmak", d: "Karmaşa yaratmak", e: "Okuma hızını yavaşlatmak" }, answer: "b" },
+            { id: 16, text: "Gestalt ilkelerinden 'Yakınlık' (Proximity) kuralı tasarımda nasıl uygulanır?", options: { a: "Birbirine benzer öğeleri uzaklaştırmak", b: "Birbirine bağlı olan bilgileri/öğeleri grup halinde birbirine yakın yerleştirmek", c: "Tüm sayfayı tek bir grup yapmak", d: "Sadece resim ve yazıyı yan yana getirmek", e: "Zıt renkleri yan yana koymak" }, answer: "b" },
+            { id: 17, text: "Sunumlarda 'Görsel Hiyerarşi' oluşturmak için hangisi yapılamaz?", options: { a: "Önemli başlığı daha büyük puntoyla yazmak", b: "Vurgulanacak yeri farklı renkle belirtmek", c: "Tüm sayfadaki yazıları aynı büyüklük ve renkte yapmak", d: "Koyu renk arka planda açık renk yazı kullanmak", e: "Ok işaretleriyle sırayı belirtmek" }, answer: "c" },
+            { id: 18, text: "Materyal değerlendirme sürecinde 'Kullanışlılık' neyi ifade eder?", options: { a: "Materyalin çok pahalı olmasını", b: "Materyalin hazırlanma, uygulama ve saklanma kolaylığını", c: "Materyalin teknolojik karmaşıklığını", d: "Sadece internetle çalışmasını", e: "Renklerin parlaklığını" }, answer: "b" },
+            { id: 19, text: "Öğretim teknolojisi araçlarından 'Etkileşimli Tahta'nın en büyük avantajı nedir?", options: { a: "Televizyon olarak kullanılması", b: "Öğrenci katılımını ve multimedya desteğini artırması", c: "Sadece öğretmen tarafından kullanılması", d: "Elektrik kesintisinde bile çalışması", e: "Defter ihtiyacını tamamen ortadan kaldırması" }, answer: "b" },
+            { id: 20, text: "Öğretim teknolojilerinin kullanımında hangisi dikkate alınması gereken bir sınırlılıktır?", options: { a: "Hızlı geri bildirim vermesi", b: "Maliyet ve teknik destek ihtiyacı", c: "Bilgiye erişimi kolaylaştırması", d: "Motivasyonu artırması", e: "Bireysel öğrenme hızına destek olması" }, answer: "b" }
+        ];
+
+        // 3. EĞİTİM PSİKOLOJİSİ
+        // --- 3. DERS (EĞİTİM PSİKOLOJİSİ) İÇİN GÜNCEL SORU VERİTABANI (41 SORU) ---
+        // --- 3. DERS (EĞİTİM PSİKOLOJİSİ) İÇİN GÜNCEL FİNAL SORU VERİTABANI ---
+        // --- 3. DERS: EĞİTİM PSİKOLOJİSİ FİNAL SORULARI (TÜMÜ - 50 SORU) ---
+        // --- 3. DERS: EĞİTİM PSİKOLOJİSİ FİNAL SORULARI (TÜMÜ - EKSİKSİZ ARŞİV) ---
+        const psikolojiSorulari = [
+            { id: 1, text: "Öğretmenler okuma yazma öğrenen çocuklara kurdele takarlar. Kurdele uygulaması bir pekiştireç olarak anlamlı olsa da gelişimin temel bir ilkesi ile uyuşmamaktadır. Bu ilke hangisi olabilir?", options: { a: "Gelişim bir süreçtir.", b: "Gelişim kalıtımsal ve çevresel faktörlerin sonucudur.", c: "Gelişim kalıtımsal bir olaydır.", d: "Gelişim alanları etkileşim içerisindedir.", e: "Gelişim çevresel bir süreçtir." }, answer: "a" },
+            { id: 2, text: "İlköğretimde ilk defa gezegenler hakkında bilgi öğrenen bir çocuğun yaşayabileceği bilişsel süreç nasıl olmalıdır?", options: { a: "Denge-Şema-Özümleme-Örgütleme-Uyum-Dengesizlik-Uzlaşma", b: "Denge-Dengesizlik-Özümleme-Uyum-Uzlaşma-Şema-Denge", c: "Dengesizlik-Uyum-Özümleme-Uzlaşma-Örgütleme-Denge-Şema", d: "Denge-Dengesizlik-Örgütleme-Uzlaşma-Denge-Şema-Uyum-Uzlaşma", e: "Denge-Dengesizlik-Özümleme-Uyum-Denge-Örgütleme-Şema" }, answer: "e" },
+            { id: 3, text: "Ayşe, babasına 'hadi baba atçılık oynayalım.' Demiş ve babasının üzerine binerek evde atçılık oynamaya başlamışlardır. Ayşe'nin bu davranışı ile ilgili olarak hangisi doğrudur?", options: { a: "Özelden özele akıl yürütme yapmaktadır.", b: "Animistik düşünce söz konusudur.", c: "Benmerkezlilik söz konusudur.", d: "Sembolik oyun oynamaktadır.", e: "Paralel oyun oynamaktadır" }, answer: "d" },
+            { id: 4, text: "Bir öğretmenin öğrenme psikoloji verilerinden yararlanarak ders anlattığını aşağıdakilerden hangisi göstermez?", options: { a: "Öğrenme ile ilgili sorun yaşayan öğrencileri fark ederek onları da dikkate alan öğretim planı yapması.", b: "Öğrencilerin yanlışlarını bularak, onlara dönüt vermesi ve doğru davranışı kazanabilmeleri için yardım etmesi.", c: "Öğrencilerin motivasyonlarını artırabilmek için davranış değiştirme tekniklerinden yararlanması.", d: "Öğrencilerin bireysel farklılıklarının normal olduğunu kabul ederek sınıfta ortalamaya göre ders yapması.", e: "Öğrenme sürecinde karşılaştığı problemlerin farkına vararak, problemlerin çözümünde öğrenme ilkelerinden yararlanması" }, answer: "d" },
+            { id: 5, text: "Çocuklar bu dönemde bütün parça ilişkisini kuramazlar. Örn, Bilyelerden maviler mi çok yoksa kırmızılar mı? sorusuna 'maviler' diyerek doğru cevabı verebilirler ancak bilyelerin tamamı mı daha çok yoksa maviler mi? sorusuna da 'maviler' cevabını verirler. Bu anlatımda hangi dönem çocuğundan bahsedilmektedir?", options: { a: "Somut işlemler dönemi", b: "Eylemsel dönem", c: "İşlem öncesi dönem", d: "Somut öncesi dönem", e: "İşlemsel dönem" }, answer: "c" },
+            { id: 6, text: "Eğitim psikolojisine göre çocuk eğitiminde ebeveyne ve öğretmen hangisini yaptığında yanlış davranmış olur?", options: { a: "Tutum ve davranışlarında tutarlılık gösterdiğinde;", b: "Uygulanan kuralların geçerliliğini korumasına dikkat ettiklerinde", c: "Çocuklara gelişim düzeylerine göre özgürlük tanıdıklarında", d: "Çocukların kendilerini anlaması ve kendileri gibi davranmasını sağladıklarında", e: "Çocuklara karar alırken seçim hakkı tanıdıklarında" }, answer: "e" },
+            { id: 7, text: "Bir öğretmenin öğrencilerinin psikososyal gelişimleri doğrultusunda gösterebileceği tutumlar hangi biçimde olmalıdır?", options: { a: "Otorite olma", b: "Serbest bırakma", c: "Koruma", d: "Model olma", e: "Ebeveyn olma" }, answer: "d" },
+            { id: 8, text: "Bilişsel gelişmenin, sosyal süreçlerin çocuklar ve yetişkinler arasında paylaşılmasından etkilendiğini, ebeveyn ya da öğretmenlerin bir bilen olarak çocukların gelişiminde önemini vurgulayan görüş aşağıdaki bilim adamlarından hangisine aittir?", options: { a: "Bruner", b: "Vygotsky", c: "Piaget", d: "Skiner", e: "Kohlberg" }, answer: "b" },
+            { id: 9, text: "Freud'un Psiko seksüel Gelişim Kuramına göre çocuk hangi dönemde cinsiyet farklılıklarını keşfeder?", options: { a: "Oral", b: "Anal", c: "Fallik", d: "Latans", e: "Genital" }, answer: "c" },
+            { id: 10, text: "Bebeklik dönemi, temel güven duygusunun gelişmesi açısından kritik bir dönemdir; bu nedenle bebeğin gereksinimlerinin karşılanmasının yanında, yeterince ilgi ve sevgi de gösterilmelidir. Bu parçada aşağıdakilerden hangisi vurgulanmaktadır?", options: { a: "Bilişsel gelişimin tamamlanması için iyi bir duygusal ortamın gerekliliği.", b: "Duygusal gelişimin farklı dönemlerde gerçekleştiği", c: "Duygusal gelişimin bebeklik döneminde taşıdığı önem", d: "Duygusal gelişimin olgunlaşmasıyla ilişkisi", e: "Çocuğun dünya görüşünün duygusal yaşam deneyimlerine etkisi" }, answer: "c" },
+            { id: 11, text: "Duygu, genel olarak belirli nesne, olay ya da kişilerin bireyin iç dünyasında uyandırdığı izlenimlerin yansıması olarak ortaya çıkmaktadır. Aşağıdakilerden hangisinde duyguları yansıtan bir ifade yer almaktadır?", options: { a: "Bilgi birikimi edinme", b: "Tutarlı olma", c: "Zamanla deneyim kazanma", d: "Başkalarına karşı sevgisini açıklama", e: "Yaşa bağlı gelişim sağlama" }, answer: "d" },
+            { id: 12, text: "Eve gelen misafirlerin çocuklarıyla oynarken oyuncaklarını paylaşmak istemeyen Ayşe annesinin uyarıcı bakışlarıyla karşılaştığında, en sevdiği oyuncakları kendisi alarak diğer oyuncakları misafir çocuklara verir. Bu durum Ayşe'nin kişiliği ile ilgili olarak hangi boyutla açıklanabilir?", options: { a: "İd", b: "Süperego", c: "Ego", d: "Elektra", e: "Oedipus" }, answer: "b" },
+            { id: 13, text: "Tuvalet eğitimi sırasında katı, cezalandırıcı davranışlara maruz kalmış bir çocukta aşağıdakilerden hangisinin yetişkinlik döneminde görülmesi beklenemez?", options: { a: "Aşırı düzenli olma", b: "İnatçı olma", c: "Girişimci olma", d: "Katı görüşlü olma", e: "Çalışkan olma" }, answer: "c" },
+            { id: 14, text: "Eğer her şey çocukluk dönemi ile açıklanırsa o zaman her şey bir başkasının kusuru olarak değerlendirilir diyerek, Psikanalitik kuramın, kişilik gelişimini sadece çocukluk dönemi ile açıklamasına karşı çıkmıştır. Bu açıklamalar hangi uzmanın görüşlerine karşılık gelmektedir?", options: { a: "Piaget", b: "Freud", c: "Ericson", d: "Kohlberg", e: "Bloom" }, answer: "c" },
+            { id: 15, text: "İhtiyacınız ne ise onu karşılamak için harekete geçersiniz; davranışların yönlendiricisi aslında bireylerin karşılanmayı bekleyen ihtiyaçlarıdır. Bu ifade aşağıdaki kavramlardan hangisi ile davranışların açıklamaktadır?", options: { a: "Tutum", b: "Duygu", c: "Düşünce", d: "Motivasyon", e: "Patoloji" }, answer: "d" },
+            { id: 16, text: "Bir dersi, mesleki yeterliliğinin bir parçası olarak görerek çalışan öğrenci ile geçer not almak için çalışan öğrenci arasında en önemli farklılık, onları yönlendiren dinamiklerle ilgilidir. Bu ifadede aşağıdaki kavramlardan hangileri vurgulanmak istenmektedir?", options: { a: "Süperego-İd İkilemi", b: "İpotekli kimlik- Başarılı kimlik ikilemi", c: "Duygu- Düşünce Motivasyonu", d: "Ödül- Duygu Motivasyonu", e: "İçsel- Dışsal motivasyon" }, answer: "e" },
+            { id: 17, text: "Bazılarının kaderi kötüdür, bazıları doğuştan şanslıdır, ne diyelim herkes bu dünyaya aynı alınyazısı ile gelmiyor ifadesini kullanan bir bireyin davranışları, Rotter'ın kişilik kuramına göre aşağıdaki kavramlardan hangisi ile açıklanabilir?", options: { a: "Dıştan denetimli", b: "İçten denetimli", c: "Ödül temelli", d: "Çıkar temelli", e: "Kaçış psikolojisi" }, answer: "a" },
+            { id: 18, text: "Aşağıdakilerden hangisi bir davranışı anormal kabul edebilmemiz için kullanabileceğimiz kriterlerden değildir?", options: { a: "Üzüntü- yetersizlik", b: "Uyumsuzluk- mantıksızlık", c: "Tahmin edilemezlik", d: "Gözlemci rahatsızlılığı", e: "Duygusallık- Düşüncelilik" }, answer: "e" },
+            { id: 19, text: "Kişilerin bazı davranış veya sonuçların nedenlerini ararken yakınsak etmenleri fazla büyütmeleri ve durumsal etmenleri küçümsemeleri ile görülen ikili eğilim aşağıdaki kavramlardan hangisi ile açıklanabilir?", options: { a: "Temel Tutum yerleşimi", b: "Temel Bilişsel süreçler", c: "Temel Atıf Hatası", d: "Temel Atıf Süreci", e: "Temel Tutarlılık Hatası" }, answer: "c" },
+            { id: 20, text: "Ne gariptir ki bazı insanlar başarılı olduklarında kendilerini, başarısız olduklarında ise başkalarını sorumlu tutma eğiliminde olabiliyorlar. Bu ifadede vurgulanmak istenen durum aşağıdakilerden hangisidir?", options: { a: "Atıf teorisi", b: "Denetim odağı", c: "Benlik saygısı", d: "Kendine hizmet eden önyargı", e: "Kendi kendini doğuran kehanet" }, answer: "d" },
+            { id: 21, text: "Bugünün yetişkinleri için ders çalışırken kitap aralarında çizgi romanları okumak ayrı bir heyecandı; günümüz çocukları içinse internet başında geçirilen zamanlar heyecan kaynağı olmaktadır. Bu durum gelişimin hangi kavramı ile açıklanabilir?", options: { a: "Kritik Dönem", b: "Deneyim", c: "Tarihsel Zaman", d: "Teknoloji", e: "Hazırbulunuşluk" }, answer: "c" },
+            { id: 22, text: "Öğrencinin içinde bulunduğu gelişim dönemi gözönüne alınarak, dersinizde başarısız olan lise ikinci sınıf öğrencisinin başarısızlığını öncelikle aşağıdakilerden hangisi ile açıklamak uygundur?", options: { a: "Hazırbulunuşluk", b: "Kritik dönem", c: "Öğrenme", d: "Zihinsel olgunluk", e: "Duygusal Olgunluk" }, answer: "a" },
+            { id: 23, text: "İki yaşındaki bir çocuk salıncakta yardımsız sallanmak istemekte, kendisini tutmaya çalışan annesinin ellerini itmektedir. Çocuğun bu davranışı hangi gelişimsel özellikle açıklanabilir?", options: { a: "Yatkınlık", b: "Özerklik", c: "Üretkenlik", d: "Özdeşim", e: "Merak" }, answer: "b" },
+            { id: 24, text: "Zeynep (3 yaş), yemek yerken yanındaki bebeğine de yedirmektedir. Bu davranışı nasıl açıklanır?", options: { a: "Benmerkezcilik", b: "Yapaycılık", c: "Hayal kurma", d: "Nesne sürekliliği", e: "Animizm" }, answer: "e" },
+            { id: 25, text: "Ayşe arkadaşlarının davranışlarına ilişkin ahlaki yargılarında, arkadaşlarının yaptıkları bir davranış kendi çıkarına uygun ise doğru, uygun değilse yanlış olduğunu düşünmektedir. Kohlberg'e göre hangi evrededir?", options: { a: "Gelenek öncesi düzeyin boyun eğme evresi", b: "Gelenek öncesi düzeyin bireyselcilik (saf çıkarcı) evresi", c: "Geleneksel düzeyin üçüncü evresi", d: "Geleneksel düzeyin dördüncü evresi", e: "Gelenek ötesi düzeyin birinci evresi" }, answer: "b" },
+            { id: 26, text: "Aşağıdaki ifadelerden hangisi gelişim ilkeleri ile uyuşmamaktadır?", options: { a: "Kalıtım gelişimdeki en önemli etmendir.", b: "Gelişim sürekli bir oluşumdur.", c: "Gelişim bir bütünlük içerisinde gerçekleşir.", d: "Gelişim aşamalar halinde gerçekleşir.", e: "Gelişim ardışık ve düzenli bir ilerleme ile olur." }, answer: "a" },
+            { id: 27, text: "İlköğretim okuluna devam eden bir öğrenci matematik dersinde kesirlerle ilgili toplama işlemini yaparken önceden bildiği toplama işlemine göre yapmaya çalışır ama doğru olmadığını görür. Bu durumu hangi kavram açıklar?", options: { a: "Dengesizlik", b: "Denge", c: "Uyumsama", d: "Özümseme", e: "Adaptasyon" }, answer: "a" },
+            { id: 28, text: "Anaokulunda öğretmenlerinin hepsinin bayan olduğunu gören Selin, büyüyünce öğretmen olacağını söylemiştir. Babası başka meslekler de olduğunu söylediğinde 'kızlar öğretmen olur' demiştir. Hangisi yanlıştır?", options: { a: "Davranışlarında benmerkezcilik görülür", b: "Tek boyutlu düşünme hakimdir", c: "Kalıp yargılarla düşünmektedir", d: "Cinsel kimliği kazanmıştır", e: "Cinsel rolleri kazanmıştır" }, answer: "e" },
+            { id: 29, text: "Bireylerin gelişimleri kendine özgü olup bu süreç içinde çevrelerindeki kişi ve olaylara karşı tutum oluşturmaları, sembolleri incelemeleri, ben kavramını geliştirip kişiliklerini geliştirmeleri hangi ilke ile açıklanır?", options: { a: "Gelişim bir bütündür", b: "Gelişimde bireysel farklılıklar vardır", c: "Gelişim bir sıra içinde gerçekleşir", d: "Gelişimin belli bir yönü vardır", e: "Gelişim dinamiktir" }, answer: "a" },
+            { id: 30, text: "Ahmet Öğretmen veli toplantısında: I- Çocuklarınıza başarı duygusunu tadacakları ortamlar hazırlayın, II- Her çocuğun farklı gelişim seyri izlediğini unutmayın, III- Başarı için gerekli istek ve inancın oluşmasına yardım edin demiştir. Bu görüşlerin sırası nedir?", options: { a: "Zekâ gelişimi - Kritik dönem - Hazır bulunuşluk", b: "Deneyim - Olgunlaşma - Kritik dönem", c: "Kritik dönem - Olgunlaşma - Öğrenme", d: "Kritik dönem - Olgunlaşma - Hazır bulunuşluk", e: "Hazır bulunuşluk - Kritik dönem - Deneyim" }, answer: "d" },
+            { id: 31, text: "Mehmet, kardeşi ile oynamaktan çok arkadaşları ile oynamaktan hoşlanmaktadır. Çünkü kardeşi Deniz ağabeyinin yanından ayrılmak istememekte ve oyunlarda kendi isteklerinin olmasını istemektedir. Mehmet ve Deniz'in bilişsel dönemi sırasıyla hangisidir?", options: { a: "İşlem öncesi - Somut işlemler", b: "İşlem öncesi - Soyut işlemler", c: "Somut işlemler - Duyusal devinim", d: "Soyut işlemler - İşlem öncesi", e: "Somut işlemler - İşlem öncesi" }, answer: "e" },
+            { id: 32, text: "Esra, kanatlı hayvanların uçabileceğini öğrendikten sonra komşularının civcivlerinin de uçabileceğini düşünerek civcivleri alarak ikinci kattan aşağı bırakmıştır. Esra’nın davranışı hangisiyle en iyi açıklanabilir?", options: { a: "Ertelenmiş taklidi sergileme", b: "Korunumun kazanılması", c: "Analitik Düşünememe", d: "Tek yönlü düşünme", e: "Nesne Sürekliliğinin Olması" }, answer: "d" },
+            { id: 33, text: "Günümüz bilgi çağı olarak kabul edilmektedir. Bilimsel ve teknolojik gelişmeler toplumların hızla değişmesine neden olmaktadır. Buna bağlı olarak eğitim psikolojisi verileri de değişmektedir. Hangi açıklama dikkate alınmalıdır?", options: { a: "Dış uyarıcıların gelişimde en etkili olduğu zaman", b: "Geçmiş zamanın dikkate alınıp geleceğe hazırlanılması", c: "Geçmişte yaşanılan saplantıların gelecekte ortaya çıkması", d: "Geçmişte olmayan ama şimdi yapılabilir olan zaman getirisi", e: "Vücudun istenilen davranışı yapabilecek düzeye ulaştığı zaman" }, answer: "d" },
+            { id: 34, text: "I- Ahmet keman çalmakta, Emel lisede başlamakta ve Ahmet'e ulaşamamaktadır. II- Aynı yaşta başlamalarına rağmen Ahmet daha iyi çalmaktadır. III- Ahmet 6, Emel 4 yaşında başlamış, Ahmet daha iyi çalmaktadır. Ahmet'in başarısı sırasıyla neyle açıklanır?", options: { a: "Olgunlaşma - Deneyim - Deneyim", b: "Deneyim - Bireysel farklılıklar - Olgunlaşma", c: "Olgunlaşma - Deneyim - Olgunlaşma", d: "Deneyim - Deneyim - Olgunlaşma", e: "Olgunlaşma - Bireysel farklılıklar - Bireysel farklılıklar" }, answer: "b" },
+            { id: 35, text: "Nurcan yürümeyi 3 yaşında, kardeşi 2 yaşında öğrenmiştir. Ömer derslerinde çok başarılıdır. Mehmet yürümeye başladığında konuşması durağanlaşmıştır. Ayşe önceleri başını, sonra gövdesini kontrol etmiştir. Hangi gelişim ilkesi AÇIKTA kalır?", options: { a: "Gelişimde belli yönelimler vardır.", b: "Gelişim kalıtım ve çevre etkileşiminin ürünüdür.", c: "Gelişimde bireysel ayrılıklar vardır.", d: "Gelişim nöbetleşedir.", e: "Gelişim bir bütünlük içinde gerçekleşir." }, answer: "b" },
+            { id: 36, text: "Aşağıdakilerden hangisi yetişkinlerin ergenlik dönemindeki bireylere göstermesi gereken davranışlardan değildir?", options: { a: "Dış çevredeki tehlikeleri fark ettirerek bilinç oluşturmalı", b: "Kendilerini kabul ettirmenin dış görünüşe bağlı olmadığı açıklanmalı", c: "Yargılamalar ve olumsuz eleştirilerden kaçınılmalı", d: "Beden yapısına ilişkin duyarlığın farkında olup, gerçekçi bir beden imgesi sağlanmamalı", e: "Bedensel özelliklerini tutarlı bir biçimde benimsemelerine yardımcı olunmalı" }, answer: "d" },
+            { id: 37, text: "Gelişim; bebeklik, çocukluk, ergenlik, yetişkinlik, yaşlılık gibi aşamalarla gerçekleşir. Aşağıdaki yorumlardan hangisini yapmak yanlış olur?", options: { a: "Gelişim aşamaları hiyerarşik olarak devam eder.", b: "Döllenmeden itibaren ileriye doğru ve aşamalı olarak gerçekleşir.", c: "Gelişim aşamalar birbirine bağlıdır ve iç içe geçmiştir.", d: "Gelişim aşamaları bazı dönemlerde hızlanırken bazı dönemlerde yavaşlayabilir.", e: "Gelişim aşamaları birikimlidir ve bir sonraki aşama için ön öğrenmeleri kazandırır." }, answer: "d" },
+            { id: 38, text: "Öğrenme çevresi çocuğa yaptığı davranışlar hakkında dönüt sağlar düşüncesi gelişimin hangi ilkesi ile desteklenebilir?", options: { a: "Gelişim bir bütündür", b: "Gelişim kalıtım ve çevrenin ürünüdür", c: "Gelişim alanları birbirleri ile etkileşim içindedir", d: "Gelişim nöbetleşedir", e: "Gelişimde bireysel farklılıklar vardır." }, answer: "b" },
+            { id: 39, text: "Her bir öğretim kademesinde kullanılan materyaller birbirinden farklıdır. Bu durum gelişimin hangi ilkesinin dikkate alındığını göstermektedir?", options: { a: "Gelişim bir bütündür.", b: "Gelişim nöbetleşedir.", c: "Gelişimde belli yönelimler vardır.", d: "Gelişimde bireysel farklılıklar vardır.", e: "Gelişim hiyerarşik bir sıra izler." }, answer: "e" },
+            { id: 40, text: "Bireylerin kalıtımsal ve çevresel faktörlerden dolayı farklılıkları söz konusudur. Cümlesindeki ifade hangi görüşle desteklenebilir?", options: { a: "Gelişim süreklidir ve öğrenme etkisi yadsınamaz.", b: "Gelişim bir bütündür ve kalıtımın etkisi önemlidir.", c: "Gelişimde olgunlaşma ve öğrenmenin etkisi yadsınamaz.", d: "Gelişim kalıtımın ve büyümenin sonucudur.", e: "Gelişimsel yönelimler bireysel farklılıkları doğurur." }, answer: "d" },
+            { id: 41, text: "6 yaşındaki Elif’i okuma yazmayı bildiği için okula yazdırmak isteyen ebeveynin isteği okul müdürü tarafından uygun görülmemiştir. Müdürün bu kararına neden olan düşünce hangisi olamaz?", options: { a: "Elif’in fiziksel ve duygusal olgunluğa ulaşmamış olması.", b: "Elif’in zihinsel olgunluk yaşı ile duygusal olgunluk yaşının paralel olmaması.", c: "Elif’in zihinsel olgunluğa ulaşmamış olması.", d: "Elif’in fizyolojik olgunluğu ile zihinsel hazır oluşunun paralel olmaması.", e: "Elif’in zihinsel olgunluğunun duygusal olgunluk için yeterli olmayışı." }, answer: "c" },
+            { id: 42, text: "Kohlberg’e göre bireyler zihinsel olgunluğa ulaşmalarına paralel olarak ahlaki kavramları öğrenirler. Kohlberg ve Piaget’i ortak noktada buluşturan gelişimin hangi ilkesi olabilir?", options: { a: "Gelişim öğrenmenin sonucudur.", b: "Gelişim kalıtım ve çevrenin ürünüdür.", c: "Gelişimde bireysel farklılıklar bulunur.", d: "Gelişim alanları birbirleri ile etkileşim içindedir.", e: "Gelişimde kritik dönemler vardır." }, answer: "e" },
+            { id: 43, text: "Belli dönemlerde bireyler diğer zamanlara göre daha fazla çalışma eğilimi gösterebilmektedirler. Bireylerin bu davranışları hangi gelişim kavramı ile açıklanabilir?", options: { a: "Zaman", b: "Deneyim", c: "Büyüme", d: "Hazır bulunuşluk", e: "Öğrenme" }, answer: "a" },
+            { id: 44, text: "Karne dönemlerinde veliler, çocuklarının karnelerini yaşıtlarıyla karşılaştırmamaları gerektiği belirtilse de bu davranışlarını sürdürürler. Velilerin bu davranışları ile ilgili hangisini söylemek yanlış olur?", options: { a: "Gelişimde bireysel farklılıkları dikkate almıyorlar", b: "Gelişimin olgunlaşma ve öğrenme sonucunda olduğunu göz ardı ediyorlar.", c: "Gelişimin kalıtımsal ve çevresel dinamiklerini dikkate almıyorlar.", d: "Gelişimde zamanın yani kritik dönemlerin varlığını bilmiyorlar.", e: "Tüm çocukların zihinsel olgunlaşması açısından farklılık gösterebileceğini bilmiyorlar." }, answer: "a" },
+            { id: 45, text: "Yaklaşık olarak 10. aydan önce bebeklerin yürümesi beklenmemelidir. Ancak anne babalar çocuklarının 8-9 aylık yürüdüklerini belirtirler. Bu durum hangi kavramlarla açıklanabilir?", options: { a: "I; III; IV", b: "III; II hariç hepsi", c: "I;IV;V", d: "III;V hariç hepsi", e: "I;II;III;IV" }, answer: "d" },
+            { id: 46, text: "Temel öğretim çocuklar açısından önemlidir. Milli Eğitim Temel Kanunu'nda ilköğretimin en önemli görevinin çocuğun sosyalleşmesini sağlamak olduğu belirtilir. Sosyal gelişim açısından hangi kavram dikkate alınmıştır?", options: { a: "Olgunlaşma", b: "Öğrenme", c: "Kritik Dönem", d: "Hazırbulunuşluk", e: "Deneyim" }, answer: "c" },
+            { id: 47, text: "Aşağıdaki bilgilerden hangisi yanlıştır?", options: { a: "Cinsiyet rolleri son çocukluk döneminde kazanılır.", b: "Bireyin kendine özgü değerler sistemi oluşturması ergenlik döneminde olur", c: "El-göz koordinasyonu kazanılması ilk çocukluğun sonunda önem kazanır.", d: "Vicdan ve değerler sistemi geliştirmeye son çocukluk döneminin gelişim görevidir.", e: "Davranışların sorumluluğunu alabilme ergenlik döneminde olur." }, answer: "a" },
+            { id: 48, text: "Aşağıdakilerden hangisi bilişsel gelişim ile ilgili alanlarla ilgili en son dikkate alınacak bir ifadedir?", options: { a: "Kelimelerin, sayıların, sembollerin kullanılmasını öğrenmek", b: "Çevredeki olay ve olguların farklılığını öğrenmek ve algılamak", c: "Problem çözmek, karar vermek, seçim yapabilmek", d: "Vücut koordinasyonunu sağlayabilmek", e: "Yeni kavramları kullanma, üretmeye olanak sağlamak" }, answer: "d" },
+            { id: 49, text: "Aşağıdakilerden hangisi Piaget’in bilişsel gelişim kuramı ile ilgili yanlış bir açıklamadır?", options: { a: "Çocuklar, bilgiyi öğrenme sürecinde aktiftir.", b: "Yetişkinlerin bilgiyi öğrenme süreci çocuklarınkinden farklıdır.", c: "Çocukların bilişsel gelişimleri deneyim ve olgunlaşmalarına bağlı gelişir.", d: "Çocukların zihinsel gelişimleri problem çözme ve bir ürün ortaya koyma yeteneğinin göstergesidir.", e: "Çocukların zihinsel gelişimlerini biyolojik gelişimlerine bağlıdır." }, answer: "d" },
+            { id: 50, text: "Öğretmen lisesi mezunları formasyon konularını önceden görmüş olabiliyorlar. Eğitim fakültesindeki formasyon derslerini ilk defa alan bir öğrenciye kıyasla daha başarılı olmaları hangi kavramla açıklanabilir?", options: { a: "Hazır bulunuşluk", b: "Kritik dönem", c: "Gelişme", d: "Deneyim", e: "Gelişim" }, answer: "a" },
+            { id: 51, text: "(Leylek Hikayesi) Çocuğun leyleklerle ilgili bilgiyi öğrenme sürecini açıklayınız?", options: { a: "Denge-Özümleme-Uyum-Denge", b: "Denge-Dengesizlik-Adaptasyon-Denge", c: "Denge-Adaptasyon-Dengesizlik-Denge", d: "Dengesizlik-Özümleme-Dengesizlik-Uyum", e: "Denge-Dengesizlik-Denge-Adaptasyon" }, answer: "b" },
+            { id: 52, text: "(Leylek Hikayesi) Çocuk, leyleklerin kayıp çocukları getirip getiremeyeceğini açıklarken leyleklerin özelliklerinden bahsetmesi hangi kavramla açıklanabilir?", options: { a: "Uyum", b: "Denge", c: "Şema", d: "Özümleme", e: "Organizasyon" }, answer: "c" },
+            { id: 53, text: "(Leylek Hikayesi) Çocuğun masalların gerçek olmadığına dair şema'yı oluşturabilmesi için anne bilişsel gelişimdeki hangi kavramın özelliklerinden destek almıştır?", options: { a: "Uyum", b: "Denge", c: "Şema", d: "Özümleme", e: "Organizasyon" }, answer: "a" },
+            { id: 54, text: "(Leylek Hikayesi) Çocuğun masalı dinlemesine bağlı olarak 'leyleklerin kayıp çocukları getirip getiremeyeceğine ait' zihinsel karmaşası hangi düşünce biçiminin halen var olduğunu gösterir?", options: { a: "Benmerkezcilik", b: "Sihirli düşünce", c: "Yapaycılık", d: "Özelden özele akıl yürütme", e: "Sembolik düşünme" }, answer: "b" },
+            { id: 55, text: "(Leylek Hikayesi) Bu çocuğun 'insanlar ve hayvanlar arasındaki ayrımı fark ediyor' olabilmesi ile ilgili hangisi doğrudur?", options: { a: "Merkeziyetsizlik kavramı gelişmiştir.", b: "Sınıflama kavramı gelişmeye başlamıştır.", c: "Benmerkezci düşünme vardır.", d: "Animistik düşünce vardır.", e: "Çoklu sınıflama vardır." }, answer: "b" },
+            { id: 56, text: "(Leylek Hikayesi) Anne ile çocuk arasındaki konuşmayı dikkate aldığımızda bu çocuğun hangi gelişim döneminde olduğu söylenebilir?", options: { a: "Son çocukluk", b: "Bebeklik", c: "İlk çocukluk", d: "Erinlik", e: "Ergenlik" }, answer: "c" },
+            { id: 57, text: "(Leylek Hikayesi) Bu çocuğun zihinsel açıdan hangi dönemde olduğunu söylemek mümkündür?", options: { a: "Duyusal-motor dönem", b: "Sembolik dönem", c: "Sezgisel dönem", d: "Somut dönem", e: "Soyut dönem" }, answer: "c" },
+            { id: 58, text: "(Leylek Hikayesi) Bu çocuğun leylekler ile ilgili bilgileri değerlendirebilmesi zihinsel gelişim ile ilgili olarak nasıl açıklanabilir?", options: { a: "Merkezileşme", b: "Nesne Sürekliliği", c: "Varsayım üretme", d: "Özelden özele akıl yürütme", e: "Kalıp yargılar" }, answer: "d" },
+            { id: 59, text: "(Leylek Hikayesi) Bu çocuğun bulunduğu gelişim dönemini bitirmesi sonucunda aşağıdakilerden hangisini kazanması beklenemez?", options: { a: "Odaklanmama", b: "Aynıyet", c: "Çoklu sınıflama", d: "Tümevarım", e: "Tersine dönüşüm" }, answer: "c" },
+            { id: 60, text: "İşlem öncesi dönemdeki çocuklar öğrendikleri bilgileri, şarkıları sürekli tekrar ederler. Bu özellikleri somut işlemler dönemine girmeleri ile birlikte sona erer. Bu ifadeye göre hangisi doğrudur?", options: { a: "Çocukların bazı hareketleri sürekli tekrar etmesi 'alışkanlık' edindiklerini gösterir.", b: "Çocukların bu davranışları döngüsel hareket olarak isimlendirilir.", c: "Çocuklar birtakım bilgilere karşı daha fazla duyarlılık gösterirler.", d: "Çocukların bu davranışları devresel tepki olarak adlandırılır.", e: "Çocukların bu davranışları ertelenmiş taklit kavramı olarak açıklanabilir." }, answer: "d" },
+            { id: 61, text: "Soykan, yaklaşık 2.5 yaşına bir erkek çocuktur. Dil gelişimi açısından Soykan ile ilgili neyi söylemek doğru olur?", options: { a: "Yaklaşık 250-270 kelimeyi aktif kullanabilir.", b: "Telaffuz hataları görülebilir.", c: "İki sözcük dönemindedir.", d: "Dil gelişimi açısından kritik dönemdedir.", e: "Yetişkinler gibi konuşabilir." }, answer: "a" },
+            { id: 62, text: "(Burger King Hikayesi) Baba çocuğunun peşinden masa masa dolaşarak yemek yedirmeye çalışmaktadır. Çocuk her gittiği masadan yiyecek almaktadır. Bu çocuğun davranışı için aşağıdakilerden hangisini söylemek doğrudur?", options: { a: "Kalıp yargılar görülmektedir.", b: "Sembolik oyun oynamaktadır.", c: "Ben merkezlilik söz konusudur.", d: "Masalara canlılık atfetmektedir.", e: "Yapaycılık görülmektedir." }, answer: "c" },
+            { id: 63, text: "(Burger King Hikayesi) Yukarıdaki örnekteki çocuğun hangi gelişim döneminde olduğu söylenebilir?", options: { a: "İşlem sonrası", b: "Duyusal-motor dönem", c: "İşlem öncesi dönem", d: "Somut işlemler", e: "Somut öncesi dönem" }, answer: "c" },
+            { id: 64, text: "(Burger King Hikayesi) Çocuk Psikososyal gelişim kuramına göre hangi dönemin özelliklerini göstermektedir?", options: { a: "Temel Güvene karşı güvensizlik", b: "Özerkliğe karşı kuşku ve utanç", c: "Girişimciliğe karşı suçluluk", d: "Özerkliğe karşı suçluluk", e: "Girişimciliğe karşı utanç" }, answer: "b" },
+            { id: 65, text: "(Burger King Hikayesi) Çocukta hangi özellik gelişmektedir?", options: { a: "Bencillik", b: "Benmerkezlilik", c: "Özerklik", d: "Girişimcilik", e: "Güven" }, answer: "c" },
+            { id: 66, text: "(Burger King Hikayesi) Çocuk Psikoseksüel gelişim kuramına göre hangi dönemdedir?", options: { a: "Oral", b: "Fallik", c: "Anal", d: "Latent", e: "Duyusal" }, answer: "c" },
+            { id: 67, text: "(Burger King Hikayesi) Yukarıdaki çocuk için aşağıdakilerden hangisini söylemek yanlış olur?", options: { a: "Dilin sembolik kullanımı görülür.", b: "Hayal dünyası gelişmiştir.", c: "Özelden özele akıl yürütebilir.", d: "Sınıflama kavramı gelişmemiştir.", e: "Benmerkezlilik görülür." }, answer: "c" },
+            { id: 68, text: "Ali kendisine verilen problemi öğretmenin öğrettiğinden farklı bir yöntemle çözmüş, Ahmet ise derste öğrendiği şekilde çözmüştür. Ali ve Ahmet için hangisini söylemek doğrudur?", options: { a: "Ali, soyut işlemler döneminde olduğu için farklı yollarla çözebilmekte Ahmet ise öğrenememiştir.", b: "Ali, somut işlemler döneminde olduğundan hipotez geliştirerek çözmüştür.", c: "Ali, soyut işlemler döneminde olduğu için benmerkezcidir.", d: "Ali, soyut işlemler döneminde olduğu için farklı çözüm yolları olabileceğini düşünmüştür.", e: "Ali korunum ilkelerini kazanmıştır." }, answer: "d" },
+            { id: 69, text: "Kavram gelişimi kuramını dikkate alan bir öğretmen aşağıdakilerden hangisini dikkate almaz?", options: { a: "Öğrencilerin farklı problem çözüm yollarını öğrenebilmesi için etkileşimlerini arttırmak.", b: "Öğrencilerin belli zamanlarda desteğe ihtiyaç duyduklarının farkında olmak.", c: "Öğrenciler için bireysel çalışma kadar birlikte çalışmanın da etkili olduğunu kabul etmek.", d: "Öğrencilerin, grup ödevlerinden ziyade bireysel ödevlerinin potansiyellerini geliştirdiğini kabul etmek.", e: "Öğrencilerin okul dışındaki etkileşimlerini arttırabilmek için okul dışında da eğitime önem vermek." }, answer: "d" },
+            { id: 70, text: "'Bireyin yaşam çevresini ve bu çevrede olup bitenleri anlama sürecidir' Burada tanımlanan özellik aşağıdakilerden hangisidir?", options: { a: "Psikomotor gelişim", b: "Kişilik gelişimi", c: "Cinsel gelişim", d: "Bilişsel gelişim", e: "Dilsel gelişim" }, answer: "d" },
+            { id: 71, text: "'Zihinsel gelişimde organizasyon ve uyum süreci belirleyicidir' Aşağıdakilerden hangisi bu süreçlerle ilgili bir örnek değildir?", options: { a: "Bir çocuğun kaşık ve çatal arasındaki farkı anlaması.", b: "Bir çocuğun bıçak yerine kaşığı kullanması.", c: "Bir çocuğun bıçak ve çatalı kullanabilmesi.", d: "Bir çocuğun lokantada bıçak istemesi.", e: "Bir çocuğun çay kaşığı yerine tatlı kaşığı istemesi." }, answer: "e" },
+            { id: 72, text: "'Bu dönemde çocuklar duyu organlarının bilincine varır ve bedenini fark edip onu istediği gibi kullanmayı öğrenir.' Bu anlatımda hangi dönem kastedilmektedir?", options: { a: "İşlem öncesi dönem", b: "Duyusal motor dönem", c: "Somut işlemler dönemi", d: "İmgesel dönem", e: "Sembolik dönem" }, answer: "b" },
+            { id: 73, text: "Çocuklar istenmeyen nesnelerle oynadıklarında anneleri nesneleri saklarlar; bebekleri ikna etmek kolay olurken daha büyük çocuklar tutturma davranışı gösterirler. Bu hangi özellik ile ilgilidir?", options: { a: "Benmerkezcilik", b: "Taklit", c: "Nesne devamlılığı", d: "İnatçılık", e: "Amaçlı davranış" }, answer: "c" },
+            { id: 74, text: "'Bu dönem çocuklarının oyunlarında rekabet ve işbirliği görülmez.' Bu anlatımda hangi dönem çocuklarından bahsedilmektedir?", options: { a: "Somut işlemler dönem", b: "Duyusal Motor dönem", c: "Eylemsel dönem", d: "İşlem öncesi dönem", e: "İşlem Sonrası dönem" }, answer: "d" },
+            { id: 75, text: "(Barbie Telefon Hikayesi) 'Bu telefonu istemiyorum, bunu istiyorum... Bu barbie telefonun üstünde resim de var.' Yukarıdaki yaşantıda kız çocuğunun hangi özelliği dikkati çekmektedir?", options: { a: "Benmerkezcilik", b: "Yapaycılık", c: "Sınıflanma", d: "Odaklanma", e: "Tek yönlü düşünme" }, answer: "d" },
+            { id: 76, text: "(Barbie Telefon Hikayesi) Bu kız çocuğunun bulunduğu dönem aşağıdakilerden hangisidir?", options: { a: "İşlem sonrası", b: "İşlem öncesi", c: "Somut işlemler", d: "Somut sonrası dön.", e: "Eylemsel dönem" }, answer: "b" },
+            { id: 77, text: "(Barbie Telefon Hikayesi) Yaşantıdaki kız çocuğu ile ilgili hangisini söylemek yanlıştır?", options: { a: "Benmerkezci düşünce gelişmiştir.", b: "Tek yönlü düşünme vardır.", c: "Odaklanma söz konusudur.", d: "Sınıflama gelişmiştir.", e: "Animistik düşünce hakimdir." }, answer: "d" },
+            { id: 78, text: "(Barbie Telefon Hikayesi) Yaşantıdaki kız çocuğu ile ilgili olarak hangisini söylemek doğrudur?", options: { a: "Cinsel rolleri kazanmıştır.", b: "Cinsel kimlik gelişmiştir.", c: "Sosyalleşme başlamıştır.", d: "Toplu oyun oynamaktadır.", e: "Duyusal devinimsel etkileşim vardır." }, answer: "b" },
+            { id: 79, text: "(Barbie Telefon Hikayesi) Bu yaşantıdaki çocuk için hangisini söylemek yanlıştır?", options: { a: "Annesinin diğer telefonu beğenme nedenleri ile onun barbie telefonu tercih etme nedeni farklıdır.", b: "Barbie telefonu arkadaşlarında gördüğü için isteyebilir.", c: "Çocuğun karar vermesi o ana ve o duruma bağlıdır.", d: "Çocuk, annesinin görüşlerini anlayabilir ve ikna edilebilir.", e: "Annesinin de kendisi gibi barbie telefonu beğenmesi gerektiğini düşünür." }, answer: "d" },
+            { id: 80, text: "Çocuklar şekli değişen hamurun ağırlığının değişmeyeceğini anlayabilir. Bu özellik hangi dönemin ardından kazanılır?", options: { a: "Somut işlemler", b: "Soyut işlemler", c: "Duyusal – Motor dönem", d: "İşlem öncesi dönem", e: "Kavramsal Dönem" }, answer: "d" },
+            { id: 81, text: "I- Farklı gelişim dönemlerindeki bireylerin özelliklerinin belirlenmesi; II- Sosyo-ekonomik-kültürel dinamiklerin gelişim süreçlerini etkileyebileceği... Bu durum psikolojinin hangi fonksiyonu ile yer almaz?", options: { a: "Tanımlama", b: "Açıklama", c: "Tahmin", d: "Kontrol", e: "Yordama" }, answer: "d" },
+            { id: 82, text: "Matematik öğretmeni Ali’ye 'abini de ben okuttum ama sen abine zerre kadar benzemiyorsun!' ifadelerini kullanmaktadır. Öğretmenin söylemleri gelişimin hangi ilkesini gözardı ettiğini göstermektedir?", options: { a: "Kalıtım etkisini", b: "Gelişimin genelden özele olduğunu", c: "Ardışık sıra takip ettiğini", d: "Bireysel farklılıkları", e: "Gelişimin nöbetleşe olduğunu" }, answer: "d" },
+            { id: 83, text: "Fizik öğretmeni Mehmet’in anlattığı konuları yeterince anlayamadığını fark etmiştir. Halbuki bu konular geçen sene anlatılan konularla ilişkilidir. Fizik öğretmeninin Mehmet’e yardımcı olabilmesi için hangisi doğrudur?", options: { a: "Mehmet, zihinsel olarak olgunlaşmamıştır.", b: "Mehmet fiziksel olarak büyümemiştir.", c: "Mehmet, duyusal olgunluğa sahip değildir.", d: "Mehmet, zihinsel olarak gelişimde gerilik göstermektedir.", e: "Mehmet, gerekli hazırbulunuşluğa sahip değildir." }, answer: "e" },
+            { id: 84, text: "Aşağıdaki ifadelerden hangisi gelişim ile ilgili yanlış bir açıklamadır?", options: { a: "Duyusal- motor dönemdeki bebekler, taklit ile öğrenseler de hemen performans olarak göstermeleri mümkün değildir.", b: "Bireyin yeni nesneyi var olan bilgisi ile açıklaması özümlemedir.", c: "Kırmızı ve mavi bilyelerden oluşan bilye topluluğu ile ilgili işlem öncesi çocuklar korunumu kazanmadıkları için maviler der.", d: "Somut işlemler dönemindeki çocuklar zihinden düşünemedikleri için yaparak yaşayarak öğrenmeye ağırlık verilmek zorundadır.", e: "Kendilerinin kendisini düşündüğü kadar başkalarının onları düşündüğünü varsayan ergenler egosantrik düşünme stiline göre davranmaktadır." }, answer: "d" },
+            { id: 85, text: "Okulda öğretmenin verdiği testteki soruları, dershanedeki öğretmeninin gösterdiği çözüm yöntemleri ile çözen Ali’ye, öğretmeni yeni bir yöntem öğretir. Ali’nin soruları ilk olarak dershanede öğrendiği gibi çözmesi hangisi ile açıklanır?", options: { a: "Dengesizlik", b: "Denge", c: "Uyumsama", d: "Özümseme", e: "Adaptasyon" }, answer: "d" },
+            { id: 86, text: "Öğretmenlerin, akran gruplarının zihinsel gelişim ve kavram gelişiminde önemini vurgulayan zihinsel gelişim kuramın temsilcisi hangisidir?", options: { a: "Piaget", b: "Bruner", c: "Vygotsky", d: "Freud", e: "John Dewey" }, answer: "c" },
+            { id: 87, text: "Hayatta her zaman diğer insanlarla birlikte yaşamı değiştirebilme şansımız olduğu görüşü hangisine aittir?", options: { a: "Bilişsel gelişim", b: "Psikoseksüel kuram", c: "Kavram gelişimi", d: "Psikososyal kuram", e: "Dil gelişimi" }, answer: "d" },
+            { id: 88, text: "I- Selim, Zeynep'e 'bizle oynayamazsın sen kızsın', II- Kerem Bey eşine 'tıraş losyonu çabuk bitiyor' diyerek oğlunu işaret etmesi, III- Demir 10 TL kağıt parayı beğenmeyip madeni paraları istemesi... Bireylerin yaş dönemleri sırasıyla hangisidir?", options: { a: "Son çocukluk - Ergenlik - İlk çocukluk - Orta yaş - Yaşlılık", b: "Son çocukluk - Ergenlik - İlk çocukluk - Orta yaş - Yaşlılık", c: "İlk çocukluk - Son Çocukluk - Ergenlik - Orta yaş - Yaşlılık", d: "Son Çocukluk - İlk çocukluk - Ergenlik - Orta yaş - Yaşlılık", e: "Ergenlik - İlk çocukluk - Son çocukluk - Orta yaş - yaşlılık" }, answer: "a" },
+            { id: 89, text: "'Sınavda 50 almak için her şey geçerlidir' diyen kişinin davranışı psikanalitik kurama göre nasıl açıklanır?", options: { a: "Süperego", b: "İd", c: "Ego", d: "Bilinçaltı", e: "Bilinçdışı" }, answer: "b" },
+            { id: 90, text: "Kişilik gelişiminin çocukluk döneminde (0-5/6 yaş) şekillendiğini söyleyen uzman hangisidir?", options: { a: "Freud", b: "Ericson", c: "Piaget", d: "Vygotsky", e: "Bruner" }, answer: "a" },
+            { id: 91, text: "Annenin bakımının önemli olduğu ve çocukta 'ben bana verilenim duygusunu' yarattığı dönem hangisidir?", options: { a: "Bebeklik", b: "Çocukluk", c: "Ergenlik", d: "Genç yetişkinlik", e: "Yetişkinlik" }, answer: "a" },
+            { id: 92, text: "Kişiliğin duygusal, sosyal ve değerler açısından kritik öneme sahip, akranların ve modellerin önemli olduğu yaşam dönemi hangisidir?", options: { a: "Bebeklik", b: "Çocukluk", c: "Ergenlik", d: "Genç yetişkinlik", e: "Yetişkinlik" }, answer: "c" },
+            { id: 93, text: "I- Adaletin kestiği parmak acımaz! II- Hayat acımasız, kimseye acımayacaksın! III- Ya bu deveyi güdeceksin ya bu diyardan gideceksin! IV- Yaşamak istiyorsan başkalarına saygı göstereceksin! Aşağıdakilerden hangi ahlaki düzeyin yukarıda karşılığı bulunmamaktadır?", options: { a: "I. Evre: Ödül – Ceza", b: "II. Evre: Araçsal ilişkiler/saf çıkarcılık", c: "III. Evre: İyi çocuk", d: "IV. Evre: Kanun düzen eğilimi", e: "VI –VII Evreler: Evrensel etik" }, answer: "e" },
+            { id: 94, text: "Freud’un Psikanalitik kuramı ile ilgili hangisi doğrudur?", options: { a: "Cinsel kimlik ve cinsel rollerin gelişimi fallik dönemde tamamlanır.", b: "Anal dönem, bağımlılıkların sevgi ve güven duygusunun gelişimini sağlar.", c: "Gizil dönemde temel görev sevgi ve çalışmaktır.", d: "Genital dönemin temelleri oral dönemde atılır.", e: "Kişilik gelişimi sosyal etkileşimin, psikoseksüel gelişim ile etkileşimi ile olur." }, answer: "a" },
+            { id: 95, text: "Bir çocuğun her gördüğü nesneyi ağzına götürmesi bilişsel gelişimi ile ilgili hangi kavramla açıklanabilir?", options: { a: "Şema oluşturma", b: "Uyum", c: "Özümleme", d: "Uzlaşma", e: "Sınıflama" }, answer: "c" },
+            { id: 96, text: "Çerkezlerde katı kabul edilen gelenekler bulunmaktadır. Örneğin, bir babanın çocuklarını ebeveyninin yanında sevmemesi. Bu gelenek ve görenekleri Kohlberg’in ahlaki evrelerine göre hangi dönemle açıklanabilir?", options: { a: "İtaat-ceza dön.", b: "Saf çıkarcı dön.", c: "İyi çocuk dön.", d: "Toplumsal yasa ve düzen dön.", e: "İnsan hakları dön." }, answer: "d" },
+            { id: 97, text: "Dersleri zayıf olan bir öğrencinin üniversite sınavında İTÜ Elektrik-Elektronik Mühendisliğini kazanacağını söylemesi hangi savunma mekanizması ile açıklanabilir?", options: { a: "Pollyannacılık", b: "Yadsıma", c: "Bastırma", d: "Yüceltme", e: "Fantezi" }, answer: "e" },
+            { id: 98, text: "Ali kardeşi Mehmet doğduktan sonra arada onun emziğini alarak koltuğun arkasında emmeğe başlamıştır. Ali’nin bu davranışı hangi savunma düzeneği ile açıklanabilir?", options: { a: "Fantezi", b: "Rasyonalizasyon", c: "Yansıtma", d: "Bastırma", e: "Ödünleme / Gerileme" }, answer: "e" },
+            { id: 99, text: "Çocukların sağlıklı bir duygusal gelişim göstermeleri için güçlü kişisel bağlanmaya gereksinim duydukları belirtilmektedir. Burada hangi duygunun gerekli olduğu belirtilmektedir?", options: { a: "Acı", b: "Sevgi", c: "Heyecan", d: "Sevinç", e: "Öfke" }, answer: "b" },
+            { id: 100, text: "Ali Bey; Öğretmenlik mesleği temelinde insani değerleri barındırır. Mehmet Bey; Öğretmenlerin ihtiyaçları karşılanmadıkça özel ders vermesi kaçınılmazdır. Aşağıdaki ifadelerden hangisi yukarıdaki görüşleri belirten bireylerin ahlaki değerleri dışında bir görüşü ifade etmektedir?", options: { a: "Doktorlar ameliyat için bıçak parası neden almasınlar ki?", b: "Bu dünyada al gülüm ver gülüm mantığı ile yaşamadıkça bir yere varamazsın!", c: "Eğer dünyayı her şeyi parayla değerlendiren insanlar yönetseydi insanlık kalmazdı.", d: "Ya bu deveyi güdeceksin ya bu diyardan gideceksin!", e: "Kuvvete dayanmayan adalet âciz, adalete dayanmayan kuvvet zalimdir." }, answer: "e" },
+            { id: 101, text: "I- Öğretmenin, derste konuşan öğrencisine sinirlenerek tokat atması. II- Öğretmenlerin, öğretmenler odasında birbirleri hakkında konuşmaları; davranışını saldırganlık tepki türleri ile nasıl açıklayabiliriz?", options: { a: "Fiziksel / Araçsal", b: "Araçsal / Sosyal", c: "Dürtüsel / Fiziksel", d: "Fiziksel / Sosyal", e: "Dürtüsel / Sosyal" }, answer: "e" },
+            { id: 102, text: "İki senedir öğretmenlik yapan Zehra, kendisini boş ve amaçsız hissetmektedir. İnsanlarla beraber olmanın anlamsız olduğunu düşünmeye başlamıştır. Zehra’nın yaşadığı bu sorunlar Ericson’un psikososyal gelişim kuramına göre hangi dönemle açıklanabilir?", options: { a: "Temel güvene – güvensizlik", b: "Özerkliğe – kuşku ve utanç", c: "Kimlik – kimlik karmaşası", d: "Üretkenliğe karşı durgunluk", e: "Yakınlığa karşı yalıtılmışlık" }, answer: "e" }
+        ];
+
+
+        /* ----------------------------------------------------
+           2. OTOMATİK SORU YÜKLEME MOTORU
+           ---------------------------------------------------- */
+
+        function sorulariYukle(konteynerId, soruDizisi, dersKodu) {
+            const liste = document.getElementById(konteynerId);
+            if (!liste) return;
+
+            // 1. Soruları Ekrana Basan Döngü
+            soruDizisi.forEach(soru => {
+                const soruKarti = document.createElement("div");
+                soruKarti.className = "soru-karti";
+
+                const uniqueId = dersKodu + "-" + soru.id;
+                soruKarti.id = "kutu-" + uniqueId;
+
+                let seceneklerHTML = "";
+                for (const [key, value] of Object.entries(soru.options)) {
+                    seceneklerHTML += `
+                    <label>
+                        <input type="radio" name="cevap-${uniqueId}" value="${key}"> 
+                        ${key.toUpperCase()}) ${value}
+                    </label>`;
+                }
+
+                soruKarti.innerHTML = `
+                <p class="soru-metni">${soru.id}. ${soru.text}</p>
+                <div class="secenekler">${seceneklerHTML}</div>
+                <button class="kontrol-btn" onclick="cevapKontrol('${uniqueId}', '${soru.answer}')">Cevabı Kontrol Et</button>
+                <div class="sonuc-mesaji" id="msg-${uniqueId}"></div>
+            `;
+
+                liste.appendChild(soruKarti);
+            });
+
+            // 2. YENİ EKLENEN KISIM: Soruların Sonundaki Tebrikler ve Instagram Yönlendirmesi
+            const tebriklerKutusu = document.createElement("div");
+
+            // Kutunun şık tasarımı (CSS içine yazmak yerine direkt buraya gömdüm, uğraştırmaz)
+            tebriklerKutusu.style.cssText = "text-align: center; margin-top: 30px; padding: 25px; background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%); border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 2px dashed #d1d8e0;";
+
+            tebriklerKutusu.innerHTML = `
+            <h3 style="color: #2c3e50; margin-top: 0; font-size: 20px;">🎉 Tebrikler, bu bölümün sonuna geldin!</h3>
+            <p style="color: #555; font-size: 15px; margin-bottom: 20px;">Zorlu bir çalışmaydı ama başardın. Zihnini dinlendirmek ve biraz mola vermek en doğal hakkın!</p>
+            <a href="https://www.instagram.com/reel/Cvg2XY8gWCO" target="_blank" style="display: inline-block; padding: 12px 25px; background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d); color: white; text-decoration: none; border-radius: 50px; font-weight: bold; font-size: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.2s;">
+                ✨ Sinan Canan'ın Sesinden: Günün Motivasyonu
+            </a>
+        `;
+
+            // Tebrikler kutusunu soruların en sonuna ekle
+            liste.appendChild(tebriklerKutusu);
+        }
+
+        // Sayfa Yüklendiğinde 2. Dönem Derslerini Hazırla
+        window.onload = function () {
+            setTimeout(function () {
+                var popup = document.getElementById('dengePopup');
+                popup.style.opacity = '1';
+                popup.style.pointerEvents = 'auto';
+                popup.children[0].style.transform = 'translateY(0)';
+            }, 1000);
+
+            sorulariYukle("soru-listesi-ders1", olcmeSorulari, "d1");
+            sorulariYukle("soru-listesi-ders2", teknolojiSorulari, "d2");
+            sorulariYukle("soru-listesi-ders3", psikolojiSorulari, "d3");
+        };
+
+        // Popup'ı kapatma fonksiyonu
+        function popupKapat() {
+            var popup = document.getElementById('dengePopup');
+            popup.style.opacity = '0';
+            popup.style.pointerEvents = 'none';
+        }
+
+
+        /* ----------------------------------------------------
+           3. CEVAP KONTROL VE DİĞER İŞLEVLER
+           ---------------------------------------------------- */
+
+        function cevapKontrol(uniqueId, dogruCevap) {
+            // Hangi şıkkın seçildiğini bul
+            const secilenRadio = document.querySelector(`input[name="cevap-${uniqueId}"]:checked`);
+            const mesajKutusu = document.getElementById(`msg-${uniqueId}`);
+
+            // Eğer hiçbir şık seçilmemişse uyarı ver
+            if (!secilenRadio) {
+                alert("Lütfen önce bir şık işaretleyiniz.");
+                return;
+            }
+
+            // Seçilen şıkkın değerini al (a, b, c, d, e)
+            const secilenCevap = secilenRadio.value;
+
+            // Doğru/Yanlış kontrolü yap
+            if (secilenCevap === dogruCevap) {
+                mesajKutusu.innerHTML = "✅ Harika! Doğru Cevap.";
+                mesajKutusu.className = "sonuc-mesaji dogru";
+            } else {
+                mesajKutusu.innerHTML = "❌ Yanlış. Doğru Cevap: " + dogruCevap.toUpperCase();
+                mesajKutusu.className = "sonuc-mesaji yanlis";
+            }
+
+            // Kutuyu görünür yap
+            mesajKutusu.style.display = "block";
+        }
+
+        // Ders İçeriği Açma/Kapama
+        function toggleDers(id) {
+            var x = document.getElementById(id);
+            x.style.display = (x.style.display === "block") ? "none" : "block";
+        }
+    </script>
+
+</body>
+
+</html>
