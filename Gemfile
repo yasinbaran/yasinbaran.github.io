@@ -6,3 +6,4 @@ gem "support-for"
 
 gem "rexml"
 gem "webrick"
+gem "jekyll-theme-hacker"
